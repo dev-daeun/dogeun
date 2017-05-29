@@ -27,7 +27,7 @@ const fs = require('fs');
 const arrUpload = upload.fields([{ name: 'pet', maxCount: 3 }, { name: 'lineage', maxCount: 1 }, { name: 'parent', maxCount: 2 }
 ]);
 
-router.post('/', showReq, arrUpload, addParcels);
+router.post('/', arrUpload, addParcels);
 router.put('/', arrUpload, changeParcels);
 router.delete('/', removeParcels);
 
@@ -98,7 +98,7 @@ async function uploadToS3(itemKey, path) {
 
 async function changeParcels(req, res, next) {
     let change_id = req.body.parcel_id;
-   
+
     let parcel_records = req.body;
 
     parcel_records.lineage = req.files['lineage'][0].location;
@@ -138,34 +138,45 @@ async function changeParcels(req, res, next) {
 
 
 async function addParcels(req, res, next) {
-    console.log(req.files);
-    
-    if (!req.files['pet']) imageUrl = null;
 
     //파일 제외하고 body부분 record
     let parcel_records = req.body;
 
     //parcel 테이블에 들어갈 파일 record 추가
-    let lineage = req.files['lineage'];
-    console.log(lineage);
-    parcel_records.lineage = req.files['lineage'].location;
+    parcel_records.lineage = req.files['lineage'][0].location;
 
 
-    //부모견 사진 테이블
+    // parent_image_records 테이블에 들어갈 record
     let parent_image_records = [];
 
-    for (let i in req.files['parent']) {
-        parent_image_records.push({ 'image': i.location });
+    if (req.files['parent'] instanceof Array) {
+
+         // parent 이미지 파일 개수만큼 record 추가 , key값과 함께 배열에 push
+        for (let i in req.files['parent']) {
+            parent_image_records.push({ 'image': req.files['parent'][i].location });
+        }
+
+    } else {
+        parent_image_records.push({ 'image': req.files['parent'][0].location });
     }
 
     //pet_images 테이블에 들어갈 record 배열 
     let image_records = [];
 
-    // pet 이미지 파일 개수만큼 record 추가 , key값과 함께 배열에 push
-    for (let i in req.files['pet']) {
-        image_records.push({ 'image': i.location });
+
+    if (req.files['pet'] instanceof Array) {
+
+        // pet 이미지 파일 개수만큼 record 추가 , key값과 함께 배열에 push
+        for (let i in req.files['pet']) {
+            image_records.push({ 'image': req.files['pet'][i].location });
+        }
+
+    } else {
+        image_records.push({ 'image': req.files['pet'][0].location });
     }
 
+
+    // 썸네일 만드는 부분 
     let thumnail_fileName = 'thumnbnail_' + req.files['pet'][0].key;
 
     let thumbnailPath = 'thumbnail/' + thumnail_fileName;
@@ -179,6 +190,7 @@ async function addParcels(req, res, next) {
 
     let pet_thumbnail = await uploadToS3(thumnail_fileName, thumbnailPath);
 
+    // 썸네일도 레코드에 추가
     parcel_records.pet_thumbnail = pet_thumbnail;
 
     // 함수 호출부분 
