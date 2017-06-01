@@ -2,4 +2,5 @@
 
 hello
 hello2
-hihihi
+hello from KDE
+conflict resolve.
