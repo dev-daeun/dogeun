@@ -3,6 +3,40 @@ const aws = require('../config/AWS');
 const upload = aws.getUpload();
 class DogList {}
 
+DogList.searchImage = async function (id, kinds) {
+    let connection;
+    let result;
+    try {
+        connection = await pool.getConnection();
+        if (kinds == 'pet') {
+            let query1 = 'SELECT parcel_id, image, image_id FROM pet_images WHERE parcel_id =?';
+            result = await connection.query(query1, id);
+        }
+        else if (kinds == 'parent') {
+            let query2 = 'SELECT parcel_id, image, image_id FROM parent_pet_images WHERE parcel_id = ?';
+            result = await connection.query(query2, id);
+        }
+        else if (kinds == 'parcel') {
+            let query3 = 'SELECT pet_thumbnail,lineage FROM parcel WHERE parcel_id = ?';
+            result = await connection.query(query3, id);
+        }
+
+
+        await connection.commit();
+
+        return result;
+
+    } catch (err) {
+        console.log(err);
+        throw err;
+    } finally {
+        pool.releaseConnection(connection);
+    }
+
+}
+
+
+
 DogList.postParcels = async function (parcelRecord, parentRecord, petRecord) {
     let connection;
     try {
@@ -15,14 +49,14 @@ DogList.postParcels = async function (parcelRecord, parentRecord, petRecord) {
         let outputId = parcelOutput.insertId;
         parcelRecord.parcel_id = outputId;
         
-        for (let parent of parent_record) {
+        for (let parent of parentRecord) {
             parent.parcel_id = outputId;
             let query2 = 'INSERT INTO parent_pet_images SET ? ';
             await connection.query(query2, parent);
 
         }
 
-        for (let pet of pet_record) {
+        for (let pet of petRecord) {
             pet.parcel_id = outputId;
             let query3 = 'INSERT INTO pet_images SET ? ';
             await connection.query(query3, pet);

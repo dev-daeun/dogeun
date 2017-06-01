@@ -7,18 +7,77 @@ const multerS3 = require('multer-s3');
 const Doglist = require('../model/doglists');
 const easyimg = require('easyimage');
 const fs = require('fs');
+const s3 = aws.getS3();
 
-const s3 = new aws.S3();
-const upload = multer({
-    storage: multerS3({
-        s3: s3,
-        bucket: 'yeonsudogndogn',
-        acl: 'public-read',
-        key: function (req, file, cb) {
-            cb(null, Date.now().toString() + '.' + file.originalname.split('.').pop());
+// const s3 = new aws.S3();
+// const upload = multer({
+//     storage: multerS3({
+//         s3: s3,
+//         bucket: 'yeonsudogndogn',
+//         acl: 'public-read',
+//         key: function (req, file, cb) {
+//             cb(null, Date.now().toString() + '.' + file.originalname.split('.').pop());
+//         }
+//     })
+// });
+async function deleteInS3(itemKey) {
+    return new Promise((resolve, reject) => {
+       
+        const params = {
+            Bucket: 'yeonsudogndogn',
+            //Key : itemKey
+            Delete: {
+                Objects: [
+                    { 
+                        Key: itemKey 
+                    }
+                ]
+            }
+
         }
+
+        s3.deleteObjects(params, (err, data) => {
+            if (err) {
+                reject(err);
+            } else {
+                console.log(data);
+                resolve(data);
+            }
+        });
     })
-});
+};
+
+
+// 만든 파일을 s3에 업로드하기위해, 업로드 후 썸네일 삭제
+async function uploadToS3(itemKey, path) {
+    return new Promise((resolve, reject) => {
+
+        const params = {
+            Bucket: 'yeonsudogndogn',
+            Key: itemKey,
+            ACL: 'public-read',
+            Body: fs.createReadStream(path)
+        }
+        
+        s3.putObject(params, (err, data) => {
+            if (err) {
+                fs.unlinkSync(path);
+                reject(err);
+            }
+            else {
+                const imageUrl = s3.endpoint.href + params.Bucket + path;
+                fs.unlinkSync(path);
+                resolve(imageUrl);
+
+            }
+        })
+    })
+}
+
+
+
+
+const upload = aws.getUpload();
 const arrUpload = upload.fields([{ name: 'pet', maxCount: 5 }, { name: 'lineage', maxCount: 1 }, { name: 'parent', maxCount: 2 }
 ]);
 
@@ -90,19 +149,18 @@ router.post('/',arrUpload, async function(req,res){
 
   
     // 썸네일 만드는 부분 
-    let thumnailFileName = 'thumnbnail_' + req.files['pet'][0].key;
+    let thumbnailFileName = 'thumnbnail_' + req.files['pet'][0].key;
 
-    let thumbnailPath = 'thumbnail/' + thumnailFileName;
+    let thumbnailPath = 'thumbnail/' + thumbnailFileName;
 
     let thumbnail = await easyimg.rescrop({
-        name: thumnailFileName,
+        name: thumbnailFileName,
         src: req.files['pet'][0].location,
         dst: thumbnailPath,
         width: 300, height: 400
     });
-    console.log(req.files['pet'][0].location);
-
-    let petThumbnail = await uploadToS3(thumnailFileName, thumbnailPath);
+    
+    let petThumbnail = await uploadToS3(thumbnailFileName, thumbnailPath);
 
     // 썸네일도 레코드에 추가
     parcelRecords.pet_thumbnail = petThumbnail;
@@ -112,7 +170,7 @@ router.post('/',arrUpload, async function(req,res){
 
     try {
      
-        let ret = await Parcels.postParcels(parcelRecords, parentImageRecords, imageRecords);
+        let ret = await Doglist.postParcels(parcelRecords, parentImageRecords, imageRecords);
         res.status(200).send({ message: 'save' });
     }
     catch (err) {
@@ -123,44 +181,48 @@ router.post('/',arrUpload, async function(req,res){
 
 });
 
-router.delete('/:parcel_id',async function(req,res){
-      let removeId = req.params.parcel_id;
+router.delete('/:parcel_id', async function (req, res) {
+    let removeId = req.params.parcel_id;
 
     try {
         // s3 이미지 지우기
         let whatIs = 'pet';
-        let pets = await Parcels.searchImage(removeId,whatIs);
+        let pets = await Doglist.searchImage(removeId, whatIs);
         var petKey = [];
 
         for (let petItem of pets) {
             petKey = petItem.image.split('/');
-            await deleteInS3(petKey[petKey.length-1]);
+            await deleteInS3(petKey[petKey.length - 1]);
         }
-        
+
         whatIs = 'parent';
-        let parents = await Parcels.searchImage(removeId,whatIs);
+        let parents = await Doglist.searchImage(removeId, whatIs);
         var parentKey = [];
 
-        for(let parentItem of parents){
-            parentKey = parentItem.image.split('/');
-            
-            await deleteInS3(parentKey[parentKey.length-1]);
-        }
+        if (parents.image) {
+            for (let parentItem of parents) {
+                parentKey = parentItem.image.split('/');
 
+                await deleteInS3(parentKey[parentKey.length - 1]);
+            }
+        }
         whatIs = 'parcel';
-        let parcels = await Parcels.searchImage(removeId,whatIs);
+        let parcels = await Doglist.searchImage(removeId, whatIs);
         var thumbnailKey = [];
-        
+
         thumbnailKey = parcels[0].pet_thumbnail.split('/');
-        await deleteInS3(thumbnailKey[thumbnailKey.length-1]);
+        await deleteInS3(thumbnailKey[thumbnailKey.length - 1]);
 
         var lineageKey = [];
 
-        lineageKey = parcels[0].lineage.split('/');
-        await deleteInS3(lineageKey[lineageKey.length-1]);
-        
-        let result = Parcels.deleteParcles(removeId);
-       
+        if (parcels[0].lineage) {
+            lineageKey = parcels[0].lineage.split('/');
+            await deleteInS3(lineageKey[lineageKey.length - 1]);
+        }
+        //await deleteInS3(lineageKey[lineageKey.length-1]);
+
+        let result = Doglist.deleteParcles(removeId);
+
         res.send({ message: 'save' });
     } catch (err) {
         console.log('err message : ', err);
