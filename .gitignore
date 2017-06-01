@@ -1,0 +1,4 @@
+dogeun_doc/
+node_modules/
+aws_config.json
+db_pool.js
