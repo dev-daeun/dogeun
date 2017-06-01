@@ -26,29 +26,28 @@ Profile.uploadToS3 = function(name, path){
 
 Profile.saveProfile = async function(req){
     try {
-        var connection = await pool.getConnection();
-        let record = req.body;
-        let query = 'insert into users set ?';
-        if(!req.file) {
-            let result = await connection.query(query, record); 
-            return result;
-        }
-        else {
-            let thumbnail_name = 'thumbnail_' + req.file.key; //썸네일이미지 이름
-            let thumbnail_path = 'thumbnail/'+ thumbnail_name; //썸네일 저장 경로
-            let result2 = await easyimage.rescrop({
-                name: thumbnail_name,
-                src: req.file.location,
-                dst: thumbnail_path, //썸네일 저장 경로에 파일을 저장하겠다?
-                width: 300, height: 300
-            });
-            console.log(result2);
-            let thumbnail_url = await uploadToS3(thumbnail_name, thumbnail_path); //2. 로컬 디렉토리에 저장된 이미지를 s3에 올리기
-            record.profile_image = req.file.location;
-            record.profile_thumbnail = thumbnail_url;
-            let result = await connection.query(query, record);
-            return result;
-        }
+            var connection = await pool.getConnection();
+            let record = req.body;
+            let query = 'insert into users set ?';
+            if(!req.file) {
+                let result = await connection.query(query, record); 
+                return result;
+            }
+            else {
+                let thumbnail_name = 'thumbnail_' + req.file.key; //썸네일이미지 이름
+                let thumbnail_path = 'thumbnail/'+ thumbnail_name; //썸네일 저장 경로
+                let result2 = await easyimage.rescrop({
+                    name: thumbnail_name,
+                    src: req.file.location,
+                    dst: thumbnail_path, //썸네일 저장 경로에 파일을 저장하겠다?
+                    width: 300, height: 300
+                });
+                let thumbnail_url = await uploadToS3(thumbnail_name, thumbnail_path); //2. 로컬 디렉토리에 저장된 이미지를 s3에 올리기
+                record.profile_image = req.file.location;
+                record.profile_thumbnail = thumbnail_url;
+                let result = await connection.query(query, record);
+                return result;
+            }
     } 
     catch(err) {
         throw err;
@@ -58,8 +57,63 @@ Profile.saveProfile = async function(req){
     }
 };
 
-Profile.editProfile = function(){
-    
-}
+Profile.editProfile = async function(req){
+    try {
+        var connection = await pool.getConnection();
+        let key_array = Object.keys(req.body);
+        let key_length = key_array.length;
+        let value_array = [];
 
+        let query = 'update users set ';
+        for(let i = 0; i<key_length; i++) {
+            if(i==key_length-1) query +=  key_array[i] + ' = ? ';
+            else query += key_array[i] + ' = ?, '
+            value_array.push(req.body.key_array[i]);
+        }
+        value_array.push(req.params.id);
+        query += 'where user_id = ?';
+        console.log(query);
+        let ret = connection.query(query, value_array);
+        return ret;
+    }
+    catch(err) {
+        console.log(err); 
+        throw err;
+    }
+    finally {
+        pool.releaseConnection(connection);
+    }
+    
+
+};
+
+Profile.editProfile = async function(req){
+    try {
+        var connection = await pool.getConnection();
+        let key_array = Object.keys(req.body);
+        let key_length = key_array.length;
+        let value_array = [];
+
+        let query = 'update users set ';
+        for(let i = 0; i<key_length; i++) {
+            if(i==key_length-1) query +=  key_array[i] + ' = ? ';
+            else query += key_array[i] + ' = ?, '
+            value_array.push(req.body.key_array[i]);
+        }
+        value_array.push(req.params.id);
+        query += 'where user_id = ?';
+        console.log(query);
+        let ret = connection.query(query, value_array);
+        return ret;
+    }
+    catch(err) {
+        console.log(err); 
+        throw err;
+    }
+    finally {
+        pool.releaseConnection(connection);
+    }
+    
+
+};
 module.exports = Profile;

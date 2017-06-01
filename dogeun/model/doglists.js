@@ -3,7 +3,7 @@ const aws = require('../config/AWS');
 const upload = aws.getUpload();
 class DogList {}
 
-DogList.getWhere = function(qs){
+DogList.getWhere = function(qs){ //조건절 빌더
     let where = '', param_array=[];
     for(let i in qs){
       if(i=='page') continue;
@@ -74,16 +74,11 @@ DogList.getWhere = function(qs){
       let query5 = 'select count(*) from favorites where parcel_id = ?'
       let favor = await connection.query(query5, parcelID);
 
-      let query6 = 'select kennel, corona, DHPPL from vaccination where parcel_id = ?';
-      let vac = await connection.query(query6, parcelID);
-
       parcel[0].username = username[0].username;
       parcel[0].parent_pet_images = parentPetImages;
       parcel[0].pet_images = petImages;
       parcel[0].favorite_number = favor[0]["count(*)"];
-      parcel[0].vaccination = vac[0];
       return parcel[0];
-
     }
     catch(err) {
       throw err;
@@ -93,7 +88,7 @@ DogList.getWhere = function(qs){
     }
   }
 
-DogList.completeParcel = async function(parcelID){
+DogList.completeParcel = async function(parcelID){ //분양완료 or 완료 취소하기
     try {
       var connection = await pool.getConnection();
       let query = 'select is_parceled from parcel where parcel_id = ?';
@@ -111,5 +106,7 @@ DogList.completeParcel = async function(parcelID){
       pool.releaseConnection(connection);
     }
 };
+
+
 
 module.exports = DogList;
