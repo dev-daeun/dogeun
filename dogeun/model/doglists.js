@@ -3,6 +3,105 @@ const aws = require('../config/AWS');
 const upload = aws.getUpload();
 class DogList {}
 
+DogList.postParcels = async function (parcelRecord, parentRecord, petRecord) {
+    let connection;
+    try {
+        connection = await pool.getConnection();
+
+        await connection.beginTransaction();
+
+        let query1 = 'INSERT INTO parcel SET ? ';
+        let parcelOutput = await connection.query(query1, parcelRecord); //분양글 저장 -> 분양글 id가 parcel_id에 저장
+        let outputId = parcelOutput.insertId;
+        parcelRecord.parcel_id = outputId;
+        
+        for (let parent of parent_record) {
+            parent.parcel_id = outputId;
+            let query2 = 'INSERT INTO parent_pet_images SET ? ';
+            await connection.query(query2, parent);
+
+        }
+
+        for (let pet of pet_record) {
+            pet.parcel_id = outputId;
+            let query3 = 'INSERT INTO pet_images SET ? ';
+            await connection.query(query3, pet);
+        }
+
+        //commit
+        await connection.commit();
+
+        return parcelOutput;
+
+    } catch (err) {
+        try {
+            await connection.rollback();
+            console.log(err);
+        } catch (err) {
+            console.log(err);
+        }
+        throw err;
+
+    } finally {
+        pool.releaseConnection(connection);
+    }
+
+};
+
+DogList.updateParcels = async function (id, parcel_record) {
+    let connection;
+    try {
+        connection = await pool.getConnection();
+
+        await connection.beginTransaction();
+
+        let query1 = 'UPDATE parcel SET ? WHERE parcel_id = ?';
+        let parcel_output = await connection.query(query1,[parcel_record, id]);
+        console.log(parcel_output);
+
+        // let query2 = 'UPDATE parent_pet_images SET ? WHERE parcel_id = ?';
+        // let pa_output = await connection.query(query2, parent_record, id);
+
+        // let query3 = 'UPDATE pet_images SET ? WHERE parcel_id = ? ';
+        // let complete = await conncetion.query(query3, pet_record, id);
+
+        await conncetion.commit();
+
+        return parcel_output;
+    } catch (err) {
+        try {
+            await connection.rollback();
+            console.log(err);
+        } catch (error) {
+            console.log(err);
+            }
+       throw err;
+    } finally {
+        pool.releaseConnection(connection);
+    }
+};
+
+
+
+
+
+DogList.deleteParcles = async function (id) {
+    let connection;
+    try {
+        connection = await pool.getConnection();
+
+        let query = 'DELETE FROM parcel WHERE parcel_id = ?';
+        let result = await connection.query(query, id);
+
+        return result;
+    } catch (err) {
+        console.log(err);
+        throw err;
+    } finally {
+        pool.releaseConnection(connection);
+    }
+};
+
 DogList.getWhere = function(qs){
     let where = '', param_array=[];
     for(let i in qs){
@@ -12,8 +111,6 @@ DogList.getWhere = function(qs){
     }
     return {where: where, param_array: param_array};
 }
-
-
 
 
  DogList.getLists = async function(qs){
@@ -111,5 +208,9 @@ DogList.completeParcel = async function(parcelID){
       pool.releaseConnection(connection);
     }
 };
+
+
+
+
 
 module.exports = DogList;
