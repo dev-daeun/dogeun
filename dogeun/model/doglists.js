@@ -3,7 +3,127 @@ const aws = require('../config/AWS');
 const upload = aws.getUpload();
 class DogList {}
 
-DogList.getWhere = function(qs){ //조건절 빌더
+
+DogList.searchImage = async function (id, kinds) {
+    let connection;
+    let result;
+    try {
+        connection = await pool.getConnection();
+        if (kinds == 'pet') {
+            let query1 = 'SELECT parcel_id, image, image_id FROM pet_images WHERE parcel_id =?';
+            result = await connection.query(query1, id);
+        }
+        else if (kinds == 'parent') {
+            let query2 = 'SELECT parcel_id, image, image_id FROM parent_pet_images WHERE parcel_id = ?';
+            result = await connection.query(query2, id);
+        }
+        else if (kinds == 'parcel') {
+            let query3 = 'SELECT pet_thumbnail,lineage FROM parcel WHERE parcel_id = ?';
+            result = await connection.query(query3, id);
+        }
+        await connection.commit();
+        return result;
+    } catch (err) {
+        console.log(err);
+        throw err;
+    } finally {
+        pool.releaseConnection(connection);
+    }
+
+}
+
+
+
+DogList.postParcel = async function (parcelRecord, parentRecord, petRecord) { //분양글 저장하기
+    let connection;
+    try {
+        connection = await pool.getConnection();
+        await connection.beginTransaction();
+        let query1 = 'INSERT INTO parcel SET ? ';
+        let parcelOutput = await connection.query(query1, parcelRecord); //분양글 저장 -> 분양글 id가 parcel_id에 저장
+        let outputId = parcelOutput.insertId;
+        parcelRecord.parcel_id = outputId;
+      
+        for (let parent of parentRecord) {
+            parent.parcel_id = outputId;
+            let query2 = 'INSERT INTO parent_pet_images SET ? ';
+            await connection.query(query2, parent);
+        }
+
+        for (let pet of petRecord) {
+            pet.parcel_id = outputId;
+            let query3 = 'INSERT INTO pet_images SET ? ';
+            await connection.query(query3, pet);
+        }
+
+        //commit
+        await connection.commit();
+        return parcelOutput;
+    } catch (err) {
+        try {
+            await connection.rollback();
+            console.log(err);
+        } catch (err) {
+            console.log(err);
+        }
+        throw err;
+
+    } finally {
+        pool.releaseConnection(connection);
+    }
+
+};
+
+DogList.updateParcel = async function (id, parcel_record) { //분양글 수정하기
+    let connection;
+    try {
+        connection = await pool.getConnection();
+        await connection.beginTransaction();
+        let query1 = 'UPDATE parcel SET ? WHERE parcel_id = ?';
+        let parcel_output = await connection.query(query1,[parcel_record, id]);
+        console.log(parcel_output);
+
+        // let query2 = 'UPDATE parent_pet_images SET ? WHERE parcel_id = ?';
+        // let pa_output = await connection.query(query2, parent_record, id);
+
+        // let query3 = 'UPDATE pet_images SET ? WHERE parcel_id = ? ';
+        // let complete = await conncetion.query(query3, pet_record, id);
+
+        await conncetion.commit();
+        return parcel_output;
+    } catch (err) {
+        try {
+            await connection.rollback();
+            console.log(err);
+        } catch (error) {
+            console.log(err);
+            }
+       throw err;
+    } finally {
+        pool.releaseConnection(connection);
+    }
+};
+
+
+
+
+
+DogList.deleteParcel = async function (id) { //분양글 삭제하기
+    let connection;
+    try {
+        connection = await pool.getConnection();
+        let query = 'DELETE FROM parcel WHERE parcel_id = ?';
+        let result = await connection.query(query, id);
+        return result;
+    } catch (err) {
+        console.log(err);
+        throw err;
+    } finally {
+        pool.releaseConnection(connection);
+    }
+};
+
+DogList.getWhere = function(qs){ //검색조회에 필요한 쿼리 만드는 함수
     let where = '', param_array=[];
     for(let i in qs){
       if(i=='page') continue;
@@ -11,12 +131,10 @@ DogList.getWhere = function(qs){ //조건절 빌더
       where += ' and p.'+i+ ' = ? ';
     }
     return {where: where, param_array: param_array};
-}
+};
 
 
-
-
- DogList.getLists = async function(qs){
+DogList.getLists = async function(qs){ //전체목록 조회하기
      try { 
            var connection = await pool.getConnection();
            let query = `select p.parcel_id, p.title, p.pet_thumbnail, u.username, 
@@ -43,7 +161,7 @@ DogList.getWhere = function(qs){ //조건절 빌더
        finally { pool.releaseConnection(connection); }
 };
 
- DogList.getEmergencyLists = async function(){
+ DogList.getEmergencyLists = async function(){ //메인화면 가로에 들어갈 분양 가장 시급한 글 6개 조회
      try { 
            var connection = await pool.getConnection();
            let query = `select p.parcel_id, p.title, p.pet_thumbnail, u.username, 
@@ -56,7 +174,7 @@ DogList.getWhere = function(qs){ //조건절 빌더
 };
      
      
- DogList.getOneList = async function(parcelID){
+ DogList.getOneList = async function(parcelID){ //게시글 상세조회
     try {
       var connection = await pool.getConnection();
       let query1 = 'select image_id, image from pet_images where parcel_id = ?';
@@ -106,7 +224,6 @@ DogList.completeParcel = async function(parcelID){ //분양완료 or 완료 취�
       pool.releaseConnection(connection);
     }
 };
-
 
 
 module.exports = DogList;
