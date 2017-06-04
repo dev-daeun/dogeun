@@ -9,12 +9,11 @@ const easyimg = require('easyimage');
 const fs = require('fs');
 const s3 = aws.getS3();
 
-
 const upload = aws.getUpload();
-const arrUpload = upload.fields([{ name: 'pet', maxCount: 5 }, { name: 'lineage', maxCount: 1 }, { name: 'parent', maxCount: 2 }
-]);
+const arrUpload = upload.fields([{ name: 'pet', maxCount: 5 }, { name: 'lineage', maxCount: 1 }, { name: 'parent', maxCount: 2 }]);
 
-router.post('/', arrUpload, async function (req, res) {
+router.post('/', arrUpload, async function(req,res){
+
     //error 처리
     if (!req.body.user_id || !req.body.spiece || !req.body.gender || !req.body.age || !req.body.region1
         || !req.body.region2 || !req.body.price || !req.body.size || !req.body.introduction
@@ -153,12 +152,10 @@ router.put('/', arrUpload, async function (req, res) {
         }
         let result = [];
         result = await Doglist.updateParcels(changeId, removePet, petImageRecords, parcelRecords, removeParent, parentImageRecords);
-
         res.send({ message: 'save', 'result': result });
     } catch (err) {
         console.log('err message : ', err);
         res.status(500).send({ message: 'fail' });
-
     }
 
 });
@@ -167,7 +164,6 @@ router.delete('/:parcel_id', async function (req, res) {
     let removeId = req.params.parcel_id;
 
     try {
-
         let result = Doglist.deleteParcles(removeId);
         res.send({ message: 'save' });
     } catch (err) {
@@ -216,5 +212,6 @@ router.put('/:id/done', async function(req, res){ //분양완료/완료취소하
         res.status(500).send( { message: 'fail: '+err });
     }
 })
+
 
 module.exports = router;

@@ -6,9 +6,6 @@ AWS.loadAccess();
 const upload = AWS.getUpload();
 
 
-
-
-
 router.post('/', upload.single('profile'), async function(req, res){
     try {
 	let body = req.body;
@@ -25,10 +22,15 @@ router.post('/', upload.single('profile'), async function(req, res){
 });
 
 
-// router.put('/:id', upload.single('profile'), async function(req ,res){
-//     try {
-//         let body = req.body;
+router.put('/:id', upload.single('profile'), async function(req ,res){
+    try {
+        let ret = await Profile.editProfile(req);
+        res.status(201).send({ message: 'success', profile_id: ret });
+    }
+    catch(err) {
+        res.status(500).send({ message: err });
+    }
+});
 
-//     }
-// });
+
 module.exports = router;
