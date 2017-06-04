@@ -16,6 +16,9 @@ Profile.uploadThumbToS3 = function(name, path){
         };
         s3.putObject(params, (err) => { //s3에 읽어온 썸네일 올리기
             if(err) return reject(err);
+        });
+        s3.putObject(params, (err, data) => { //s3에 읽어온 썸네일 올리기
+            if(err) reject(err);
             else { 
                 const imageUrl = s3.endpoint.href + params.Bucket + path; //s3주소 + 버킷이름 + 썸네일 로컬 위치
                 fs.unlinkSync(path); //로컬 디렉토리에 썸네일은 불필요하므로 삭제
@@ -23,7 +26,7 @@ Profile.uploadThumbToS3 = function(name, path){
             }
         });
     });
-}
+};
 
 Profile.deleteFromS3 = function(key){
     return new Promise((fulfill, reject) => {
@@ -57,6 +60,7 @@ Profile.saveProfile = async function(req){
                     width: 300, height: 300
                 });
                 let thumbnail_url = await this.uploadThumbToS3(thumbnail_name, thumbnail_path); //2. 로컬 디렉토리에 저장된 이미지를 s3에 올리기
+                let thumbnail_url = await this.uploadToS3(thumbnail_name, thumbnail_path); //2. 로컬 디렉토리에 저장된 이미지를 s3에 올리기
                 record.profile_image = req.file.location;
                 record.profile_thumbnail = thumbnail_url;
                 result = await connection.query(query, record);
