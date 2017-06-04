@@ -18,6 +18,7 @@
     "multer-s3": "^2.7.0",
     "mysql": "^2.13.0",
     "promise-mysql": "^3.0.1",
+    "sequelize": "^3.30.4",
     "serve-favicon": "~2.4.2"
   }
 }

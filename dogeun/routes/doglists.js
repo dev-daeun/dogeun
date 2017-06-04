@@ -8,67 +8,8 @@ const Doglist = require('../model/doglists');
 const easyimg = require('easyimage');
 const fs = require('fs');
 const s3 = aws.getS3();
-
-async function deleteInS3(itemKey) {
-    return new Promise((resolve, reject) => {
-       
-        const params = {
-            Bucket: 'yeonsudogndogn',
-            //Key : itemKey
-            Delete: {
-                Objects: [
-                    { 
-                        Key: itemKey 
-                    }
-                ]
-            }
-
-        }
-
-        s3.deleteObjects(params, (err, data) => {
-            if (err) {
-                reject(err);
-            } else {
-                console.log(data);
-                resolve(data);
-            }
-        });
-    })
-};
-
-
-// 만든 파일을 s3에 업로드하기위해, 업로드 후 썸네일 삭제
-async function uploadToS3(itemKey, path) {
-    return new Promise((resolve, reject) => {
-
-        const params = {
-            Bucket: 'yeonsudogndogn',
-            Key: itemKey,
-            ACL: 'public-read',
-            Body: fs.createReadStream(path)
-        }
-        
-        s3.putObject(params, (err, data) => {
-            if (err) {
-                fs.unlinkSync(path);
-                reject(err);
-            }
-            else {
-                const imageUrl = s3.endpoint.href + params.Bucket + path;
-                fs.unlinkSync(path);
-                resolve(imageUrl);
-
-            }
-        })
-    })
-}
-
-
-
-
 const upload = aws.getUpload();
-const arrUpload = upload.fields([{ name: 'pet', maxCount: 5 }, { name: 'lineage', maxCount: 1 }, { name: 'parent', maxCount: 2 }
-]);
+const arrUpload = upload.fields([{ name: 'pet', maxCount: 5 }, { name: 'lineage', maxCount: 1 }, { name: 'parent', maxCount: 2 }]);
 
 router.post('/', arrUpload, async function(req,res){
     //error 처리
@@ -258,5 +199,60 @@ router.put('/:id/done', async function(req, res){ //분양완료/완료취소하
         res.status(500).send( { message: 'fail: '+err });
     }
 })
+
+
+async function deleteInS3(itemKey) {
+    return new Promise((resolve, reject) => {
+       
+        const params = {
+            Bucket: 'yeonsudogndogn',
+            //Key : itemKey
+            Delete: {
+                Objects: [
+                    { 
+                        Key: itemKey 
+                    }
+                ]
+            }
+
+        }
+
+        s3.deleteObjects(params, (err, data) => {
+            if (err) {
+                reject(err);
+            } else {
+                console.log(data);
+                resolve(data);
+            }
+        });
+    })
+};
+
+
+// 만든 파일을 s3에 업로드하기위해, 업로드 후 썸네일 삭제
+async function uploadToS3(itemKey, path) {
+    return new Promise((resolve, reject) => {
+
+        const params = {
+            Bucket: 'yeonsudogndogn',
+            Key: itemKey,
+            ACL: 'public-read',
+            Body: fs.createReadStream(path)
+        }
+        
+        s3.putObject(params, (err, data) => {
+            if (err) {
+                fs.unlinkSync(path);
+                reject(err);
+            }
+            else {
+                const imageUrl = s3.endpoint.href + params.Bucket + path;
+                fs.unlinkSync(path);
+                resolve(imageUrl);
+
+            }
+        })
+    })
+}
 
 module.exports = router;

@@ -9,7 +9,7 @@ Favorites.getFavorites = async function(){
         var connection = await pool.getConnection();
         let query = 'select '
     }
-    catch {
+    catch(err) {
         
     }
     finally {
