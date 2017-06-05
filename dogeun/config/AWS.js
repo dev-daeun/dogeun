@@ -19,7 +19,7 @@ AWS.getUpload = function(){
 };
      
 AWS.loadAccess = function (){
-      aws.config.loadFromPath('./config/aws_config.json');
+  aws.config.loadFromPath('./config/aws_config.json');
 };
 
 AWS.getS3 = function(){

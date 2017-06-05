@@ -1,0 +1,581 @@
+2017-05-29 00:48:07: ===============================================================================
+2017-05-29 00:48:07: --- New PM2 Daemon started ----------------------------------------------------
+2017-05-29 00:48:07: Time                 : Mon May 29 2017 00:48:07 GMT+0000 (UTC)
+2017-05-29 00:48:07: PM2 version          : 2.4.6
+2017-05-29 00:48:07: Node.js version      : 7.10.0
+2017-05-29 00:48:07: Current arch         : x64
+2017-05-29 00:48:07: PM2 home             : /home/ubuntu/.pm2
+2017-05-29 00:48:07: PM2 PID file         : /home/ubuntu/.pm2/pm2.pid
+2017-05-29 00:48:07: RPC socket file      : /home/ubuntu/.pm2/rpc.sock
+2017-05-29 00:48:07: BUS socket file      : /home/ubuntu/.pm2/pub.sock
+2017-05-29 00:48:07: Application log path : /home/ubuntu/.pm2/logs
+2017-05-29 00:48:07: Process dump file    : /home/ubuntu/.pm2/dump.pm2
+2017-05-29 00:48:07: Concurrent actions   : 2
+2017-05-29 00:48:07: SIGTERM timeout      : 1600
+2017-05-29 00:48:07: ===============================================================================
+2017-05-29 00:48:07: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-29 00:48:07: App name:www id:0 online
+2017-05-29 01:38:27: Stopping app:www id:0
+2017-05-29 01:38:27: App [www] with id [0] and pid [852], exited with code [0] via signal [SIGINT]
+2017-05-29 01:38:27: pid=852 msg=process killed
+2017-05-29 01:38:36: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-29 01:38:36: App name:www id:0 online
+2017-05-29 01:38:36: App [www] with id [0] and pid [941], exited with code [1] via signal [SIGINT]
+2017-05-29 01:38:36: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-29 01:38:36: App name:www id:0 online
+2017-05-29 01:38:36: App [www] with id [0] and pid [951], exited with code [1] via signal [SIGINT]
+2017-05-29 01:38:36: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-29 01:38:36: App name:www id:0 online
+2017-05-29 01:38:37: App [www] with id [0] and pid [961], exited with code [1] via signal [SIGINT]
+2017-05-29 01:38:37: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-29 01:38:37: App name:www id:0 online
+2017-05-29 01:38:37: App [www] with id [0] and pid [971], exited with code [1] via signal [SIGINT]
+2017-05-29 01:38:37: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-29 01:38:37: App name:www id:0 online
+2017-05-29 01:38:37: App [www] with id [0] and pid [981], exited with code [1] via signal [SIGINT]
+2017-05-29 01:38:37: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-29 01:38:37: App name:www id:0 online
+2017-05-29 01:38:37: App [www] with id [0] and pid [991], exited with code [1] via signal [SIGINT]
+2017-05-29 01:38:37: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-29 01:38:37: App name:www id:0 online
+2017-05-29 01:38:37: App [www] with id [0] and pid [1001], exited with code [1] via signal [SIGINT]
+2017-05-29 01:38:37: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-29 01:38:37: App name:www id:0 online
+2017-05-29 01:38:37: App [www] with id [0] and pid [1011], exited with code [1] via signal [SIGINT]
+2017-05-29 01:38:37: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-29 01:38:37: App name:www id:0 online
+2017-05-29 01:38:38: App [www] with id [0] and pid [1021], exited with code [1] via signal [SIGINT]
+2017-05-29 01:38:38: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-29 01:38:38: App name:www id:0 online
+2017-05-29 01:38:38: App [www] with id [0] and pid [1031], exited with code [1] via signal [SIGINT]
+2017-05-29 01:38:38: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-29 01:38:38: App name:www id:0 online
+2017-05-29 01:38:38: App [www] with id [0] and pid [1041], exited with code [1] via signal [SIGINT]
+2017-05-29 01:38:38: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-29 01:38:38: App name:www id:0 online
+2017-05-29 01:38:38: App [www] with id [0] and pid [1052], exited with code [1] via signal [SIGINT]
+2017-05-29 01:38:38: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-29 01:38:38: App name:www id:0 online
+2017-05-29 01:38:38: App [www] with id [0] and pid [1063], exited with code [1] via signal [SIGINT]
+2017-05-29 01:38:38: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-29 01:38:38: App name:www id:0 online
+2017-05-29 01:38:39: App [www] with id [0] and pid [1074], exited with code [1] via signal [SIGINT]
+2017-05-29 01:38:39: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-29 01:38:39: App name:www id:0 online
+2017-05-29 01:38:39: App [www] with id [0] and pid [1087], exited with code [1] via signal [SIGINT]
+2017-05-29 01:38:39: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-29 01:38:39: App name:www id:0 online
+2017-05-29 01:38:39: App [www] with id [0] and pid [1100], exited with code [1] via signal [SIGINT]
+2017-05-29 01:38:39: Script /home/ubuntu/dogeun/bin/www had too many unstable restarts (16). Stopped. "errored"
+2017-05-29 01:39:17: Stopping app:www id:0
+2017-05-29 01:39:17: app=www id=0 does not have a pid
+2017-05-29 01:39:19: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-29 01:39:19: App name:www id:0 online
+2017-05-29 01:51:48: Stopping app:www id:0
+2017-05-29 01:51:48: App [www] with id [0] and pid [1168], exited with code [0] via signal [SIGINT]
+2017-05-29 01:51:48: pid=1168 msg=process killed
+2017-05-29 01:51:51: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-29 01:51:51: App name:www id:0 online
+2017-05-29 05:49:30: Stopping app:www id:0
+2017-05-29 05:49:30: App [www] with id [0] and pid [1253], exited with code [0] via signal [SIGINT]
+2017-05-29 05:49:30: pid=1253 msg=process killed
+2017-05-29 05:49:33: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-29 05:49:33: App name:www id:0 online
+2017-05-29 06:58:57: Stopping app:www id:0
+2017-05-29 06:58:57: App [www] with id [0] and pid [1891], exited with code [0] via signal [SIGINT]
+2017-05-29 06:58:57: pid=1891 msg=process killed
+2017-05-29 06:59:00: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-29 06:59:00: App name:www id:0 online
+2017-05-29 07:07:14: Stopping app:www id:0
+2017-05-29 07:07:14: App [www] with id [0] and pid [2173], exited with code [0] via signal [SIGINT]
+2017-05-29 07:07:14: pid=2173 msg=process killed
+2017-05-29 07:07:16: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-29 07:07:16: App name:www id:0 online
+2017-05-29 07:07:17: App [www] with id [0] and pid [2290], exited with code [1] via signal [SIGINT]
+2017-05-29 07:07:17: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-29 07:07:17: App name:www id:0 online
+2017-05-29 07:07:17: App [www] with id [0] and pid [2300], exited with code [1] via signal [SIGINT]
+2017-05-29 07:07:17: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-29 07:07:17: App name:www id:0 online
+2017-05-29 07:07:18: App [www] with id [0] and pid [2310], exited with code [1] via signal [SIGINT]
+2017-05-29 07:07:18: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-29 07:07:18: App name:www id:0 online
+2017-05-29 07:07:18: App [www] with id [0] and pid [2320], exited with code [1] via signal [SIGINT]
+2017-05-29 07:07:18: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-29 07:07:18: App name:www id:0 online
+2017-05-29 07:07:19: App [www] with id [0] and pid [2336], exited with code [1] via signal [SIGINT]
+2017-05-29 07:07:19: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-29 07:07:19: App name:www id:0 online
+2017-05-29 07:07:19: App [www] with id [0] and pid [2346], exited with code [1] via signal [SIGINT]
+2017-05-29 07:07:19: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-29 07:07:19: App name:www id:0 online
+2017-05-29 07:07:19: App [www] with id [0] and pid [2356], exited with code [1] via signal [SIGINT]
+2017-05-29 07:07:19: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-29 07:07:19: App name:www id:0 online
+2017-05-29 07:07:20: App [www] with id [0] and pid [2366], exited with code [1] via signal [SIGINT]
+2017-05-29 07:07:20: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-29 07:07:20: App name:www id:0 online
+2017-05-29 07:07:20: App [www] with id [0] and pid [2376], exited with code [1] via signal [SIGINT]
+2017-05-29 07:07:20: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-29 07:07:20: App name:www id:0 online
+2017-05-29 07:07:21: App [www] with id [0] and pid [2386], exited with code [1] via signal [SIGINT]
+2017-05-29 07:07:21: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-29 07:07:21: App name:www id:0 online
+2017-05-29 07:07:21: App [www] with id [0] and pid [2396], exited with code [1] via signal [SIGINT]
+2017-05-29 07:07:21: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-29 07:07:21: App name:www id:0 online
+2017-05-29 07:07:21: App [www] with id [0] and pid [2406], exited with code [1] via signal [SIGINT]
+2017-05-29 07:07:21: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-29 07:07:21: App name:www id:0 online
+2017-05-29 07:07:22: App [www] with id [0] and pid [2416], exited with code [1] via signal [SIGINT]
+2017-05-29 07:07:22: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-29 07:07:22: App name:www id:0 online
+2017-05-29 07:07:22: App [www] with id [0] and pid [2426], exited with code [1] via signal [SIGINT]
+2017-05-29 07:07:22: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-29 07:07:22: App name:www id:0 online
+2017-05-29 07:07:23: App [www] with id [0] and pid [2436], exited with code [1] via signal [SIGINT]
+2017-05-29 07:07:23: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-29 07:07:23: App name:www id:0 online
+2017-05-29 07:07:23: App [www] with id [0] and pid [2446], exited with code [1] via signal [SIGINT]
+2017-05-29 07:07:23: Script /home/ubuntu/dogeun/bin/www had too many unstable restarts (16). Stopped. "errored"
+2017-05-29 07:08:58: Stopping app:www id:0
+2017-05-29 07:08:58: app=www id=0 does not have a pid
+2017-05-29 07:09:01: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-29 07:09:01: App name:www id:0 online
+2017-05-30 04:06:24: Stopping app:www id:0
+2017-05-30 04:06:24: App [www] with id [0] and pid [2504], exited with code [0] via signal [SIGINT]
+2017-05-30 04:06:24: pid=2504 msg=process killed
+2017-05-30 04:06:39: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-30 04:06:39: App name:www id:0 online
+2017-05-30 04:08:17: Stopping app:www id:0
+2017-05-30 04:08:17: App [www] with id [0] and pid [4663], exited with code [0] via signal [SIGINT]
+2017-05-30 04:08:17: pid=4663 msg=process killed
+2017-05-30 04:08:21: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-30 04:08:21: App name:www id:0 online
+2017-05-30 04:51:01: Stopping app:www id:0
+2017-05-30 04:51:01: App [www] with id [0] and pid [4770], exited with code [0] via signal [SIGINT]
+2017-05-30 04:51:01: pid=4770 msg=process killed
+2017-05-30 04:51:03: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-30 04:51:03: App name:www id:0 online
+2017-05-30 05:27:56: Stopping app:www id:0
+2017-05-30 05:27:56: App [www] with id [0] and pid [4904], exited with code [0] via signal [SIGINT]
+2017-05-30 05:27:56: pid=4904 msg=process killed
+2017-05-30 05:27:58: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-30 05:27:58: App name:www id:0 online
+2017-05-31 04:48:57: Stopping app:www id:0
+2017-05-31 04:48:57: App [www] with id [0] and pid [5050], exited with code [0] via signal [SIGINT]
+2017-05-31 04:48:57: pid=5050 msg=process killed
+2017-05-31 04:49:07: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-31 04:49:07: App name:www id:0 online
+2017-05-31 05:03:20: Stopping app:www id:0
+2017-05-31 05:03:20: App [www] with id [0] and pid [7362], exited with code [0] via signal [SIGINT]
+2017-05-31 05:03:20: pid=7362 msg=process killed
+2017-05-31 05:03:23: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-31 05:03:23: App name:www id:0 online
+2017-05-31 05:09:54: Stopping app:www id:0
+2017-05-31 05:09:54: App [www] with id [0] and pid [7556], exited with code [0] via signal [SIGINT]
+2017-05-31 05:09:54: pid=7556 msg=process killed
+2017-05-31 05:10:10: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-31 05:10:10: App name:www id:0 online
+2017-05-31 05:14:55: Stopping app:www id:0
+2017-05-31 05:14:55: App [www] with id [0] and pid [7694], exited with code [0] via signal [SIGINT]
+2017-05-31 05:14:55: pid=7694 msg=process killed
+2017-05-31 05:15:01: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-31 05:15:01: App name:www id:0 online
+2017-05-31 05:18:04: Stopping app:www id:0
+2017-05-31 05:18:04: App [www] with id [0] and pid [7783], exited with code [0] via signal [SIGINT]
+2017-05-31 05:18:04: pid=7783 msg=process killed
+2017-05-31 05:18:06: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-31 05:18:06: App name:www id:0 online
+2017-05-31 05:18:07: App [www] with id [0] and pid [7855], exited with code [1] via signal [SIGINT]
+2017-05-31 05:18:07: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-31 05:18:07: App name:www id:0 online
+2017-05-31 05:18:07: App [www] with id [0] and pid [7865], exited with code [1] via signal [SIGINT]
+2017-05-31 05:18:07: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-31 05:18:07: App name:www id:0 online
+2017-05-31 05:18:08: App [www] with id [0] and pid [7875], exited with code [1] via signal [SIGINT]
+2017-05-31 05:18:08: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-31 05:18:08: App name:www id:0 online
+2017-05-31 05:18:08: App [www] with id [0] and pid [7885], exited with code [1] via signal [SIGINT]
+2017-05-31 05:18:08: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-31 05:18:08: App name:www id:0 online
+2017-05-31 05:18:09: App [www] with id [0] and pid [7895], exited with code [1] via signal [SIGINT]
+2017-05-31 05:18:09: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-31 05:18:09: App name:www id:0 online
+2017-05-31 05:18:09: App [www] with id [0] and pid [7905], exited with code [1] via signal [SIGINT]
+2017-05-31 05:18:09: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-31 05:18:09: App name:www id:0 online
+2017-05-31 05:18:09: App [www] with id [0] and pid [7915], exited with code [1] via signal [SIGINT]
+2017-05-31 05:18:09: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-31 05:18:09: App name:www id:0 online
+2017-05-31 05:18:10: App [www] with id [0] and pid [7925], exited with code [1] via signal [SIGINT]
+2017-05-31 05:18:10: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-31 05:18:10: App name:www id:0 online
+2017-05-31 05:18:10: App [www] with id [0] and pid [7935], exited with code [1] via signal [SIGINT]
+2017-05-31 05:18:10: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-31 05:18:10: App name:www id:0 online
+2017-05-31 05:18:11: App [www] with id [0] and pid [7945], exited with code [1] via signal [SIGINT]
+2017-05-31 05:18:11: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-31 05:18:11: App name:www id:0 online
+2017-05-31 05:18:11: App [www] with id [0] and pid [7955], exited with code [1] via signal [SIGINT]
+2017-05-31 05:18:11: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-31 05:18:11: App name:www id:0 online
+2017-05-31 05:18:11: App [www] with id [0] and pid [7965], exited with code [1] via signal [SIGINT]
+2017-05-31 05:18:11: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-31 05:18:11: App name:www id:0 online
+2017-05-31 05:18:12: App [www] with id [0] and pid [7975], exited with code [1] via signal [SIGINT]
+2017-05-31 05:18:12: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-31 05:18:12: App name:www id:0 online
+2017-05-31 05:18:12: App [www] with id [0] and pid [7985], exited with code [1] via signal [SIGINT]
+2017-05-31 05:18:12: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-31 05:18:12: App name:www id:0 online
+2017-05-31 05:18:13: App [www] with id [0] and pid [7995], exited with code [1] via signal [SIGINT]
+2017-05-31 05:18:13: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-31 05:18:13: App name:www id:0 online
+2017-05-31 05:18:13: App [www] with id [0] and pid [8005], exited with code [1] via signal [SIGINT]
+2017-05-31 05:18:13: Script /home/ubuntu/dogeun/bin/www had too many unstable restarts (16). Stopped. "errored"
+2017-05-31 05:18:57: Stopping app:www id:0
+2017-05-31 05:18:57: app=www id=0 does not have a pid
+2017-05-31 05:19:06: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-31 05:19:06: App name:www id:0 online
+2017-05-31 05:20:48: Stopping app:www id:0
+2017-05-31 05:20:48: App [www] with id [0] and pid [8061], exited with code [0] via signal [SIGINT]
+2017-05-31 05:20:48: pid=8061 msg=process killed
+2017-05-31 05:20:50: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-31 05:20:50: App name:www id:0 online
+2017-05-31 05:30:13: Stopping app:www id:0
+2017-05-31 05:30:13: App [www] with id [0] and pid [8111], exited with code [0] via signal [SIGINT]
+2017-05-31 05:30:14: pid=8111 msg=process killed
+2017-05-31 05:30:16: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-31 05:30:16: App name:www id:0 online
+2017-05-31 05:35:41: Stopping app:www id:0
+2017-05-31 05:35:41: App [www] with id [0] and pid [8383], exited with code [0] via signal [SIGINT]
+2017-05-31 05:35:42: pid=8383 msg=process killed
+2017-05-31 05:35:44: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-31 05:35:44: App name:www id:0 online
+2017-05-31 06:18:17: Stopping app:www id:0
+2017-05-31 06:18:17: App [www] with id [0] and pid [8484], exited with code [0] via signal [SIGINT]
+2017-05-31 06:18:18: pid=8484 msg=process killed
+2017-05-31 06:18:20: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-31 06:18:20: App name:www id:0 online
+2017-05-31 06:19:35: Stopping app:www id:0
+2017-05-31 06:19:35: App [www] with id [0] and pid [8651], exited with code [0] via signal [SIGINT]
+2017-05-31 06:19:35: pid=8651 msg=process killed
+2017-05-31 06:19:38: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-31 06:19:38: App name:www id:0 online
+2017-05-31 06:40:24: Stopping app:www id:0
+2017-05-31 06:40:24: App [www] with id [0] and pid [8744], exited with code [0] via signal [SIGINT]
+2017-05-31 06:40:24: pid=8744 msg=process killed
+2017-05-31 06:40:30: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-31 06:40:30: App name:www id:0 online
+2017-05-31 06:43:09: Stopping app:www id:0
+2017-05-31 06:43:09: App [www] with id [0] and pid [9037], exited with code [0] via signal [SIGINT]
+2017-05-31 06:43:09: pid=9037 msg=process killed
+2017-05-31 06:43:11: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-31 06:43:11: App name:www id:0 online
+2017-05-31 06:43:12: App [www] with id [0] and pid [9101], exited with code [1] via signal [SIGINT]
+2017-05-31 06:43:12: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-31 06:43:12: App name:www id:0 online
+2017-05-31 06:43:12: App [www] with id [0] and pid [9111], exited with code [1] via signal [SIGINT]
+2017-05-31 06:43:12: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-31 06:43:12: App name:www id:0 online
+2017-05-31 06:43:13: App [www] with id [0] and pid [9121], exited with code [1] via signal [SIGINT]
+2017-05-31 06:43:13: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-31 06:43:13: App name:www id:0 online
+2017-05-31 06:43:13: App [www] with id [0] and pid [9131], exited with code [1] via signal [SIGINT]
+2017-05-31 06:43:13: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-31 06:43:13: App name:www id:0 online
+2017-05-31 06:43:14: App [www] with id [0] and pid [9141], exited with code [1] via signal [SIGINT]
+2017-05-31 06:43:14: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-31 06:43:14: App name:www id:0 online
+2017-05-31 06:43:14: App [www] with id [0] and pid [9151], exited with code [1] via signal [SIGINT]
+2017-05-31 06:43:14: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-31 06:43:14: App name:www id:0 online
+2017-05-31 06:43:15: App [www] with id [0] and pid [9161], exited with code [1] via signal [SIGINT]
+2017-05-31 06:43:15: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-31 06:43:15: App name:www id:0 online
+2017-05-31 06:43:15: App [www] with id [0] and pid [9171], exited with code [1] via signal [SIGINT]
+2017-05-31 06:43:15: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-31 06:43:15: App name:www id:0 online
+2017-05-31 06:43:16: App [www] with id [0] and pid [9181], exited with code [1] via signal [SIGINT]
+2017-05-31 06:43:16: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-31 06:43:16: App name:www id:0 online
+2017-05-31 06:43:16: App [www] with id [0] and pid [9191], exited with code [1] via signal [SIGINT]
+2017-05-31 06:43:16: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-31 06:43:16: App name:www id:0 online
+2017-05-31 06:43:17: App [www] with id [0] and pid [9201], exited with code [1] via signal [SIGINT]
+2017-05-31 06:43:17: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-31 06:43:17: App name:www id:0 online
+2017-05-31 06:43:17: App [www] with id [0] and pid [9211], exited with code [1] via signal [SIGINT]
+2017-05-31 06:43:17: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-31 06:43:17: App name:www id:0 online
+2017-05-31 06:43:18: App [www] with id [0] and pid [9221], exited with code [1] via signal [SIGINT]
+2017-05-31 06:43:18: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-31 06:43:18: App name:www id:0 online
+2017-05-31 06:43:18: App [www] with id [0] and pid [9231], exited with code [1] via signal [SIGINT]
+2017-05-31 06:43:18: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-31 06:43:18: App name:www id:0 online
+2017-05-31 06:43:19: App [www] with id [0] and pid [9241], exited with code [1] via signal [SIGINT]
+2017-05-31 06:43:19: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-31 06:43:19: App name:www id:0 online
+2017-05-31 06:43:19: App [www] with id [0] and pid [9251], exited with code [1] via signal [SIGINT]
+2017-05-31 06:43:19: Script /home/ubuntu/dogeun/bin/www had too many unstable restarts (16). Stopped. "errored"
+2017-05-31 06:44:00: Stopping app:www id:0
+2017-05-31 06:44:00: app=www id=0 does not have a pid
+2017-05-31 06:44:02: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-31 06:44:02: App name:www id:0 online
+2017-05-31 06:45:47: Stopping app:www id:0
+2017-05-31 06:45:47: App [www] with id [0] and pid [9306], exited with code [0] via signal [SIGINT]
+2017-05-31 06:45:47: pid=9306 msg=process killed
+2017-05-31 06:45:54: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-31 06:45:54: App name:www id:0 online
+2017-05-31 06:50:54: Stopping app:www id:0
+2017-05-31 06:50:54: App [www] with id [0] and pid [9368], exited with code [0] via signal [SIGINT]
+2017-05-31 06:50:54: pid=9368 msg=process killed
+2017-05-31 06:50:57: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-31 06:50:57: App name:www id:0 online
+2017-05-31 06:50:57: App [www] with id [0] and pid [9613], exited with code [1] via signal [SIGINT]
+2017-05-31 06:50:57: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-31 06:50:57: App name:www id:0 online
+2017-05-31 06:50:58: App [www] with id [0] and pid [9623], exited with code [1] via signal [SIGINT]
+2017-05-31 06:50:58: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-31 06:50:58: App name:www id:0 online
+2017-05-31 06:50:58: App [www] with id [0] and pid [9633], exited with code [1] via signal [SIGINT]
+2017-05-31 06:50:58: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-31 06:50:58: App name:www id:0 online
+2017-05-31 06:50:59: App [www] with id [0] and pid [9643], exited with code [1] via signal [SIGINT]
+2017-05-31 06:50:59: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-31 06:50:59: App name:www id:0 online
+2017-05-31 06:50:59: App [www] with id [0] and pid [9653], exited with code [1] via signal [SIGINT]
+2017-05-31 06:50:59: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-31 06:50:59: App name:www id:0 online
+2017-05-31 06:51:00: App [www] with id [0] and pid [9663], exited with code [1] via signal [SIGINT]
+2017-05-31 06:51:00: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-31 06:51:00: App name:www id:0 online
+2017-05-31 06:51:00: App [www] with id [0] and pid [9673], exited with code [1] via signal [SIGINT]
+2017-05-31 06:51:00: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-31 06:51:00: App name:www id:0 online
+2017-05-31 06:51:01: App [www] with id [0] and pid [9683], exited with code [1] via signal [SIGINT]
+2017-05-31 06:51:01: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-31 06:51:01: App name:www id:0 online
+2017-05-31 06:51:01: App [www] with id [0] and pid [9693], exited with code [1] via signal [SIGINT]
+2017-05-31 06:51:01: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-31 06:51:01: App name:www id:0 online
+2017-05-31 06:51:02: App [www] with id [0] and pid [9703], exited with code [1] via signal [SIGINT]
+2017-05-31 06:51:02: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-31 06:51:02: App name:www id:0 online
+2017-05-31 06:51:02: App [www] with id [0] and pid [9713], exited with code [1] via signal [SIGINT]
+2017-05-31 06:51:02: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-31 06:51:02: App name:www id:0 online
+2017-05-31 06:51:03: App [www] with id [0] and pid [9723], exited with code [1] via signal [SIGINT]
+2017-05-31 06:51:03: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-31 06:51:03: App name:www id:0 online
+2017-05-31 06:51:03: App [www] with id [0] and pid [9733], exited with code [1] via signal [SIGINT]
+2017-05-31 06:51:03: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-31 06:51:03: App name:www id:0 online
+2017-05-31 06:51:03: App [www] with id [0] and pid [9743], exited with code [1] via signal [SIGINT]
+2017-05-31 06:51:03: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-31 06:51:03: App name:www id:0 online
+2017-05-31 06:51:04: App [www] with id [0] and pid [9753], exited with code [1] via signal [SIGINT]
+2017-05-31 06:51:04: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-31 06:51:04: App name:www id:0 online
+2017-05-31 06:51:04: App [www] with id [0] and pid [9763], exited with code [1] via signal [SIGINT]
+2017-05-31 06:51:04: Script /home/ubuntu/dogeun/bin/www had too many unstable restarts (16). Stopped. "errored"
+2017-05-31 06:53:01: Stopping app:www id:0
+2017-05-31 06:53:01: app=www id=0 does not have a pid
+2017-05-31 06:56:14: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-31 06:56:14: App name:www id:0 online
+2017-05-31 06:56:15: App [www] with id [0] and pid [9833], exited with code [1] via signal [SIGINT]
+2017-05-31 06:56:15: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-31 06:56:15: App name:www id:0 online
+2017-05-31 06:56:15: App [www] with id [0] and pid [9843], exited with code [1] via signal [SIGINT]
+2017-05-31 06:56:15: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-31 06:56:15: App name:www id:0 online
+2017-05-31 06:56:16: App [www] with id [0] and pid [9853], exited with code [1] via signal [SIGINT]
+2017-05-31 06:56:16: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-31 06:56:16: App name:www id:0 online
+2017-05-31 06:56:16: App [www] with id [0] and pid [9863], exited with code [1] via signal [SIGINT]
+2017-05-31 06:56:16: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-31 06:56:16: App name:www id:0 online
+2017-05-31 06:56:17: App [www] with id [0] and pid [9873], exited with code [1] via signal [SIGINT]
+2017-05-31 06:56:17: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-31 06:56:17: App name:www id:0 online
+2017-05-31 06:56:17: App [www] with id [0] and pid [9883], exited with code [1] via signal [SIGINT]
+2017-05-31 06:56:17: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-31 06:56:17: App name:www id:0 online
+2017-05-31 06:56:18: App [www] with id [0] and pid [9899], exited with code [1] via signal [SIGINT]
+2017-05-31 06:56:18: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-31 06:56:18: App name:www id:0 online
+2017-05-31 06:56:19: App [www] with id [0] and pid [9909], exited with code [1] via signal [SIGINT]
+2017-05-31 06:56:19: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-31 06:56:19: App name:www id:0 online
+2017-05-31 06:56:19: App [www] with id [0] and pid [9919], exited with code [1] via signal [SIGINT]
+2017-05-31 06:56:19: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-31 06:56:19: App name:www id:0 online
+2017-05-31 06:56:20: App [www] with id [0] and pid [9929], exited with code [1] via signal [SIGINT]
+2017-05-31 06:56:20: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-31 06:56:20: App name:www id:0 online
+2017-05-31 06:56:20: App [www] with id [0] and pid [9939], exited with code [1] via signal [SIGINT]
+2017-05-31 06:56:20: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-31 06:56:20: App name:www id:0 online
+2017-05-31 06:56:21: App [www] with id [0] and pid [9949], exited with code [1] via signal [SIGINT]
+2017-05-31 06:56:21: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-31 06:56:21: App name:www id:0 online
+2017-05-31 06:56:21: App [www] with id [0] and pid [9959], exited with code [1] via signal [SIGINT]
+2017-05-31 06:56:21: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-31 06:56:21: App name:www id:0 online
+2017-05-31 06:56:21: App [www] with id [0] and pid [9969], exited with code [1] via signal [SIGINT]
+2017-05-31 06:56:21: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-31 06:56:21: App name:www id:0 online
+2017-05-31 06:56:22: App [www] with id [0] and pid [9979], exited with code [1] via signal [SIGINT]
+2017-05-31 06:56:22: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-31 06:56:22: App name:www id:0 online
+2017-05-31 06:56:22: App [www] with id [0] and pid [9989], exited with code [1] via signal [SIGINT]
+2017-05-31 06:56:22: Script /home/ubuntu/dogeun/bin/www had too many unstable restarts (16). Stopped. "errored"
+2017-05-31 07:04:48: Stopping app:www id:0
+2017-05-31 07:04:48: app=www id=0 does not have a pid
+2017-05-31 07:04:51: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-31 07:04:51: App name:www id:0 online
+2017-05-31 07:04:52: App [www] with id [0] and pid [10121], exited with code [1] via signal [SIGINT]
+2017-05-31 07:04:52: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-31 07:04:52: App name:www id:0 online
+2017-05-31 07:04:52: App [www] with id [0] and pid [10131], exited with code [1] via signal [SIGINT]
+2017-05-31 07:04:52: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-31 07:04:52: App name:www id:0 online
+2017-05-31 07:04:53: App [www] with id [0] and pid [10141], exited with code [1] via signal [SIGINT]
+2017-05-31 07:04:53: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-31 07:04:53: App name:www id:0 online
+2017-05-31 07:04:53: App [www] with id [0] and pid [10151], exited with code [1] via signal [SIGINT]
+2017-05-31 07:04:53: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-31 07:04:53: App name:www id:0 online
+2017-05-31 07:04:53: App [www] with id [0] and pid [10161], exited with code [1] via signal [SIGINT]
+2017-05-31 07:04:53: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-31 07:04:53: App name:www id:0 online
+2017-05-31 07:04:54: App [www] with id [0] and pid [10171], exited with code [1] via signal [SIGINT]
+2017-05-31 07:04:54: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-31 07:04:54: App name:www id:0 online
+2017-05-31 07:04:54: App [www] with id [0] and pid [10181], exited with code [1] via signal [SIGINT]
+2017-05-31 07:04:54: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-31 07:04:54: App name:www id:0 online
+2017-05-31 07:04:55: App [www] with id [0] and pid [10191], exited with code [1] via signal [SIGINT]
+2017-05-31 07:04:55: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-31 07:04:55: App name:www id:0 online
+2017-05-31 07:04:55: App [www] with id [0] and pid [10201], exited with code [1] via signal [SIGINT]
+2017-05-31 07:04:55: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-31 07:04:55: App name:www id:0 online
+2017-05-31 07:04:56: App [www] with id [0] and pid [10211], exited with code [1] via signal [SIGINT]
+2017-05-31 07:04:56: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-31 07:04:56: App name:www id:0 online
+2017-05-31 07:04:56: App [www] with id [0] and pid [10221], exited with code [1] via signal [SIGINT]
+2017-05-31 07:04:56: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-31 07:04:56: App name:www id:0 online
+2017-05-31 07:04:57: App [www] with id [0] and pid [10231], exited with code [1] via signal [SIGINT]
+2017-05-31 07:04:57: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-31 07:04:57: App name:www id:0 online
+2017-05-31 07:04:58: App [www] with id [0] and pid [10241], exited with code [1] via signal [SIGINT]
+2017-05-31 07:04:58: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-31 07:04:58: App name:www id:0 online
+2017-05-31 07:04:58: App [www] with id [0] and pid [10257], exited with code [1] via signal [SIGINT]
+2017-05-31 07:04:58: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-31 07:04:58: App name:www id:0 online
+2017-05-31 07:04:59: App [www] with id [0] and pid [10271], exited with code [1] via signal [SIGINT]
+2017-05-31 07:04:59: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-31 07:04:59: App name:www id:0 online
+2017-05-31 07:04:59: App [www] with id [0] and pid [10281], exited with code [1] via signal [SIGINT]
+2017-05-31 07:04:59: Script /home/ubuntu/dogeun/bin/www had too many unstable restarts (16). Stopped. "errored"
+2017-05-31 07:06:01: Stopping app:www id:0
+2017-05-31 07:06:01: app=www id=0 does not have a pid
+2017-05-31 07:06:10: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-31 07:06:10: App name:www id:0 online
+2017-05-31 07:14:36: Stopping app:www id:0
+2017-05-31 07:14:36: App [www] with id [0] and pid [10364], exited with code [0] via signal [SIGINT]
+2017-05-31 07:14:36: pid=10364 msg=process killed
+2017-05-31 07:14:41: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-31 07:14:41: App name:www id:0 online
+2017-05-31 07:16:07: Stopping app:www id:0
+2017-05-31 07:16:07: App [www] with id [0] and pid [10456], exited with code [0] via signal [SIGINT]
+2017-05-31 07:16:07: pid=10456 msg=process killed
+2017-05-31 07:16:12: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-31 07:16:12: App name:www id:0 online
+2017-05-31 07:21:11: Stopping app:www id:0
+2017-05-31 07:21:11: App [www] with id [0] and pid [10502], exited with code [0] via signal [SIGINT]
+2017-05-31 07:21:11: pid=10502 msg=process killed
+2017-05-31 07:21:13: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-31 07:21:13: App name:www id:0 online
+2017-05-31 07:21:43: Stopping app:www id:0
+2017-05-31 07:21:43: App [www] with id [0] and pid [10599], exited with code [0] via signal [SIGINT]
+2017-05-31 07:21:43: pid=10599 msg=process killed
+2017-05-31 07:21:47: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-31 07:21:47: App name:www id:0 online
+2017-05-31 07:38:56: Stopping app:www id:0
+2017-05-31 07:38:56: App [www] with id [0] and pid [10668], exited with code [0] via signal [SIGINT]
+2017-05-31 07:38:56: pid=10668 msg=process killed
+2017-05-31 07:38:58: Starting execution sequence in -fork mode- for app name:www id:0
+2017-05-31 07:38:58: App name:www id:0 online
+2017-05-31 07:39:37: Stopping app:www id:0
+2017-05-31 07:39:37: App [www] with id [0] and pid [10802], exited with code [0] via signal [SIGINT]
+2017-05-31 07:39:37: pid=10802 msg=process killed
+2017-06-02 05:08:44: Starting execution sequence in -fork mode- for app name:www id:0
+2017-06-02 05:08:44: App name:www id:0 online
+2017-06-02 05:40:28: Stopping app:www id:0
+2017-06-02 05:40:28: App [www] with id [0] and pid [8639], exited with code [0] via signal [SIGINT]
+2017-06-02 05:40:29: pid=8639 msg=process killed
+2017-06-02 05:40:31: Starting execution sequence in -fork mode- for app name:www id:0
+2017-06-02 05:40:31: App name:www id:0 online
+2017-06-02 12:46:30: Stopping app:www id:0
+2017-06-02 12:46:30: App [www] with id [0] and pid [9805], exited with code [0] via signal [SIGINT]
+2017-06-02 12:46:30: pid=9805 msg=process killed
+2017-06-02 12:46:33: Starting execution sequence in -fork mode- for app name:www id:0
+2017-06-02 12:46:33: App name:www id:0 online
+2017-06-02 18:57:24: Stopping app:www id:0
+2017-06-02 18:57:24: App [www] with id [0] and pid [28441], exited with code [0] via signal [SIGINT]
+2017-06-02 18:57:24: pid=28441 msg=process killed
+2017-06-02 18:57:26: Starting execution sequence in -fork mode- for app name:www id:0
+2017-06-02 18:57:26: App name:www id:0 online
+2017-06-02 18:57:27: App [www] with id [0] and pid [9107], exited with code [1] via signal [SIGINT]
+2017-06-02 18:57:27: Starting execution sequence in -fork mode- for app name:www id:0
+2017-06-02 18:57:27: App name:www id:0 online
+2017-06-02 18:57:27: App [www] with id [0] and pid [9135], exited with code [1] via signal [SIGINT]
+2017-06-02 18:57:27: Starting execution sequence in -fork mode- for app name:www id:0
+2017-06-02 18:57:27: App name:www id:0 online
+2017-06-02 18:57:28: App [www] with id [0] and pid [9163], exited with code [1] via signal [SIGINT]
+2017-06-02 18:57:28: Starting execution sequence in -fork mode- for app name:www id:0
+2017-06-02 18:57:28: App name:www id:0 online
+2017-06-02 18:57:29: App [www] with id [0] and pid [9197], exited with code [1] via signal [SIGINT]
+2017-06-02 18:57:29: Starting execution sequence in -fork mode- for app name:www id:0
+2017-06-02 18:57:29: App name:www id:0 online
+2017-06-02 18:57:29: App [www] with id [0] and pid [9225], exited with code [1] via signal [SIGINT]
+2017-06-02 18:57:29: Starting execution sequence in -fork mode- for app name:www id:0
+2017-06-02 18:57:29: App name:www id:0 online
+2017-06-02 18:57:30: App [www] with id [0] and pid [9253], exited with code [1] via signal [SIGINT]
+2017-06-02 18:57:30: Starting execution sequence in -fork mode- for app name:www id:0
+2017-06-02 18:57:30: App name:www id:0 online
+2017-06-02 18:57:31: App [www] with id [0] and pid [9281], exited with code [1] via signal [SIGINT]
+2017-06-02 18:57:31: Starting execution sequence in -fork mode- for app name:www id:0
+2017-06-02 18:57:31: App name:www id:0 online
+2017-06-02 18:57:31: App [www] with id [0] and pid [9309], exited with code [1] via signal [SIGINT]
+2017-06-02 18:57:31: Starting execution sequence in -fork mode- for app name:www id:0
+2017-06-02 18:57:31: App name:www id:0 online
+2017-06-02 18:57:32: App [www] with id [0] and pid [9338], exited with code [1] via signal [SIGINT]
+2017-06-02 18:57:32: Starting execution sequence in -fork mode- for app name:www id:0
+2017-06-02 18:57:32: App name:www id:0 online
+2017-06-02 18:57:32: App [www] with id [0] and pid [9365], exited with code [1] via signal [SIGINT]
+2017-06-02 18:57:32: Starting execution sequence in -fork mode- for app name:www id:0
+2017-06-02 18:57:32: App name:www id:0 online
+2017-06-02 18:57:33: App [www] with id [0] and pid [9393], exited with code [1] via signal [SIGINT]
+2017-06-02 18:57:33: Starting execution sequence in -fork mode- for app name:www id:0
+2017-06-02 18:57:33: App name:www id:0 online
+2017-06-02 18:57:33: App [www] with id [0] and pid [9421], exited with code [1] via signal [SIGINT]
+2017-06-02 18:57:33: Starting execution sequence in -fork mode- for app name:www id:0
+2017-06-02 18:57:33: App name:www id:0 online
+2017-06-02 18:57:34: App [www] with id [0] and pid [9449], exited with code [1] via signal [SIGINT]
+2017-06-02 18:57:34: Starting execution sequence in -fork mode- for app name:www id:0
+2017-06-02 18:57:34: App name:www id:0 online
+2017-06-02 18:57:35: App [www] with id [0] and pid [9477], exited with code [1] via signal [SIGINT]
+2017-06-02 18:57:35: Starting execution sequence in -fork mode- for app name:www id:0
+2017-06-02 18:57:35: App name:www id:0 online
+2017-06-02 18:57:35: App [www] with id [0] and pid [9505], exited with code [1] via signal [SIGINT]
+2017-06-02 18:57:35: Starting execution sequence in -fork mode- for app name:www id:0
+2017-06-02 18:57:35: App name:www id:0 online
+2017-06-02 18:57:36: App [www] with id [0] and pid [9533], exited with code [1] via signal [SIGINT]
+2017-06-02 18:57:36: Script /home/ubuntu/dogeun/bin/www had too many unstable restarts (16). Stopped. "errored"
