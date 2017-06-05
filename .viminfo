@@ -51,37 +51,47 @@ $
 "0	LINE	0
 	            console.log(profile.dataValues);
 ""1	LINE	0
-	>>>>>>> 36aea3121942c7ce8f617fdf1bc1708be6e46909
+	>>>>>>> f21af6bddf778ba1a6e36b923bb1507dc4d696ca
 "2	LINE	0
-	module.exports = AWS;
+	=======
 "3	LINE	0
-	
+	module.exports = Profile;
 "4	LINE	0
 	
 "5	LINE	0
 	
 "6	LINE	0
-	} 
+	};
 "7	LINE	0
-	  return s3;
+	    }
 "8	LINE	0
-	AWS.getS3 = function(){
+	        throw err;
 "9	LINE	0
-	
+	        console.log(err); 
 
 # File marks:
-'0  8  0  ~/.gitignore
-'1  5  18  ~/.gitignore
-'2  6  4  ~/.gitignore
-'3  1  0  ~/.gitingore
-'4  1  0  ~/.gitignore
-'5  31  0  ~/dogeun/config/AWS.js
-'6  110  0  ~/dogeun/model/profiles.js
-'7  258  0  ~/dogeun/routes/doglists.js
-'8  1  0  ~/dogeun/routes/profiles.js
-'9  41  0  ~/dogeun/routes/profiles.js
+'0  32  52  ~/dogeun/routes/profiles.js
+'1  115  0  ~/dogeun/model/profiles.js
+'2  73  33  ~/dogeun/model/profiles.js
+'3  1  0  ~/dogeun/routes/profiles.js
+'4  33  27  ~/dogeun/routes/profiles.js
+'5  1  0  ~/dogeun/model/profiles.js
+'6  124  0  ~/dogeun/model/profiles.js
+'7  101  29  ~/dogeun/model/profiles.js
+'8  112  0  ~/dogeun/model/profiles.js
+'9  80  0  ~/dogeun/model/profiles.js
 
 # Jumplist (newest first):
+-'  32  52  ~/dogeun/routes/profiles.js
+-'  1  0  ~/dogeun/routes/profiles.js
+-'  115  0  ~/dogeun/model/profiles.js
+-'  1  0  ~/dogeun/model/profiles.js
+-'  73  33  ~/dogeun/model/profiles.js
+-'  33  27  ~/dogeun/routes/profiles.js
+-'  124  0  ~/dogeun/model/profiles.js
+-'  101  29  ~/dogeun/model/profiles.js
+-'  112  0  ~/dogeun/model/profiles.js
+-'  80  0  ~/dogeun/model/profiles.js
 -'  8  0  ~/.gitignore
 -'  1  0  ~/.gitignore
 -'  5  18  ~/.gitignore
@@ -89,16 +99,12 @@ $
 -'  1  0  ~/.gitingore
 -'  31  0  ~/dogeun/config/AWS.js
 -'  1  0  ~/dogeun/config/AWS.js
--'  110  0  ~/dogeun/model/profiles.js
--'  1  0  ~/dogeun/model/profiles.js
 -'  258  0  ~/dogeun/routes/doglists.js
 -'  1  0  ~/dogeun/routes/doglists.js
--'  1  0  ~/dogeun/routes/profiles.js
--'  41  0  ~/dogeun/routes/profiles.js
+-'  42  0  ~/dogeun/routes/profiles.js
 -'  251  0  ~/dogeun/model/doglists.js
 -'  1  0  ~/dogeun/model/doglists.js
--'  70  0  ~/dogeun/model/profiles.js
--'  135  0  ~/dogeun/model/profiles.js
+-'  10  0  ~/dogeun/model/profiles.js
 -'  8  0  ~/dogeun
 -'  1  0  ~/dogeun/bin/www
 -'  1  0  ~/dogeun/bin/q
@@ -108,28 +114,14 @@ $
 -'  1  0  ~/parcels.js
 -'  1  0  ~/thumbnail.js
 -'  8  0  ~/thumbnail
--'  85  0  ~/dogeun/model/profiles.js
--'  87  31  ~/dogeun/model/profiles.js
--'  101  29  ~/dogeun/model/profiles.js
 -'  1  0  ~/dogeun/routes/po
--'  27  8  ~/dogeun/model/profiles.js
 -'  182  1  ~/dogeun/model/doglists.js
 -'  238  11  ~/dogeun/model/doglists.js
 -'  138  4  ~/dogeun/model/doglists.js
--'  117  0  ~/dogeun/model/profiles.js
 -'  26  18  ~/dogeun/model/models.js
 -'  1  0  ~/dogeun/model/models.js
--'  125  0  ~/dogeun/model/profiles.js
--'  80  31  ~/dogeun/model/profiles.js
--'  84  22  ~/dogeun/model/profiles.js
--'  6  37  ~/dogeun/model/profiles.js
 -'  13  11  ~/dogeun/model/models.js
--'  83  14  ~/dogeun/model/profiles.js
--'  74  0  ~/dogeun/model/profiles.js
--'  81  27  ~/dogeun/model/profiles.js
 -'  50  12  ~/dogeun/model/models.js
--'  90  16  ~/dogeun/model/profiles.js
--'  63  16  ~/dogeun/model/profiles.js
 -'  91  0  ~/dogeun/bin/www
 -'  85  0  ~/dogeun/bin/www
 -'  84  0  ~/dogeun/bin/www
@@ -144,29 +136,11 @@ $
 -'  157  1  ~/dogeun/model/doglists.js
 -'  126  8  ~/dogeun/model/doglists.js
 -'  133  4  ~/dogeun/model/doglists.js
--'  89  0  ~/dogeun/model/profiles.js
--'  45  46  ~/dogeun/model/profiles.js
--'  19  35  ~/dogeun/model/profiles.js
--'  10  18  ~/dogeun/model/profiles.js
--'  33  11  ~/dogeun/model/profiles.js
--'  47  13  ~/dogeun/model/profiles.js
--'  50  11  ~/dogeun/model/profiles.js
--'  16  29  ~/dogeun/model/profiles.js
 -'  1  0  ~/dogeun/ls
 -'  8  0  ~/dogeun/routes
 -'  96  0  ~/dogeun/model/doglists.js
 -'  1  0  ~/thumbnail/thumbnail.js
 -'  1  0  ~/thumbnail/thumbnail
--'  41  29  ~/dogeun/model/profiles.js
--'  38  12  ~/dogeun/model/profiles.js
--'  37  32  ~/dogeun/model/profiles.js
--'  54  24  ~/dogeun/model/profiles.js
--'  42  34  ~/dogeun/model/profiles.js
--'  39  30  ~/dogeun/model/profiles.js
--'  2  0  ~/dogeun/model/profiles.js
--'  17  26  ~/dogeun/model/profiles.js
--'  8  29  ~/dogeun/model/profiles.js
--'  64  24  ~/dogeun/model/profiles.js
 -'  3  33  ~/dogeun/config/AWS.js
 -'  28  29  ~/dogeun/app.js
 -'  25  10  ~/dogeun/config/AWS.js
@@ -177,11 +151,130 @@ $
 -'  251  0  ~/dogeun/model/doglists.js
 -'  1  0  ~/dogeun/model/doglists.js
 -'  8  0  ~/dogeun
--'  1  0  ~/dogeun/routes/profiles.js
--'  41  0  ~/dogeun/routes/profiles.js
+-'  8  0  ~/.gitignore
+-'  1  0  ~/.gitignore
+-'  5  18  ~/.gitignore
+-'  6  4  ~/.gitignore
+-'  1  0  ~/.gitingore
+-'  31  0  ~/dogeun/config/AWS.js
+-'  1  0  ~/dogeun/config/AWS.js
 -'  258  0  ~/dogeun/routes/doglists.js
+-'  1  0  ~/dogeun/routes/doglists.js
+-'  251  0  ~/dogeun/model/doglists.js
+-'  1  0  ~/dogeun/model/doglists.js
+-'  8  0  ~/dogeun
+-'  1  0  ~/dogeun/bin/www
+-'  1  0  ~/dogeun/bin/q
+-'  1  0  ~/s3config.js
+-'  8  0  ~/r
+-'  143  0  ~/parcels.js
+-'  1  0  ~/parcels.js
+-'  1  0  ~/thumbnail.js
+-'  8  0  ~/thumbnail
+-'  1  0  ~/dogeun/routes/po
+-'  182  1  ~/dogeun/model/doglists.js
+-'  238  11  ~/dogeun/model/doglists.js
+-'  138  4  ~/dogeun/model/doglists.js
+-'  26  18  ~/dogeun/model/models.js
+-'  1  0  ~/dogeun/model/models.js
+-'  13  11  ~/dogeun/model/models.js
+-'  50  12  ~/dogeun/model/models.js
 
 # History of marks within files (newest to oldest):
+
+> ~/dogeun/routes/profiles.js
+	"	32	52
+	^	32	53
+	.	32	53
+	+	1	20
+	+	1	90
+	+	1	47
+	+	1	3
+	+	1	5
+	+	1	6
+	+	1	7
+	+	1	0
+	+	1	0
+	+	1	0
+	+	1	0
+	+	1	0
+	+	1	1
+	+	1	3
+	+	1	0
+	+	43	0
+	+	1	0
+	+	32	78
+	+	33	27
+	+	32	53
+
+> ~/dogeun/model/profiles.js
+	"	115	0
+	^	73	34
+	.	73	33
+	+	1	27
+	+	1	24
+	+	1	17
+	+	1	9
+	+	1	12
+	+	1	29
+	+	1	26
+	+	1	31
+	+	1	34
+	+	1	34
+	+	1	25
+	+	1	22
+	+	1	24
+	+	1	0
+	+	1	30
+	+	1	12
+	+	1	13
+	+	1	12
+	+	1	13
+	+	1	13
+	+	1	13
+	+	1	13
+	+	1	13
+	+	1	13
+	+	1	13
+	+	1	13
+	+	1	12
+	+	1	15
+	+	1	12
+	+	1	12
+	+	1	12
+	+	1	12
+	+	1	12
+	+	1	12
+	+	1	14
+	+	1	13
+	+	1	28
+	+	1	13
+	+	1	12
+	+	1	0
+	+	1	36
+	+	1	46
+	+	1	0
+	+	1	0
+	+	1	0
+	+	1	0
+	+	1	0
+	+	1	43
+	+	1	36
+	+	1	22
+	+	1	31
+	+	1	37
+	+	1	22
+	+	1	31
+	+	1	10
+	+	1	0
+	+	1	39
+	+	1	0
+	+	1	31
+	+	1	0
+	+	125	0
+	+	64	33
+	+	101	29
+	+	73	33
 
 > ~/.gitignore
 	"	8	0
@@ -207,97 +300,12 @@ $
 	+	1	0
 	+	32	0
 
-> ~/dogeun/model/profiles.js
-	"	110	0
-	^	87	32
-	.	85	31
-	+	41	27
-	+	64	24
-	+	50	17
-	+	9	9
-	+	50	12
-	+	8	29
-	+	17	26
-	+	40	31
-	+	42	34
-	+	38	34
-	+	39	25
-	+	45	22
-	+	54	24
-	+	37	0
-	+	17	30
-	+	36	12
-	+	37	13
-	+	38	12
-	+	39	13
-	+	40	13
-	+	41	13
-	+	42	13
-	+	43	13
-	+	44	13
-	+	45	13
-	+	47	13
-	+	37	12
-	+	38	15
-	+	39	12
-	+	40	12
-	+	41	12
-	+	42	12
-	+	43	12
-	+	44	12
-	+	45	14
-	+	47	13
-	+	13	28
-	+	45	13
-	+	47	12
-	+	10	0
-	+	13	36
-	+	45	46
-	+	86	0
-	+	89	0
-	+	86	0
-	+	63	0
-	+	81	0
-	+	80	43
-	+	84	36
-	+	80	22
-	+	84	31
-	+	6	37
-	+	84	22
-	+	80	31
-	+	78	10
-	+	84	0
-	+	85	39
-	+	86	0
-	+	85	31
-
 > ~/dogeun/routes/doglists.js
 	"	258	0
 	.	258	0
 	+	1	53
 	+	1	0
 	+	258	0
-
-> ~/dogeun/routes/profiles.js
-	"	1	0
-	.	1	0
-	+	1	20
-	+	1	90
-	+	1	47
-	+	1	3
-	+	1	5
-	+	1	6
-	+	1	7
-	+	1	0
-	+	1	0
-	+	1	0
-	+	1	0
-	+	1	0
-	+	1	1
-	+	1	3
-	+	1	0
-	+	42	0
-	+	1	0
 
 > ~/dogeun/model/doglists.js
 	"	251	0

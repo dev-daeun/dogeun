@@ -658,3 +658,171 @@ npm start
 vi model/profiles.js 
 npm start
 vi model/profiles.js 
+git checkout kde
+git log --decorate --all --oneline --graph
+git checkout kde
+git branch
+git branch kde
+git checkout kde
+git pull origin master
+git merge kde
+git status
+ls
+mkdir .gitignore
+ls -a
+mv image* .gitignore
+vi .gitignore
+clear
+ls
+vi thumbnail
+vi thumbnail.js 
+rm thumbnail
+rm thumbnail.js 
+vi parcels.js 
+rm parcels.js 
+rm doglist.js
+rm doglists.js
+ls
+vi r
+ls r
+rm r
+rm -rf r
+ls
+rm image.jpg 
+rm image_thumb.jpg 
+ls
+cd dogeun/
+ls
+cd ../
+ls
+cd node_modules/
+ls
+:q
+cd ../
+ls
+rm node_modules/
+rm -rf node_modules/
+ls
+ls dogeun/
+rm -rf thumbnail/
+ls
+vi s3config.js 
+ls dogeun/
+rm s3config.js 
+ls
+git status
+ls
+cd dogeun/
+vi bin/q
+vi bin/www 
+rm req.csr
+ls
+cd ../
+ls
+rm req.csr 
+ls
+git status
+git add dogeun/*
+git status
+cd dogeun/
+ls
+rm apidoc
+rm -rf apidoc
+git status
+cd ../
+ls
+git add dogeun/*
+git status
+git branch
+git checkout kde
+git status
+git pull origin kde
+vi dogeun/
+cd dogeun/
+ls
+vi model/profiles.js 
+git status
+git reset --soft HEAD~1
+git status
+git pull origin kde
+git revert HEAD
+git status
+ls
+cd ../
+ls
+rm doglists.js 
+rm parcels.js 
+ls
+rm -rf dogeun/
+ls
+cd dogeun/
+npm install
+npm start
+vi model/profiles.js 
+npm start
+git status
+git add -A
+git commit -am "전체 커밋 from ec2"
+git push origin kde
+git merge kde
+git pull origin kde
+ls
+vi model/doglists.js 
+npm start
+vi routes/profiles.js 
+vi routes/doglists.js 
+vi model/profiles.js 
+npm start
+vi config/AWS.js 
+npm start
+ls thumbnail/
+npm start
+ls thumbnail/
+git status
+git pull origin kde
+git status
+git add model/profiles.js 
+git commit -m "ec2에서 프로필 모델 commit"
+git add model/profiles.js 
+git commit -m "ec2에서 프로필 모델 commit"
+git status
+git add model/*
+git add routes/*
+git commit -m "ec2에서 프로필 모델 commit"
+ls
+cd ../
+ls
+vi .gitignore
+git statis
+git status
+git commit -m "ec2에서 프로필 모델 commit"
+vi .gitignore
+git status
+git commit -m "ec2에서 프로필 모델 commit"
+git add dogeun/config/AWS.js 
+git commit -m "ec2에서 프로필 모델 commit"
+ls -a
+vi .gitingore
+vi .gitignore
+git status
+git commit -m "ec2에서 프로필 모델 commit"
+vi .gitignore
+git status
+git commit -m "ec2에서 프로필 모델 commit"
+git add -A
+git commit -m "ec2에서 프로필 모델 commit"
+git commit -am "ec2에서 프로필 모델 commit"
+git pull origin kde
+cd d
+cd dogeun/
+vi model/profiles.js 
+npm start
+:q
+vi model/profiles.js 
+npm start
+vi model/profiles.js 
+npm start
+vi model/profiles.js 
+npm start
+vi model/profiles.js 
+npm start
