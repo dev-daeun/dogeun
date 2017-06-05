@@ -10,7 +10,7 @@ const sequelize = new Sequelize(
   }
 );
 class Model{}
- Model.user =  sequelize.define('users', { //users 모델
+ Model.users =  sequelize.define('users', { //users 모델
   user_id: {
     type: Sequelize.INTEGER,
     primaryKey: true,
@@ -23,7 +23,7 @@ class Model{}
   },
   gender: {
     type: Sequelize.INTEGER,
-    allowNull: false
+    allowNull: true
   }, 
   lifestyle: {
     type: Sequelize.INTEGER,
