@@ -104,20 +104,41 @@ router.put('/', arrUpload, async function (req, res) {
 
     try {
         let removePet;
+        let removePetNums;
+        
         // 삭제할 이미지가 있으면 
         if (req.body.pet_image_id) {
             removePet = [req.body.pet_image_id];
+            removePetNums = removePet.length;
+        }else{
+            //삭제할 이미지가 없으면
+            removePetNums = 0;
         }
 
         let petImageRecords = [];
+
+        let newPetNums;
 
         // 새로운 펫 이미지 파일이 있으면
         if (req.files['pet']) {
             for (let item of req.files['pet']) {
                 petImageRecords.push({ 'image': item.location, 'parcel_id': changeId });
             }
+            newPetNums = req.files['pet'].length;
+        }else{
+            // 새로운 펫이미지가 없으면 
+           newPetNums = 0;
         }
-
+        
+        // 기존의 펫 이미지 개수 
+        let imageNums = await Doglist.checkImages(changeId);
+     
+        // 널값 확인하기 위해
+        if(imageNums - removePetNums + newPetNums <= 0 ){
+             res.status(400).send({ message: 'fail' });
+              return;
+        }
+    
         let parcelRecords = {
             spiece: req.body.spiece,
             gender: req.body.gender,
@@ -137,14 +158,14 @@ router.put('/', arrUpload, async function (req, res) {
         };
 
         let removeParent;
-        // 삭제할 이미지가 있으면 
+        // 삭제할 부모견 이미지가 있으면 
         if (req.body.parent_image_id) {
             removeParent = [req.body.parent_image_id];
         }
 
         let parentImageRecords = [];
 
-        // 새로운 펫 이미지 파일이 있으면
+        // 새로운 부모견 이미지 파일이 있으면
         if (req.files['parent']) {
             for (let item of req.files['parent']) {
                 parentImageRecords.push({ 'image': item.location, 'parcel_id': changeId });
@@ -152,7 +173,7 @@ router.put('/', arrUpload, async function (req, res) {
         }
         let result = [];
         result = await Doglist.updateParcels(changeId, removePet, petImageRecords, parcelRecords, removeParent, parentImageRecords);
-        res.send({ message: 'save', 'result': result });
+        res.send({ message: 'save', 'results': result });
     } catch (err) {
         console.log('err message : ', err);
         res.status(500).send({ message: 'fail' });

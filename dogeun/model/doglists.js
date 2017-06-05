@@ -60,6 +60,28 @@ DogList.uploadToS3 = async function (itemKey, path) {
     })
 };
 
+// 펫 이미지 개수 확인하는 함수 
+DogList.checkImages = async function(id){
+    let connection;
+    try{
+        connection = await pool.getConnection();
+
+        // TODO: 사진 개수 확인, 썸네일 만들기
+        let query = 'select count(parcel_id) as count from pet_images where parcel_id = ? ';
+        let imageNum = await connection.query(query, id);
+
+        let count = imageNum[0].count;
+        return count;
+
+    }catch(err){
+        console.log(err);
+        throw err;
+    }finally{
+        await pool.releaseConnection(connection);
+    }
+
+};
+
 // 분양글 저장하기 
 DogList.postParcels = async function (parcelRecord, parentRecord, petRecord, thumbnailInfo) {
     let connection;
@@ -167,23 +189,12 @@ DogList.updateParcels = async function (changeId, removePet, petRecord, parcelRe
 
             for (let pet of petRecord) {
                 let query3 = 'insert into pet_images set ?';
-                let newPet = await connection.query(query2, pet);
+                let newPet = await connection.query(query3, pet);
                 pet.image_id = newPet.insertId;
                 data.push({ 'pet_images': pet });
 
             }
         }
-
-        // TODO: 사진 개수 확인, 썸네일 만들기
-        let query = 'select count(parcel_id) as count from pet_images where parcel_id = ? group by parcel_id';
-        let result = await connection.query(query, changeId);
-
-        if (result[0]["count(parcel_id)"] > 6 || result[0]["count(parcel_id)"] < 1) {
-            let error = new Error();
-            error.code = 400;
-            throw new Error();
-        }
-        console.log(result[0]["count(parcel_id)"]);
 
         // 분양글 항목 업데이트
         let query5 = 'UPDATE parcel SET ? WHERE parcel_id = ?';
