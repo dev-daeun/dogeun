@@ -2,3 +2,8 @@ dogeun_doc/
 node_modules/
 aws_config.json
 db_pool.js
+ImageMagick-7.0.5-9/
+.npm/
+ImageMagick-7.0.5-9/www/css/magick.css
+ImageMagick-7.0.5-9/www/js/magick.js
+

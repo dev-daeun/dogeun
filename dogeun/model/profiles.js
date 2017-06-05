@@ -6,10 +6,10 @@ const easyimage = require('easyimage');
 const user = require('./models').users;
 class Profile {}
 
-Profile.makeThumb = function(thumb_name, thumb_path){ //썸네일 만들어서 로컬에 저장하는 메소드
+Profile.makeThumb = function(location,thumb_name, thumb_path){ //썸네일 만들어서 로컬에 저장하는 메소드
         easyimage.rescrop({
             name: thumb_name,
-            src: req.file.location,
+            src: location,
             dst: thumb_path, //로컬 디렉토리에 썸네일 저장
             width: 300, height: 300
         });
@@ -68,7 +68,7 @@ Profile.saveProfile = async function(req){
             else {
                 let thumbnail_name = 'thumbnail_' + req.file.key; //썸네일이미지 이름
                 let thumbnail_path = 'thumbnail/'+ thumbnail_name; //썸네일 저장 경로
-                await this.makeThumb(thumbnail_name, thumbnail_path);
+                await this.makeThumb(req.file.location, thumbnail_name, thumbnail_path);
                 let thumbnail_url = await this.uploadThumbToS3(thumbnail_name, thumbnail_path); //2. 로컬 디렉토리에 저장된 이미지를 s3에 올리기
                 record.profile_image = req.file.location;
                 record.profile_thumbnail = thumbnail_url;
@@ -100,7 +100,7 @@ Profile.editProfile = async function(req){
             }
             let thumbnail_name = 'thumbnail_' + req.file.key; //썸네일이미지 이름
             let thumbnail_path = 'thumbnail/'+ thumbnail_name; //썸네일 저장 경로
-            await this.makeThumb(thumbnail_name, thumbnail_path);
+            await this.makeThumb(req.file.location, thumbnail_name, thumbnail_path);
             let thumbnail_url = await this.uploadThumbToS3(thumbnail_name, thumbnail_path); //로컬에 저장된 썸네일을 s3에 업로드
             record.profile_image = req.file.location; //수정할 레코드에 새 이미지url 추가
             record.profile_thumbnail = thumbnail_url;       
