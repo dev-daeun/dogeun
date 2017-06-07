@@ -1,0 +1,1208 @@
+[0mGET /doglist?page=2 [32m200 [0m188.926 ms - 770[0m
+[0mGET /doglist?page=1 [32m200 [0m9.110 ms - 1411[0m
+[0mGET /doglists?page=1 [32m200 [0m162.606 ms - 1411[0m
+[0mGET /doglists?page=1 [32m200 [0m68.879 ms - 1411[0m
+[0mGET /doglists?page=1 [32m200 [0m170.930 ms - 1337[0m
+[0mGET /doglists?page=2 [32m200 [0m8.446 ms - 1072[0m
+[0mGET /doglists/emergency [33m404 [0m7.714 ms - 1415[0m
+[0mGET /doglists?page=2 [32m200 [0m70.060 ms - 1651[0m
+[0mGET /doglists/emergency [32m200 [0m9.113 ms - 542[0m
+[0mGET /doglists/emergency [32m200 [0m82.363 ms - 542[0m
+[0mGET /doglists?page=0 [32m200 [0m6.848 ms - 882[0m
+[0mGET /doglists?page=0 [32m200 [0m7.660 ms - 882[0m
+[0mGET / [32m200 [0m9.277 ms - 207[0m
+{ Error: ER_PARSE_ERROR: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '?  and p.age = ?  order by parcel_id desc' at line 1
+    at Query.Sequence._packetToError (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/sequences/Sequence.js:52:14)
+    at Query.ErrorPacket (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/sequences/Query.js:77:18)
+    at Protocol._parsePacket (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/Protocol.js:280:23)
+    at Parser.write (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/Parser.js:75:12)
+    at Protocol.write (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/Protocol.js:39:16)
+    at Socket.<anonymous> (/home/ubuntu/dogeun/node_modules/mysql/lib/Connection.js:103:28)
+    at emitOne (events.js:96:13)
+    at Socket.emit (events.js:191:7)
+    at readableAddChunk (_stream_readable.js:178:18)
+    at Socket.Readable.push (_stream_readable.js:136:10)
+    at TCP.onread (net.js:561:20)
+    --------------------
+    at Protocol._enqueue (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/Protocol.js:141:48)
+    at PoolConnection.query (/home/ubuntu/dogeun/node_modules/mysql/lib/Connection.js:208:25)
+    at /home/ubuntu/dogeun/node_modules/promise-mysql/lib/helper.js:16:24
+    at Promise._execute (/home/ubuntu/dogeun/node_modules/bluebird/js/release/debuggability.js:300:9)
+    at Promise._resolveFromExecutor (/home/ubuntu/dogeun/node_modules/bluebird/js/release/promise.js:483:18)
+    at new Promise (/home/ubuntu/dogeun/node_modules/bluebird/js/release/promise.js:79:10)
+    at PoolConnection.promiseCallback (/home/ubuntu/dogeun/node_modules/promise-mysql/lib/helper.js:6:10)
+    at connection.query (/home/ubuntu/dogeun/node_modules/promise-mysql/lib/connection.js:64:28)
+    at Function.DogList.getLists (/home/ubuntu/dogeun/model/doglists.js:25:39)
+  code: 'ER_PARSE_ERROR',
+  errno: 1064,
+  sqlState: '42000',
+  index: 0 }
+[0mGET /doglists?page=0&spiece=%EC%9B%B0%EC%8B%9C%EC%BD%94%EA%B8%B0&gender=%EB%82%A8%EC%9E%90&region1=2&age=0 [31m500 [0m6.501 ms - 231[0m
+[0mGET /doglists/86 [31m500 [0m0.881 ms - 23[0m
+{ Error: ER_PARSE_ERROR: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '?  and p.age = ?  order by parcel_id desc' at line 1
+    at Query.Sequence._packetToError (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/sequences/Sequence.js:52:14)
+    at Query.ErrorPacket (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/sequences/Query.js:77:18)
+    at Protocol._parsePacket (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/Protocol.js:280:23)
+    at Parser.write (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/Parser.js:75:12)
+    at Protocol.write (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/Protocol.js:39:16)
+    at Socket.<anonymous> (/home/ubuntu/dogeun/node_modules/mysql/lib/Connection.js:103:28)
+    at emitOne (events.js:96:13)
+    at Socket.emit (events.js:191:7)
+    at readableAddChunk (_stream_readable.js:178:18)
+    at Socket.Readable.push (_stream_readable.js:136:10)
+    at TCP.onread (net.js:561:20)
+    --------------------
+    at Protocol._enqueue (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/Protocol.js:141:48)
+    at PoolConnection.query (/home/ubuntu/dogeun/node_modules/mysql/lib/Connection.js:208:25)
+    at /home/ubuntu/dogeun/node_modules/promise-mysql/lib/helper.js:16:24
+    at Promise._execute (/home/ubuntu/dogeun/node_modules/bluebird/js/release/debuggability.js:300:9)
+    at Promise._resolveFromExecutor (/home/ubuntu/dogeun/node_modules/bluebird/js/release/promise.js:483:18)
+    at new Promise (/home/ubuntu/dogeun/node_modules/bluebird/js/release/promise.js:79:10)
+    at PoolConnection.promiseCallback (/home/ubuntu/dogeun/node_modules/promise-mysql/lib/helper.js:6:10)
+    at connection.query (/home/ubuntu/dogeun/node_modules/promise-mysql/lib/connection.js:64:28)
+    at Function.DogList.getLists (/home/ubuntu/dogeun/model/doglists.js:25:39)
+  code: 'ER_PARSE_ERROR',
+  errno: 1064,
+  sqlState: '42000',
+  index: 0 }
+[0mGET /doglists?page=0&spiece=0&gender=0&region1=2&age=0 [31m500 [0m4.321 ms - 231[0m
+{ Error: ER_PARSE_ERROR: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '?  and p.age = ?  order by parcel_id desc' at line 1
+    at Query.Sequence._packetToError (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/sequences/Sequence.js:52:14)
+    at Query.ErrorPacket (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/sequences/Query.js:77:18)
+    at Protocol._parsePacket (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/Protocol.js:280:23)
+    at Parser.write (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/Parser.js:75:12)
+    at Protocol.write (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/Protocol.js:39:16)
+    at Socket.<anonymous> (/home/ubuntu/dogeun/node_modules/mysql/lib/Connection.js:103:28)
+    at emitOne (events.js:96:13)
+    at Socket.emit (events.js:191:7)
+    at readableAddChunk (_stream_readable.js:178:18)
+    at Socket.Readable.push (_stream_readable.js:136:10)
+    at TCP.onread (net.js:561:20)
+    --------------------
+    at Protocol._enqueue (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/Protocol.js:141:48)
+    at PoolConnection.query (/home/ubuntu/dogeun/node_modules/mysql/lib/Connection.js:208:25)
+    at /home/ubuntu/dogeun/node_modules/promise-mysql/lib/helper.js:16:24
+    at Promise._execute (/home/ubuntu/dogeun/node_modules/bluebird/js/release/debuggability.js:300:9)
+    at Promise._resolveFromExecutor (/home/ubuntu/dogeun/node_modules/bluebird/js/release/promise.js:483:18)
+    at new Promise (/home/ubuntu/dogeun/node_modules/bluebird/js/release/promise.js:79:10)
+    at PoolConnection.promiseCallback (/home/ubuntu/dogeun/node_modules/promise-mysql/lib/helper.js:6:10)
+    at connection.query (/home/ubuntu/dogeun/node_modules/promise-mysql/lib/connection.js:64:28)
+    at Function.DogList.getLists (/home/ubuntu/dogeun/model/doglists.js:25:39)
+  code: 'ER_PARSE_ERROR',
+  errno: 1064,
+  sqlState: '42000',
+  index: 0 }
+[0mGET /doglists?page=2&spiece=1&gender=2&region1=2&age=1 [31m500 [0m4.938 ms - 231[0m
+{ Error: ER_PARSE_ERROR: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '?  and p.age = ?  order by parcel_id desc' at line 1
+    at Query.Sequence._packetToError (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/sequences/Sequence.js:52:14)
+    at Query.ErrorPacket (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/sequences/Query.js:77:18)
+    at Protocol._parsePacket (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/Protocol.js:280:23)
+    at Parser.write (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/Parser.js:75:12)
+    at Protocol.write (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/Protocol.js:39:16)
+    at Socket.<anonymous> (/home/ubuntu/dogeun/node_modules/mysql/lib/Connection.js:103:28)
+    at emitOne (events.js:96:13)
+    at Socket.emit (events.js:191:7)
+    at readableAddChunk (_stream_readable.js:178:18)
+    at Socket.Readable.push (_stream_readable.js:136:10)
+    at TCP.onread (net.js:561:20)
+    --------------------
+    at Protocol._enqueue (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/Protocol.js:141:48)
+    at PoolConnection.query (/home/ubuntu/dogeun/node_modules/mysql/lib/Connection.js:208:25)
+    at /home/ubuntu/dogeun/node_modules/promise-mysql/lib/helper.js:16:24
+    at Promise._execute (/home/ubuntu/dogeun/node_modules/bluebird/js/release/debuggability.js:300:9)
+    at Promise._resolveFromExecutor (/home/ubuntu/dogeun/node_modules/bluebird/js/release/promise.js:483:18)
+    at new Promise (/home/ubuntu/dogeun/node_modules/bluebird/js/release/promise.js:79:10)
+    at PoolConnection.promiseCallback (/home/ubuntu/dogeun/node_modules/promise-mysql/lib/helper.js:6:10)
+    at connection.query (/home/ubuntu/dogeun/node_modules/promise-mysql/lib/connection.js:64:28)
+    at Function.DogList.getLists (/home/ubuntu/dogeun/model/doglists.js:25:39)
+  code: 'ER_PARSE_ERROR',
+  errno: 1064,
+  sqlState: '42000',
+  index: 0 }
+[0mGET /doglists?page=2&spiece=1&gender=2&region1=2&age=1 [31m500 [0m4.075 ms - 231[0m
+{ Error: ER_PARSE_ERROR: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '?  and p.age = ?  order by parcel_id desc' at line 1
+    at Query.Sequence._packetToError (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/sequences/Sequence.js:52:14)
+    at Query.ErrorPacket (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/sequences/Query.js:77:18)
+    at Protocol._parsePacket (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/Protocol.js:280:23)
+    at Parser.write (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/Parser.js:75:12)
+    at Protocol.write (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/Protocol.js:39:16)
+    at Socket.<anonymous> (/home/ubuntu/dogeun/node_modules/mysql/lib/Connection.js:103:28)
+    at emitOne (events.js:96:13)
+    at Socket.emit (events.js:191:7)
+    at readableAddChunk (_stream_readable.js:178:18)
+    at Socket.Readable.push (_stream_readable.js:136:10)
+    at TCP.onread (net.js:561:20)
+    --------------------
+    at Protocol._enqueue (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/Protocol.js:141:48)
+    at PoolConnection.query (/home/ubuntu/dogeun/node_modules/mysql/lib/Connection.js:208:25)
+    at /home/ubuntu/dogeun/node_modules/promise-mysql/lib/helper.js:16:24
+    at Promise._execute (/home/ubuntu/dogeun/node_modules/bluebird/js/release/debuggability.js:300:9)
+    at Promise._resolveFromExecutor (/home/ubuntu/dogeun/node_modules/bluebird/js/release/promise.js:483:18)
+    at new Promise (/home/ubuntu/dogeun/node_modules/bluebird/js/release/promise.js:79:10)
+    at PoolConnection.promiseCallback (/home/ubuntu/dogeun/node_modules/promise-mysql/lib/helper.js:6:10)
+    at connection.query (/home/ubuntu/dogeun/node_modules/promise-mysql/lib/connection.js:64:28)
+    at Function.DogList.getLists (/home/ubuntu/dogeun/model/doglists.js:25:39)
+  code: 'ER_PARSE_ERROR',
+  errno: 1064,
+  sqlState: '42000',
+  index: 0 }
+[0mGET /doglists?page=2&spiece=1&gender=2&region1=2&age=1 [31m500 [0m4.978 ms - 231[0m
+{ Error: ER_PARSE_ERROR: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '?  and p.age = ?  order by parcel_id desc' at line 1
+    at Query.Sequence._packetToError (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/sequences/Sequence.js:52:14)
+    at Query.ErrorPacket (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/sequences/Query.js:77:18)
+    at Protocol._parsePacket (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/Protocol.js:280:23)
+    at Parser.write (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/Parser.js:75:12)
+    at Protocol.write (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/Protocol.js:39:16)
+    at Socket.<anonymous> (/home/ubuntu/dogeun/node_modules/mysql/lib/Connection.js:103:28)
+    at emitOne (events.js:96:13)
+    at Socket.emit (events.js:191:7)
+    at readableAddChunk (_stream_readable.js:178:18)
+    at Socket.Readable.push (_stream_readable.js:136:10)
+    at TCP.onread (net.js:561:20)
+    --------------------
+    at Protocol._enqueue (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/Protocol.js:141:48)
+    at PoolConnection.query (/home/ubuntu/dogeun/node_modules/mysql/lib/Connection.js:208:25)
+    at /home/ubuntu/dogeun/node_modules/promise-mysql/lib/helper.js:16:24
+    at Promise._execute (/home/ubuntu/dogeun/node_modules/bluebird/js/release/debuggability.js:300:9)
+    at Promise._resolveFromExecutor (/home/ubuntu/dogeun/node_modules/bluebird/js/release/promise.js:483:18)
+    at new Promise (/home/ubuntu/dogeun/node_modules/bluebird/js/release/promise.js:79:10)
+    at PoolConnection.promiseCallback (/home/ubuntu/dogeun/node_modules/promise-mysql/lib/helper.js:6:10)
+    at connection.query (/home/ubuntu/dogeun/node_modules/promise-mysql/lib/connection.js:64:28)
+    at Function.DogList.getLists (/home/ubuntu/dogeun/model/doglists.js:25:39)
+  code: 'ER_PARSE_ERROR',
+  errno: 1064,
+  sqlState: '42000',
+  index: 0 }
+[0mGET /doglists?page=2&spiece=1&gender=2&region1=2&age=1 [31m500 [0m6.207 ms - 231[0m
+{ Error: ER_PARSE_ERROR: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '?  and p.age = ?  order by parcel_id desc' at line 1
+    at Query.Sequence._packetToError (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/sequences/Sequence.js:52:14)
+    at Query.ErrorPacket (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/sequences/Query.js:77:18)
+    at Protocol._parsePacket (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/Protocol.js:280:23)
+    at Parser.write (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/Parser.js:75:12)
+    at Protocol.write (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/Protocol.js:39:16)
+    at Socket.<anonymous> (/home/ubuntu/dogeun/node_modules/mysql/lib/Connection.js:103:28)
+    at emitOne (events.js:96:13)
+    at Socket.emit (events.js:191:7)
+    at readableAddChunk (_stream_readable.js:178:18)
+    at Socket.Readable.push (_stream_readable.js:136:10)
+    at TCP.onread (net.js:561:20)
+    --------------------
+    at Protocol._enqueue (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/Protocol.js:141:48)
+    at PoolConnection.query (/home/ubuntu/dogeun/node_modules/mysql/lib/Connection.js:208:25)
+    at /home/ubuntu/dogeun/node_modules/promise-mysql/lib/helper.js:16:24
+    at Promise._execute (/home/ubuntu/dogeun/node_modules/bluebird/js/release/debuggability.js:300:9)
+    at Promise._resolveFromExecutor (/home/ubuntu/dogeun/node_modules/bluebird/js/release/promise.js:483:18)
+    at new Promise (/home/ubuntu/dogeun/node_modules/bluebird/js/release/promise.js:79:10)
+    at PoolConnection.promiseCallback (/home/ubuntu/dogeun/node_modules/promise-mysql/lib/helper.js:6:10)
+    at connection.query (/home/ubuntu/dogeun/node_modules/promise-mysql/lib/connection.js:64:28)
+    at Function.DogList.getLists (/home/ubuntu/dogeun/model/doglists.js:25:39)
+  code: 'ER_PARSE_ERROR',
+  errno: 1064,
+  sqlState: '42000',
+  index: 0 }
+[0mGET /doglists?page=2&spiece=1&gender=2&region1=2&age=1 [31m500 [0m4.106 ms - 231[0m
+{ Error: ER_PARSE_ERROR: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '?  and p.age = ?  order by parcel_id desc' at line 1
+    at Query.Sequence._packetToError (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/sequences/Sequence.js:52:14)
+    at Query.ErrorPacket (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/sequences/Query.js:77:18)
+    at Protocol._parsePacket (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/Protocol.js:280:23)
+    at Parser.write (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/Parser.js:75:12)
+    at Protocol.write (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/Protocol.js:39:16)
+    at Socket.<anonymous> (/home/ubuntu/dogeun/node_modules/mysql/lib/Connection.js:103:28)
+    at emitOne (events.js:96:13)
+    at Socket.emit (events.js:191:7)
+    at readableAddChunk (_stream_readable.js:178:18)
+    at Socket.Readable.push (_stream_readable.js:136:10)
+    at TCP.onread (net.js:561:20)
+    --------------------
+    at Protocol._enqueue (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/Protocol.js:141:48)
+    at PoolConnection.query (/home/ubuntu/dogeun/node_modules/mysql/lib/Connection.js:208:25)
+    at /home/ubuntu/dogeun/node_modules/promise-mysql/lib/helper.js:16:24
+    at Promise._execute (/home/ubuntu/dogeun/node_modules/bluebird/js/release/debuggability.js:300:9)
+    at Promise._resolveFromExecutor (/home/ubuntu/dogeun/node_modules/bluebird/js/release/promise.js:483:18)
+    at new Promise (/home/ubuntu/dogeun/node_modules/bluebird/js/release/promise.js:79:10)
+    at PoolConnection.promiseCallback (/home/ubuntu/dogeun/node_modules/promise-mysql/lib/helper.js:6:10)
+    at connection.query (/home/ubuntu/dogeun/node_modules/promise-mysql/lib/connection.js:64:28)
+    at Function.DogList.getLists (/home/ubuntu/dogeun/model/doglists.js:25:39)
+  code: 'ER_PARSE_ERROR',
+  errno: 1064,
+  sqlState: '42000',
+  index: 0 }
+[0mGET /doglists?page=2&spiece=%EC%9B%B0%EC%8B%9C%EC%BD%94%EA%B8%B0&gender=%EC%88%98%EC%BB%B7&region1=2&age=1 [31m500 [0m3.932 ms - 231[0m
+TypeError: Doglist.getLists is not a function
+    at /home/ubuntu/dogeun/routes/doglists.js:9:32
+    at Layer.handle [as handle_request] (/home/ubuntu/dogeun/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/dogeun/node_modules/express/lib/router/route.js:137:13)
+    at Route.dispatch (/home/ubuntu/dogeun/node_modules/express/lib/router/route.js:112:3)
+    at Layer.handle [as handle_request] (/home/ubuntu/dogeun/node_modules/express/lib/router/layer.js:95:5)
+    at /home/ubuntu/dogeun/node_modules/express/lib/router/index.js:281:22
+    at Function.process_params (/home/ubuntu/dogeun/node_modules/express/lib/router/index.js:335:12)
+    at next (/home/ubuntu/dogeun/node_modules/express/lib/router/index.js:275:10)
+    at Function.handle (/home/ubuntu/dogeun/node_modules/express/lib/router/index.js:174:3)
+    at router (/home/ubuntu/dogeun/node_modules/express/lib/router/index.js:47:12)
+[0mGET /doglists?page=2&spiece=1&gender=1&age=1&region1=1 [31m500 [0m8.240 ms - 66[0m
+[ 1, 1, 1, 1, 1 ]
+[0mGET /doglists?page=2&spiece=1&gender=1&age=1&region1=1 [32m200 [0m73.954 ms - 119[0m
+[ 1, NaN, NaN, NaN, 0 ]
+{ Error: ER_BAD_FIELD_ERROR: Unknown column 'NaN' in 'where clause'
+    at Query.Sequence._packetToError (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/sequences/Sequence.js:52:14)
+    at Query.ErrorPacket (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/sequences/Query.js:77:18)
+    at Protocol._parsePacket (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/Protocol.js:280:23)
+    at Parser.write (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/Parser.js:75:12)
+    at Protocol.write (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/Protocol.js:39:16)
+    at Socket.<anonymous> (/home/ubuntu/dogeun/node_modules/mysql/lib/Connection.js:103:28)
+    at emitOne (events.js:96:13)
+    at Socket.emit (events.js:191:7)
+    at readableAddChunk (_stream_readable.js:178:18)
+    at Socket.Readable.push (_stream_readable.js:136:10)
+    at TCP.onread (net.js:561:20)
+    --------------------
+    at Protocol._enqueue (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/Protocol.js:141:48)
+    at PoolConnection.query (/home/ubuntu/dogeun/node_modules/mysql/lib/Connection.js:208:25)
+    at /home/ubuntu/dogeun/node_modules/promise-mysql/lib/helper.js:16:24
+    at Promise._execute (/home/ubuntu/dogeun/node_modules/bluebird/js/release/debuggability.js:300:9)
+    at Promise._resolveFromExecutor (/home/ubuntu/dogeun/node_modules/bluebird/js/release/promise.js:483:18)
+    at new Promise (/home/ubuntu/dogeun/node_modules/bluebird/js/release/promise.js:79:10)
+    at PoolConnection.promiseCallback (/home/ubuntu/dogeun/node_modules/promise-mysql/lib/helper.js:6:10)
+    at connection.query (/home/ubuntu/dogeun/node_modules/promise-mysql/lib/connection.js:64:28)
+    at Function.DogList.getLists (/home/ubuntu/dogeun/model/doglists.js:29:39)
+  code: 'ER_BAD_FIELD_ERROR',
+  errno: 1054,
+  sqlState: '42S22',
+  index: 0 }
+[0mGET /doglists?page=0&spiece=&gender=&region=&age=0 [31m500 [0m11.857 ms - 86[0m
+[ 1, NaN, NaN, 2, 1 ]
+{ Error: ER_BAD_FIELD_ERROR: Unknown column 'NaN' in 'where clause'
+    at Query.Sequence._packetToError (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/sequences/Sequence.js:52:14)
+    at Query.ErrorPacket (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/sequences/Query.js:77:18)
+    at Protocol._parsePacket (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/Protocol.js:280:23)
+    at Parser.write (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/Parser.js:75:12)
+    at Protocol.write (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/Protocol.js:39:16)
+    at Socket.<anonymous> (/home/ubuntu/dogeun/node_modules/mysql/lib/Connection.js:103:28)
+    at emitOne (events.js:96:13)
+    at Socket.emit (events.js:191:7)
+    at readableAddChunk (_stream_readable.js:178:18)
+    at Socket.Readable.push (_stream_readable.js:136:10)
+    at TCP.onread (net.js:561:20)
+    --------------------
+    at Protocol._enqueue (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/Protocol.js:141:48)
+    at PoolConnection.query (/home/ubuntu/dogeun/node_modules/mysql/lib/Connection.js:208:25)
+    at /home/ubuntu/dogeun/node_modules/promise-mysql/lib/helper.js:16:24
+    at Promise._execute (/home/ubuntu/dogeun/node_modules/bluebird/js/release/debuggability.js:300:9)
+    at Promise._resolveFromExecutor (/home/ubuntu/dogeun/node_modules/bluebird/js/release/promise.js:483:18)
+    at new Promise (/home/ubuntu/dogeun/node_modules/bluebird/js/release/promise.js:79:10)
+    at PoolConnection.promiseCallback (/home/ubuntu/dogeun/node_modules/promise-mysql/lib/helper.js:6:10)
+    at connection.query (/home/ubuntu/dogeun/node_modules/promise-mysql/lib/connection.js:64:28)
+    at Function.DogList.getLists (/home/ubuntu/dogeun/model/doglists.js:29:39)
+  code: 'ER_BAD_FIELD_ERROR',
+  errno: 1054,
+  sqlState: '42S22',
+  index: 0 }
+[0mGET /doglists?page=2&spiece=%EC%9B%B0%EC%8B%9C%EC%BD%94%EA%B8%B0&gender=%EC%88%98%EC%BB%B7&region1=2&age=1 [31m500 [0m8.198 ms - 86[0m
+[ 1, 1, 1, 1, 1 ]
+[0mGET /doglists?page=2&spiece=1&gender=1&age=1&region1=1 [32m200 [0m6.376 ms - 119[0m
+[ 1, 1, 1, 1, 2 ]
+[0mGET /doglists?page=2&spiece=1&gender=1&age=1&region1=2 [32m200 [0m5.211 ms - 6[0m
+[ 1, 1, 1, 1, 3 ]
+[0mGET /doglists?page=2&spiece=1&gender=1&age=1&region1=3 [32m200 [0m6.666 ms - 6[0m
+[ 1, 1, 1, 1, 1 ]
+[0mGET /doglists?page=2&spiece=1&gender=1&age=1&region1=1 [32m200 [0m5.462 ms - 119[0m
+[ 1, 1, 1, 1 ]
+[0mGET /doglists?page=2&spiece=1&gender=1&age=1 [32m200 [0m4.696 ms - 119[0m
+[ 1, 1, 1 ]
+[0mGET /doglists?page=2&spiece=1&gender=1 [32m200 [0m4.769 ms - 119[0m
+[ 1, NaN, NaN, 2, 1 ]
+{ Error: ER_BAD_FIELD_ERROR: Unknown column 'NaN' in 'where clause'
+    at Query.Sequence._packetToError (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/sequences/Sequence.js:52:14)
+    at Query.ErrorPacket (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/sequences/Query.js:77:18)
+    at Protocol._parsePacket (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/Protocol.js:280:23)
+    at Parser.write (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/Parser.js:75:12)
+    at Protocol.write (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/Protocol.js:39:16)
+    at Socket.<anonymous> (/home/ubuntu/dogeun/node_modules/mysql/lib/Connection.js:103:28)
+    at emitOne (events.js:96:13)
+    at Socket.emit (events.js:191:7)
+    at readableAddChunk (_stream_readable.js:178:18)
+    at Socket.Readable.push (_stream_readable.js:136:10)
+    at TCP.onread (net.js:561:20)
+    --------------------
+    at Protocol._enqueue (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/Protocol.js:141:48)
+    at PoolConnection.query (/home/ubuntu/dogeun/node_modules/mysql/lib/Connection.js:208:25)
+    at /home/ubuntu/dogeun/node_modules/promise-mysql/lib/helper.js:16:24
+    at Promise._execute (/home/ubuntu/dogeun/node_modules/bluebird/js/release/debuggability.js:300:9)
+    at Promise._resolveFromExecutor (/home/ubuntu/dogeun/node_modules/bluebird/js/release/promise.js:483:18)
+    at new Promise (/home/ubuntu/dogeun/node_modules/bluebird/js/release/promise.js:79:10)
+    at PoolConnection.promiseCallback (/home/ubuntu/dogeun/node_modules/promise-mysql/lib/helper.js:6:10)
+    at connection.query (/home/ubuntu/dogeun/node_modules/promise-mysql/lib/connection.js:64:28)
+    at Function.DogList.getLists (/home/ubuntu/dogeun/model/doglists.js:29:39)
+  code: 'ER_BAD_FIELD_ERROR',
+  errno: 1054,
+  sqlState: '42S22',
+  index: 0 }
+[0mGET /doglists?page=2&spiece=&gender=&region1=2&age=1 [31m500 [0m5.566 ms - 86[0m
+[ 1, 1 ]
+[0mGET /doglists?page=2&spiece=1 [32m200 [0m5.921 ms - 119[0m
+[ 1, 2 ]
+[0mGET /doglists?page=2&spiece=2 [32m200 [0m4.506 ms - 6[0m
+[ 1, 1 ]
+[0mGET /doglists?page=2&spiece=1 [32m200 [0m8.140 ms - 119[0m
+[ 1, NaN, NaN, 2, 1 ]
+{ Error: ER_BAD_FIELD_ERROR: Unknown column 'NaN' in 'where clause'
+    at Query.Sequence._packetToError (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/sequences/Sequence.js:52:14)
+    at Query.ErrorPacket (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/sequences/Query.js:77:18)
+    at Protocol._parsePacket (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/Protocol.js:280:23)
+    at Parser.write (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/Parser.js:75:12)
+    at Protocol.write (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/Protocol.js:39:16)
+    at Socket.<anonymous> (/home/ubuntu/dogeun/node_modules/mysql/lib/Connection.js:103:28)
+    at emitOne (events.js:96:13)
+    at Socket.emit (events.js:191:7)
+    at readableAddChunk (_stream_readable.js:178:18)
+    at Socket.Readable.push (_stream_readable.js:136:10)
+    at TCP.onread (net.js:561:20)
+    --------------------
+    at Protocol._enqueue (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/Protocol.js:141:48)
+    at PoolConnection.query (/home/ubuntu/dogeun/node_modules/mysql/lib/Connection.js:208:25)
+    at /home/ubuntu/dogeun/node_modules/promise-mysql/lib/helper.js:16:24
+    at Promise._execute (/home/ubuntu/dogeun/node_modules/bluebird/js/release/debuggability.js:300:9)
+    at Promise._resolveFromExecutor (/home/ubuntu/dogeun/node_modules/bluebird/js/release/promise.js:483:18)
+    at new Promise (/home/ubuntu/dogeun/node_modules/bluebird/js/release/promise.js:79:10)
+    at PoolConnection.promiseCallback (/home/ubuntu/dogeun/node_modules/promise-mysql/lib/helper.js:6:10)
+    at connection.query (/home/ubuntu/dogeun/node_modules/promise-mysql/lib/connection.js:64:28)
+    at Function.DogList.getLists (/home/ubuntu/dogeun/model/doglists.js:29:39)
+  code: 'ER_BAD_FIELD_ERROR',
+  errno: 1054,
+  sqlState: '42S22',
+  index: 0 }
+[0mGET /doglists?page=2&spiece=null&gender=null&region1=2&age=1 [31m500 [0m5.387 ms - 86[0m
+[ 1, 1 ]
+[0mGET /doglists?page=2&spiece=1 [32m200 [0m5.240 ms - 119[0m
+[ 1, 1 ]
+[0mGET /doglists?page=1&spiece=1 [32m200 [0m5.038 ms - 119[0m
+[ 1, 1 ]
+[0mGET /doglists?page=0&spiece=1 [32m200 [0m5.898 ms - 1583[0m
+[ 1, 1 ]
+[0mGET /doglists?page=1&spiece=1 [32m200 [0m4.954 ms - 119[0m
+[ 1, 1 ]
+[0mGET /doglists?page=0&spiece=1 [32m200 [0m4.914 ms - 1583[0m
+[ 1, 3 ]
+[0mGET /doglists?page=0&spiece=3 [32m200 [0m8.611 ms - 1785[0m
+[ 1, 3 ]
+[0mGET /doglists?page=1&spiece=3 [32m200 [0m4.934 ms - 1080[0m
+[ 1, 3, 2 ]
+[0mGET /doglists?page=0&spiece=3&region1=2 [32m200 [0m10.299 ms - 1785[0m
+[ 1, NaN, NaN, 2, 0 ]
+{ Error: ER_BAD_FIELD_ERROR: Unknown column 'NaN' in 'where clause'
+    at Query.Sequence._packetToError (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/sequences/Sequence.js:52:14)
+    at Query.ErrorPacket (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/sequences/Query.js:77:18)
+    at Protocol._parsePacket (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/Protocol.js:280:23)
+    at Parser.write (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/Parser.js:75:12)
+    at Protocol.write (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/Protocol.js:39:16)
+    at Socket.<anonymous> (/home/ubuntu/dogeun/node_modules/mysql/lib/Connection.js:103:28)
+    at emitOne (events.js:96:13)
+    at Socket.emit (events.js:191:7)
+    at readableAddChunk (_stream_readable.js:178:18)
+    at Socket.Readable.push (_stream_readable.js:136:10)
+    at TCP.onread (net.js:561:20)
+    --------------------
+    at Protocol._enqueue (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/Protocol.js:141:48)
+    at PoolConnection.query (/home/ubuntu/dogeun/node_modules/mysql/lib/Connection.js:208:25)
+    at /home/ubuntu/dogeun/node_modules/promise-mysql/lib/helper.js:16:24
+    at Promise._execute (/home/ubuntu/dogeun/node_modules/bluebird/js/release/debuggability.js:300:9)
+    at Promise._resolveFromExecutor (/home/ubuntu/dogeun/node_modules/bluebird/js/release/promise.js:483:18)
+    at new Promise (/home/ubuntu/dogeun/node_modules/bluebird/js/release/promise.js:79:10)
+    at PoolConnection.promiseCallback (/home/ubuntu/dogeun/node_modules/promise-mysql/lib/helper.js:6:10)
+    at connection.query (/home/ubuntu/dogeun/node_modules/promise-mysql/lib/connection.js:64:28)
+    at Function.DogList.getLists (/home/ubuntu/dogeun/model/doglists.js:29:39)
+  code: 'ER_BAD_FIELD_ERROR',
+  errno: 1054,
+  sqlState: '42S22',
+  index: 0 }
+[0mGET /doglists?page=0&spiece=null&gender=null&region1=2&age=0 [31m500 [0m5.340 ms - 86[0m
+[ 1, NaN, NaN, 2, 0 ]
+{ Error: ER_BAD_FIELD_ERROR: Unknown column 'NaN' in 'where clause'
+    at Query.Sequence._packetToError (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/sequences/Sequence.js:52:14)
+    at Query.ErrorPacket (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/sequences/Query.js:77:18)
+    at Protocol._parsePacket (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/Protocol.js:280:23)
+    at Parser.write (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/Parser.js:75:12)
+    at Protocol.write (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/Protocol.js:39:16)
+    at Socket.<anonymous> (/home/ubuntu/dogeun/node_modules/mysql/lib/Connection.js:103:28)
+    at emitOne (events.js:96:13)
+    at Socket.emit (events.js:191:7)
+    at readableAddChunk (_stream_readable.js:178:18)
+    at Socket.Readable.push (_stream_readable.js:136:10)
+    at TCP.onread (net.js:561:20)
+    --------------------
+    at Protocol._enqueue (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/Protocol.js:141:48)
+    at PoolConnection.query (/home/ubuntu/dogeun/node_modules/mysql/lib/Connection.js:208:25)
+    at /home/ubuntu/dogeun/node_modules/promise-mysql/lib/helper.js:16:24
+    at Promise._execute (/home/ubuntu/dogeun/node_modules/bluebird/js/release/debuggability.js:300:9)
+    at Promise._resolveFromExecutor (/home/ubuntu/dogeun/node_modules/bluebird/js/release/promise.js:483:18)
+    at new Promise (/home/ubuntu/dogeun/node_modules/bluebird/js/release/promise.js:79:10)
+    at PoolConnection.promiseCallback (/home/ubuntu/dogeun/node_modules/promise-mysql/lib/helper.js:6:10)
+    at connection.query (/home/ubuntu/dogeun/node_modules/promise-mysql/lib/connection.js:64:28)
+    at Function.DogList.getLists (/home/ubuntu/dogeun/model/doglists.js:29:39)
+  code: 'ER_BAD_FIELD_ERROR',
+  errno: 1054,
+  sqlState: '42S22',
+  index: 0 }
+[0mGET /doglists?page=0&spiece=null&gender=null&region=2&age=0 [31m500 [0m6.484 ms - 86[0m
+[ 1, 2, 0 ]
+{ Error: ER_BAD_FIELD_ERROR: Unknown column 'p.region' in 'where clause'
+    at Query.Sequence._packetToError (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/sequences/Sequence.js:52:14)
+    at Query.ErrorPacket (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/sequences/Query.js:77:18)
+    at Protocol._parsePacket (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/Protocol.js:280:23)
+    at Parser.write (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/Parser.js:75:12)
+    at Protocol.write (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/Protocol.js:39:16)
+    at Socket.<anonymous> (/home/ubuntu/dogeun/node_modules/mysql/lib/Connection.js:103:28)
+    at emitOne (events.js:96:13)
+    at Socket.emit (events.js:191:7)
+    at readableAddChunk (_stream_readable.js:178:18)
+    at Socket.Readable.push (_stream_readable.js:136:10)
+    at TCP.onread (net.js:561:20)
+    --------------------
+    at Protocol._enqueue (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/Protocol.js:141:48)
+    at PoolConnection.query (/home/ubuntu/dogeun/node_modules/mysql/lib/Connection.js:208:25)
+    at /home/ubuntu/dogeun/node_modules/promise-mysql/lib/helper.js:16:24
+    at Promise._execute (/home/ubuntu/dogeun/node_modules/bluebird/js/release/debuggability.js:300:9)
+    at Promise._resolveFromExecutor (/home/ubuntu/dogeun/node_modules/bluebird/js/release/promise.js:483:18)
+    at new Promise (/home/ubuntu/dogeun/node_modules/bluebird/js/release/promise.js:79:10)
+    at PoolConnection.promiseCallback (/home/ubuntu/dogeun/node_modules/promise-mysql/lib/helper.js:6:10)
+    at connection.query (/home/ubuntu/dogeun/node_modules/promise-mysql/lib/connection.js:64:28)
+    at Function.DogList.getLists (/home/ubuntu/dogeun/model/doglists.js:29:39)
+  code: 'ER_BAD_FIELD_ERROR',
+  errno: 1054,
+  sqlState: '42S22',
+  index: 0 }
+[0mGET /doglists?page=0&region=2&age=0 [31m500 [0m4.572 ms - 91[0m
+[ 1, NaN, 0 ]
+{ Error: ER_BAD_FIELD_ERROR: Unknown column 'p.region' in 'where clause'
+    at Query.Sequence._packetToError (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/sequences/Sequence.js:52:14)
+    at Query.ErrorPacket (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/sequences/Query.js:77:18)
+    at Protocol._parsePacket (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/Protocol.js:280:23)
+    at Parser.write (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/Parser.js:75:12)
+    at Protocol.write (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/Protocol.js:39:16)
+    at Socket.<anonymous> (/home/ubuntu/dogeun/node_modules/mysql/lib/Connection.js:103:28)
+    at emitOne (events.js:96:13)
+    at Socket.emit (events.js:191:7)
+    at readableAddChunk (_stream_readable.js:178:18)
+    at Socket.Readable.push (_stream_readable.js:136:10)
+    at TCP.onread (net.js:561:20)
+    --------------------
+    at Protocol._enqueue (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/Protocol.js:141:48)
+    at PoolConnection.query (/home/ubuntu/dogeun/node_modules/mysql/lib/Connection.js:208:25)
+    at /home/ubuntu/dogeun/node_modules/promise-mysql/lib/helper.js:16:24
+    at Promise._execute (/home/ubuntu/dogeun/node_modules/bluebird/js/release/debuggability.js:300:9)
+    at Promise._resolveFromExecutor (/home/ubuntu/dogeun/node_modules/bluebird/js/release/promise.js:483:18)
+    at new Promise (/home/ubuntu/dogeun/node_modules/bluebird/js/release/promise.js:79:10)
+    at PoolConnection.promiseCallback (/home/ubuntu/dogeun/node_modules/promise-mysql/lib/helper.js:6:10)
+    at connection.query (/home/ubuntu/dogeun/node_modules/promise-mysql/lib/connection.js:64:28)
+    at Function.DogList.getLists (/home/ubuntu/dogeun/model/doglists.js:29:39)
+  code: 'ER_BAD_FIELD_ERROR',
+  errno: 1054,
+  sqlState: '42S22',
+  index: 0 }
+[0mGET /doglists?page=0&region=%EC%86%A1%ED%8C%8C%EA%B5%AC&age=0 [31m500 [0m6.088 ms - 91[0m
+[ 1, 1, 2, 2, 1 ]
+[0mGET /doglists?page=2&spiece=1&gender=2&region1=2&age=1 [32m200 [0m7.396 ms - 6[0m
+[0mGET /doglists?page=0 [32m200 [0m5.807 ms - 882[0m
+[ 1, 1, 2, 2, 1 ]
+[0mGET /doglists?page=0&spiece=1&gender=2&region1=2&age=1 [32m200 [0m5.096 ms - 6[0m
+[0mGET /doglists?page=1 [32m200 [0m4.994 ms - 1337[0m
+[0mGET /doglists?page=10 [32m200 [0m8.598 ms - 184[0m
+[0mGET /doglists?page=0 [32m200 [0m4.553 ms - 882[0m
+[0mGET /doglists [32m200 [0m5.247 ms - 2[0m
+[0mGET /doglists/86 [32m200 [0m17.325 ms - 728[0m
+[0mGET /doglists/ [32m200 [0m5.331 ms - 2[0m
+[0mGET /doglists? [32m200 [0m4.349 ms - 2[0m
+[0mGET /doglists?page [32m200 [0m5.745 ms - 882[0m
+[0mGET /doglists?page=0 [32m200 [0m4.623 ms - 882[0m
+[ 1, 1, 1, 1, 1 ]
+[0mGET /doglists?page=2&spiece=1&gender=1&age=1&region1=1 [32m200 [0m4.926 ms - 119[0m
+[ 1, 1, 1, 1, 1 ]
+[0mGET /doglists?page=0&spiece=1&gender=1&age=1&region1=1 [32m200 [0m4.593 ms - 119[0m
+[ 1, 1, 1, 1, 1 ]
+[0mGET /doglists?page=1&spiece=1&gender=1&age=1&region1=1 [32m200 [0m15.555 ms - 119[0m
+[ 1, 1, 1, 1, 1 ]
+[0mGET /doglists?page=2&spiece=1&gender=1&age=1&region1=1 [32m200 [0m6.833 ms - 119[0m
+[ 1, 1, 1 ]
+[0mGET /doglists?page=2&spiece=1&gender=1 [32m200 [0m7.825 ms - 119[0m
+[ 1, 1, 1 ]
+[0mGET /doglists?page=0&spiece=1&gender=1 [32m200 [0m5.174 ms - 119[0m
+[ 1, 1, 1 ]
+[0mGET /doglists?page=1&spiece=1&gender=1 [32m200 [0m5.507 ms - 119[0m
+[ 1, 1 ]
+[0mGET /doglists?page=1&spiece=1 [32m200 [0m4.867 ms - 119[0m
+[ 1, 1 ]
+[0mGET /doglists?page=0&spiece=1 [32m200 [0m5.138 ms - 1583[0m
+[ 1, 1 ]
+[0mGET /doglists?page=1&spiece=1 [32m200 [0m5.117 ms - 119[0m
+[ 1, 1 ]
+[0mGET /doglists?page=2&spiece=1 [32m200 [0m4.842 ms - 119[0m
+[ 1, 1 ]
+[0mGET /doglists?page=3&spiece=1 [32m200 [0m4.584 ms - 119[0m
+[0mGET /doglists?page=0&spiece=3 [32m200 [0m75.781 ms - 1785[0m
+[0mGET /doglists?page=1&spiece=3 [32m200 [0m6.971 ms - 1080[0m
+[0mGET /doglists?page=2&spiece=3 [32m200 [0m5.668 ms - 503[0m
+[0mGET /doglists?page=3&spiece=3 [32m200 [0m10.174 ms - 6[0m
+[0mGET /doglists?page=4&spiece=3 [32m200 [0m6.325 ms - 6[0m
+[0mGET /doglists/86 [32m200 [0m15.114 ms - 728[0m
+[0mGET /doglists/emergency [32m200 [0m6.134 ms - 542[0m
+[0mGET /doglists?page=2&spiece=1&gender=2&region1=2&age=1 [32m200 [0m4.889 ms - 6[0m
+[0mGET /doglists/86/done [33m404 [0m7.440 ms - 1415[0m
+{ Error: ER_BAD_FIELD_ERROR: Unknown column 'NaN' in 'where clause'
+    at Query.Sequence._packetToError (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/sequences/Sequence.js:52:14)
+    at Query.ErrorPacket (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/sequences/Query.js:77:18)
+    at Protocol._parsePacket (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/Protocol.js:280:23)
+    at Parser.write (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/Parser.js:75:12)
+    at Protocol.write (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/Protocol.js:39:16)
+    at Socket.<anonymous> (/home/ubuntu/dogeun/node_modules/mysql/lib/Connection.js:103:28)
+    at emitOne (events.js:96:13)
+    at Socket.emit (events.js:191:7)
+    at readableAddChunk (_stream_readable.js:178:18)
+    at Socket.Readable.push (_stream_readable.js:136:10)
+    at TCP.onread (net.js:561:20)
+    --------------------
+    at Protocol._enqueue (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/Protocol.js:141:48)
+    at PoolConnection.query (/home/ubuntu/dogeun/node_modules/mysql/lib/Connection.js:208:25)
+    at /home/ubuntu/dogeun/node_modules/promise-mysql/lib/helper.js:16:24
+    at Promise._execute (/home/ubuntu/dogeun/node_modules/bluebird/js/release/debuggability.js:300:9)
+    at Promise._resolveFromExecutor (/home/ubuntu/dogeun/node_modules/bluebird/js/release/promise.js:483:18)
+    at new Promise (/home/ubuntu/dogeun/node_modules/bluebird/js/release/promise.js:79:10)
+    at PoolConnection.promiseCallback (/home/ubuntu/dogeun/node_modules/promise-mysql/lib/helper.js:6:10)
+    at connection.query (/home/ubuntu/dogeun/node_modules/promise-mysql/lib/connection.js:64:28)
+    at Function.DogList.getLists (/home/ubuntu/dogeun/model/doglists.js:28:39)
+  code: 'ER_BAD_FIELD_ERROR',
+  errno: 1054,
+  sqlState: '42S22',
+  index: 0 }
+[0mGET /doglists?page=0&spiece=&gender=&region=&age=0 [31m500 [0m5.864 ms - 86[0m
+[0mGET /doglists?page=2&spiece=1&gender=1&age=1&region1=3 [32m200 [0m96.096 ms - 6[0m
+[0mGET /doglists?page=0&spiece=1&gender=1&age=1&region1=3 [32m200 [0m6.594 ms - 6[0m
+[0mGET /doglists?page=0&spiece=1&gender=1 [32m200 [0m5.495 ms - 119[0m
+[0mGET /doglists?page=1&spiece=1&gender=1 [32m200 [0m6.239 ms - 6[0m
+{ Error: ER_BAD_FIELD_ERROR: Unknown column 'NaN' in 'where clause'
+    at Query.Sequence._packetToError (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/sequences/Sequence.js:52:14)
+    at Query.ErrorPacket (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/sequences/Query.js:77:18)
+    at Protocol._parsePacket (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/Protocol.js:280:23)
+    at Parser.write (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/Parser.js:75:12)
+    at Protocol.write (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/Protocol.js:39:16)
+    at Socket.<anonymous> (/home/ubuntu/dogeun/node_modules/mysql/lib/Connection.js:103:28)
+    at emitOne (events.js:96:13)
+    at Socket.emit (events.js:191:7)
+    at readableAddChunk (_stream_readable.js:178:18)
+    at Socket.Readable.push (_stream_readable.js:136:10)
+    at TCP.onread (net.js:561:20)
+    --------------------
+    at Protocol._enqueue (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/Protocol.js:141:48)
+    at PoolConnection.query (/home/ubuntu/dogeun/node_modules/mysql/lib/Connection.js:208:25)
+    at /home/ubuntu/dogeun/node_modules/promise-mysql/lib/helper.js:16:24
+    at Promise._execute (/home/ubuntu/dogeun/node_modules/bluebird/js/release/debuggability.js:300:9)
+    at Promise._resolveFromExecutor (/home/ubuntu/dogeun/node_modules/bluebird/js/release/promise.js:483:18)
+    at new Promise (/home/ubuntu/dogeun/node_modules/bluebird/js/release/promise.js:79:10)
+    at PoolConnection.promiseCallback (/home/ubuntu/dogeun/node_modules/promise-mysql/lib/helper.js:6:10)
+    at connection.query (/home/ubuntu/dogeun/node_modules/promise-mysql/lib/connection.js:64:28)
+    at Function.DogList.getLists (/home/ubuntu/dogeun/model/doglists.js:28:39)
+  code: 'ER_BAD_FIELD_ERROR',
+  errno: 1054,
+  sqlState: '42S22',
+  index: 0 }
+[0mGET /doglists?page=0&spiece=&gender=&region=&age=0 [31m500 [0m14.549 ms - 86[0m
+{ Error: ER_BAD_FIELD_ERROR: Unknown column 'NaN' in 'where clause'
+    at Query.Sequence._packetToError (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/sequences/Sequence.js:52:14)
+    at Query.ErrorPacket (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/sequences/Query.js:77:18)
+    at Protocol._parsePacket (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/Protocol.js:280:23)
+    at Parser.write (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/Parser.js:75:12)
+    at Protocol.write (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/Protocol.js:39:16)
+    at Socket.<anonymous> (/home/ubuntu/dogeun/node_modules/mysql/lib/Connection.js:103:28)
+    at emitOne (events.js:96:13)
+    at Socket.emit (events.js:191:7)
+    at readableAddChunk (_stream_readable.js:178:18)
+    at Socket.Readable.push (_stream_readable.js:136:10)
+    at TCP.onread (net.js:561:20)
+    --------------------
+    at Protocol._enqueue (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/Protocol.js:141:48)
+    at PoolConnection.query (/home/ubuntu/dogeun/node_modules/mysql/lib/Connection.js:208:25)
+    at /home/ubuntu/dogeun/node_modules/promise-mysql/lib/helper.js:16:24
+    at Promise._execute (/home/ubuntu/dogeun/node_modules/bluebird/js/release/debuggability.js:300:9)
+    at Promise._resolveFromExecutor (/home/ubuntu/dogeun/node_modules/bluebird/js/release/promise.js:483:18)
+    at new Promise (/home/ubuntu/dogeun/node_modules/bluebird/js/release/promise.js:79:10)
+    at PoolConnection.promiseCallback (/home/ubuntu/dogeun/node_modules/promise-mysql/lib/helper.js:6:10)
+    at connection.query (/home/ubuntu/dogeun/node_modules/promise-mysql/lib/connection.js:64:28)
+    at Function.DogList.getLists (/home/ubuntu/dogeun/model/doglists.js:28:39)
+  code: 'ER_BAD_FIELD_ERROR',
+  errno: 1054,
+  sqlState: '42S22',
+  index: 0 }
+[0mGET /doglists?page=0&spiece=&gender=&region=&age=0 [31m500 [0m4.901 ms - 86[0m
+{ Error: ER_BAD_FIELD_ERROR: Unknown column 'NaN' in 'where clause'
+    at Query.Sequence._packetToError (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/sequences/Sequence.js:52:14)
+    at Query.ErrorPacket (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/sequences/Query.js:77:18)
+    at Protocol._parsePacket (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/Protocol.js:280:23)
+    at Parser.write (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/Parser.js:75:12)
+    at Protocol.write (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/Protocol.js:39:16)
+    at Socket.<anonymous> (/home/ubuntu/dogeun/node_modules/mysql/lib/Connection.js:103:28)
+    at emitOne (events.js:96:13)
+    at Socket.emit (events.js:191:7)
+    at readableAddChunk (_stream_readable.js:178:18)
+    at Socket.Readable.push (_stream_readable.js:136:10)
+    at TCP.onread (net.js:561:20)
+    --------------------
+    at Protocol._enqueue (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/Protocol.js:141:48)
+    at PoolConnection.query (/home/ubuntu/dogeun/node_modules/mysql/lib/Connection.js:208:25)
+    at /home/ubuntu/dogeun/node_modules/promise-mysql/lib/helper.js:16:24
+    at Promise._execute (/home/ubuntu/dogeun/node_modules/bluebird/js/release/debuggability.js:300:9)
+    at Promise._resolveFromExecutor (/home/ubuntu/dogeun/node_modules/bluebird/js/release/promise.js:483:18)
+    at new Promise (/home/ubuntu/dogeun/node_modules/bluebird/js/release/promise.js:79:10)
+    at PoolConnection.promiseCallback (/home/ubuntu/dogeun/node_modules/promise-mysql/lib/helper.js:6:10)
+    at connection.query (/home/ubuntu/dogeun/node_modules/promise-mysql/lib/connection.js:64:28)
+    at Function.DogList.getLists (/home/ubuntu/dogeun/model/doglists.js:28:39)
+  code: 'ER_BAD_FIELD_ERROR',
+  errno: 1054,
+  sqlState: '42S22',
+  index: 0 }
+[0mGET /doglists?page=0&spiece=&gender=&region=&age=0 [31m500 [0m4.488 ms - 86[0m
+[0mGET /doglists?page=0 [32m200 [0m8.192 ms - 876[0m
+{ Error: ER_BAD_FIELD_ERROR: Unknown column 'NaN' in 'where clause'
+    at Query.Sequence._packetToError (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/sequences/Sequence.js:52:14)
+    at Query.ErrorPacket (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/sequences/Query.js:77:18)
+    at Protocol._parsePacket (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/Protocol.js:280:23)
+    at Parser.write (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/Parser.js:75:12)
+    at Protocol.write (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/Protocol.js:39:16)
+    at Socket.<anonymous> (/home/ubuntu/dogeun/node_modules/mysql/lib/Connection.js:103:28)
+    at emitOne (events.js:96:13)
+    at Socket.emit (events.js:191:7)
+    at readableAddChunk (_stream_readable.js:178:18)
+    at Socket.Readable.push (_stream_readable.js:136:10)
+    at TCP.onread (net.js:561:20)
+    --------------------
+    at Protocol._enqueue (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/Protocol.js:141:48)
+    at PoolConnection.query (/home/ubuntu/dogeun/node_modules/mysql/lib/Connection.js:208:25)
+    at /home/ubuntu/dogeun/node_modules/promise-mysql/lib/helper.js:16:24
+    at Promise._execute (/home/ubuntu/dogeun/node_modules/bluebird/js/release/debuggability.js:300:9)
+    at Promise._resolveFromExecutor (/home/ubuntu/dogeun/node_modules/bluebird/js/release/promise.js:483:18)
+    at new Promise (/home/ubuntu/dogeun/node_modules/bluebird/js/release/promise.js:79:10)
+    at PoolConnection.promiseCallback (/home/ubuntu/dogeun/node_modules/promise-mysql/lib/helper.js:6:10)
+    at connection.query (/home/ubuntu/dogeun/node_modules/promise-mysql/lib/connection.js:64:28)
+    at Function.DogList.getLists (/home/ubuntu/dogeun/model/doglists.js:28:39)
+  code: 'ER_BAD_FIELD_ERROR',
+  errno: 1054,
+  sqlState: '42S22',
+  index: 0 }
+[0mGET /doglists?page=0&spiece=null&gender=null&region=null&age=0 [31m500 [0m4.181 ms - 86[0m
+{ Error: ER_BAD_FIELD_ERROR: Unknown column 'NaN' in 'where clause'
+    at Query.Sequence._packetToError (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/sequences/Sequence.js:52:14)
+    at Query.ErrorPacket (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/sequences/Query.js:77:18)
+    at Protocol._parsePacket (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/Protocol.js:280:23)
+    at Parser.write (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/Parser.js:75:12)
+    at Protocol.write (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/Protocol.js:39:16)
+    at Socket.<anonymous> (/home/ubuntu/dogeun/node_modules/mysql/lib/Connection.js:103:28)
+    at emitOne (events.js:96:13)
+    at Socket.emit (events.js:191:7)
+    at readableAddChunk (_stream_readable.js:178:18)
+    at Socket.Readable.push (_stream_readable.js:136:10)
+    at TCP.onread (net.js:561:20)
+    --------------------
+    at Protocol._enqueue (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/Protocol.js:141:48)
+    at PoolConnection.query (/home/ubuntu/dogeun/node_modules/mysql/lib/Connection.js:208:25)
+    at /home/ubuntu/dogeun/node_modules/promise-mysql/lib/helper.js:16:24
+    at Promise._execute (/home/ubuntu/dogeun/node_modules/bluebird/js/release/debuggability.js:300:9)
+    at Promise._resolveFromExecutor (/home/ubuntu/dogeun/node_modules/bluebird/js/release/promise.js:483:18)
+    at new Promise (/home/ubuntu/dogeun/node_modules/bluebird/js/release/promise.js:79:10)
+    at PoolConnection.promiseCallback (/home/ubuntu/dogeun/node_modules/promise-mysql/lib/helper.js:6:10)
+    at connection.query (/home/ubuntu/dogeun/node_modules/promise-mysql/lib/connection.js:64:28)
+    at Function.DogList.getLists (/home/ubuntu/dogeun/model/doglists.js:28:39)
+  code: 'ER_BAD_FIELD_ERROR',
+  errno: 1054,
+  sqlState: '42S22',
+  index: 0 }
+[0mGET /doglists?page=0&spiece=null&gender=null&region=null [31m500 [0m4.080 ms - 86[0m
+{ Error: ER_BAD_FIELD_ERROR: Unknown column 'NaN' in 'where clause'
+    at Query.Sequence._packetToError (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/sequences/Sequence.js:52:14)
+    at Query.ErrorPacket (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/sequences/Query.js:77:18)
+    at Protocol._parsePacket (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/Protocol.js:280:23)
+    at Parser.write (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/Parser.js:75:12)
+    at Protocol.write (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/Protocol.js:39:16)
+    at Socket.<anonymous> (/home/ubuntu/dogeun/node_modules/mysql/lib/Connection.js:103:28)
+    at emitOne (events.js:96:13)
+    at Socket.emit (events.js:191:7)
+    at readableAddChunk (_stream_readable.js:178:18)
+    at Socket.Readable.push (_stream_readable.js:136:10)
+    at TCP.onread (net.js:561:20)
+    --------------------
+    at Protocol._enqueue (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/Protocol.js:141:48)
+    at PoolConnection.query (/home/ubuntu/dogeun/node_modules/mysql/lib/Connection.js:208:25)
+    at /home/ubuntu/dogeun/node_modules/promise-mysql/lib/helper.js:16:24
+    at Promise._execute (/home/ubuntu/dogeun/node_modules/bluebird/js/release/debuggability.js:300:9)
+    at Promise._resolveFromExecutor (/home/ubuntu/dogeun/node_modules/bluebird/js/release/promise.js:483:18)
+    at new Promise (/home/ubuntu/dogeun/node_modules/bluebird/js/release/promise.js:79:10)
+    at PoolConnection.promiseCallback (/home/ubuntu/dogeun/node_modules/promise-mysql/lib/helper.js:6:10)
+    at connection.query (/home/ubuntu/dogeun/node_modules/promise-mysql/lib/connection.js:64:28)
+    at Function.DogList.getLists (/home/ubuntu/dogeun/model/doglists.js:28:39)
+  code: 'ER_BAD_FIELD_ERROR',
+  errno: 1054,
+  sqlState: '42S22',
+  index: 0 }
+[0mGET /doglists?page=0&spiece=null&gender=null&region1=null [31m500 [0m6.149 ms - 86[0m
+[0mGET /doglists?page=0 [32m200 [0m8.534 ms - 876[0m
+[0mGET /doglists?page=0 [32m200 [0m6.917 ms - 876[0m
+[0mGET /doglists?page=0 [32m200 [0m8.243 ms - 876[0m
+[0mGET /doglists?page=2&spiece=1&gender=2&region1=2&age=1 [32m200 [0m6.669 ms - 6[0m
+[0mGET /doglists?page=0 [32m200 [0m4.640 ms - 876[0m
+[0mGET /doglists?page=0 [32m200 [0m9.687 ms - 876[0m
+[0mGET /doglists?page=0 [32m200 [0m5.023 ms - 876[0m
+[0mGET /doglists?page=0 [32m200 [0m13.471 ms - 876[0m
+[0mGET /doglists?page=0 [32m200 [0m4.441 ms - 876[0m
+[0mGET /doglists?page=0 [32m200 [0m4.410 ms - 876[0m
+[0mGET /doglists?page=0 [32m200 [0m4.740 ms - 876[0m
+[0mGET /doglists?page=0 [32m200 [0m4.937 ms - 876[0m
+[0mGET /doglists?page=0 [32m200 [0m6.276 ms - 876[0m
+[0mGET /doglists?page=0 [32m200 [0m4.712 ms - 876[0m
+[0mGET /doglists?page=0 [32m200 [0m13.213 ms - 876[0m
+[0mGET /doglists?page=0 [32m200 [0m4.326 ms - 876[0m
+[0mGET /doglists?page=0 [32m200 [0m6.481 ms - 876[0m
+[0mGET /doglists?page=0 [32m200 [0m4.424 ms - 876[0m
+[0mGET /doglists?page=0 [32m200 [0m5.113 ms - 876[0m
+[0mGET /doglists?page=0 [32m200 [0m8.612 ms - 876[0m
+[0mGET /doglists?page=0 [32m200 [0m6.930 ms - 876[0m
+[0mGET /doglists?page=0 [32m200 [0m5.414 ms - 876[0m
+[0mGET /doglists?page=0 [32m200 [0m4.539 ms - 876[0m
+[0mGET /doglists?page=0 [32m200 [0m4.468 ms - 876[0m
+[0mGET /doglists?page=0 [32m200 [0m5.387 ms - 876[0m
+[0mGET /doglists?page=0 [32m200 [0m4.322 ms - 876[0m
+[0mGET /doglists?page=0 [32m200 [0m4.618 ms - 876[0m
+[0mGET /doglists?page=0 [32m200 [0m6.430 ms - 876[0m
+[0mGET /doglists?page=0 [32m200 [0m4.944 ms - 876[0m
+[0mGET /doglists?page=0 [32m200 [0m4.358 ms - 876[0m
+[0mGET /doglists?page=0 [32m200 [0m6.090 ms - 876[0m
+[0mGET /doglists?page=0 [32m200 [0m7.267 ms - 876[0m
+[0mGET /doglists?page=0 [32m200 [0m9.031 ms - 876[0m
+[0mGET /doglists?page=0 [32m200 [0m4.665 ms - 876[0m
+[0mGET /doglists?page=0 [32m200 [0m6.539 ms - 876[0m
+[0mGET /doglists?page=0 [32m200 [0m94.955 ms - 876[0m
+[0mGET /doglists?page=0 [32m200 [0m8.553 ms - 876[0m
+[0mGET /doglists?page=0 [32m200 [0m5.784 ms - 876[0m
+[0mGET /doglists?page=0 [32m200 [0m5.728 ms - 876[0m
+[0mGET /doglists?page=0 [32m200 [0m4.689 ms - 876[0m
+[0mGET /doglists?page=0 [32m200 [0m5.509 ms - 876[0m
+[0mGET /doglists?page=0 [32m200 [0m8.995 ms - 876[0m
+[0mGET /doglists?page=0 [32m200 [0m4.414 ms - 876[0m
+[0mGET /doglists?page=0 [32m200 [0m4.376 ms - 876[0m
+[0mGET /doglists?page=0 [32m200 [0m5.011 ms - 876[0m
+[0mGET /doglists?page=0 [32m200 [0m4.504 ms - 876[0m
+[0mGET /doglists?page=0 [32m200 [0m5.202 ms - 876[0m
+[0mGET /doglists?page=0 [32m200 [0m5.990 ms - 876[0m
+[0mGET /doglists?page=0 [32m200 [0m4.639 ms - 876[0m
+[0mGET /doglists?page=0 [32m200 [0m4.659 ms - 876[0m
+[0mGET /doglists?page=0 [32m200 [0m11.724 ms - 876[0m
+[0mGET /doglists?page=0 [32m200 [0m5.106 ms - 876[0m
+[0mGET /doglists?page=0 [32m200 [0m4.656 ms - 876[0m
+[0mGET /doglists?page=0 [32m200 [0m4.378 ms - 876[0m
+[0mGET /doglists?page=0 [32m200 [0m102.418 ms - 876[0m
+[0mGET /doglists?page=0 [32m200 [0m9.884 ms - 876[0m
+[0mGET /doglists?page=0 [32m200 [0m99.298 ms - 876[0m
+[0mPOST /profiles [33m404 [0m8.555 ms - 1422[0m
+[0mPOST /profiles [31m500 [0m152.173 ms - 481[0m
+[0mPOST /profiles [33m401 [0m233.765 ms - 31[0m
+[0mPOST /profiles [31m500 [0m168.135 ms - 14[0m
+[0mPOST /profiles [31m500 [0m12.332 ms - 14[0m
+[0mPOST /profiles [31m500 [0m2.819 ms - 14[0m
+[0mPOST /profiles [31m500 [0m0.885 ms - 14[0m
+[0mPOST /profiles [31m500 [0m0.641 ms - 14[0m
+[0mPOST /profiles [31m500 [0m0.640 ms - 14[0m
+[0mPOST /profiles [31m500 [0m0.609 ms - 14[0m
+[0mPOST /profiles [31m500 [0m0.591 ms - 14[0m
+[0mPOST /profiles [31m500 [0m16.029 ms - 14[0m
+[0mPOST /profiles [31m500 [0m15.507 ms - 14[0m
+[0mGET /doglists?page=0 [32m200 [0m163.426 ms - 876[0m
+[0mGET /doglists?page=0 [32m200 [0m10.591 ms - 876[0m
+[0mGET /doglists?page=0 [32m200 [0m5.843 ms - 876[0m
+[0mGET /doglists?page=0 [32m200 [0m5.359 ms - 876[0m
+[0mGET /doglists?page=0 [32m200 [0m5.901 ms - 876[0m
+[0mGET /doglists?page=0 [32m200 [0m7.941 ms - 876[0m
+[0mGET /doglists?page=0 [32m200 [0m5.459 ms - 876[0m
+[0mGET /doglists?page=0 [32m200 [0m21.041 ms - 876[0m
+[0mGET /doglists?page=0 [32m200 [0m6.100 ms - 876[0m
+[0mGET /doglists?page=0 [32m200 [0m7.046 ms - 876[0m
+[0mGET /doglists?page=0 [32m200 [0m9.854 ms - 876[0m
+[0mGET /doglists?page=0 [32m200 [0m4.375 ms - 876[0m
+[0mGET /doglists?page=0 [32m200 [0m5.242 ms - 876[0m
+[0mPOST /profiles [31m500 [0m110.172 ms - 77[0m
+{ username: '김다은',
+  gender: '4',
+  lifestyle: '3',
+  other_pets: '3',
+  family_size: '3',
+  region: '서울' }
+{ username: '김다은',
+  gender: '4',
+  lifestyle: '3',
+  other_pets: '3',
+  family_size: '3',
+  region: '서울' }
+[0mPOST /profiles [31m500 [0m81.770 ms - 77[0m
+{ username: '김다은',
+  gender: '4',
+  lifestyle: '3',
+  other_pets: '3',
+  family_size: '3',
+  region: '서울' }
+{ username: '김다은',
+  gender: '4',
+  lifestyle: '3',
+  other_pets: '3',
+  family_size: '3',
+  region: '서울' }
+[0mPOST /profiles [32m201 [0m12.756 ms - 163[0m
+{ username: '김다연',
+  gender: '4',
+  lifestyle: '3',
+  other_pets: '3',
+  family_size: '3',
+  region: '서울' }
+{ username: '김다연',
+  gender: '4',
+  lifestyle: '3',
+  other_pets: '3',
+  family_size: '3',
+  region: '서울' }
+[0mPOST /profiles [32m201 [0m11.871 ms - 163[0m
+{ '------WebKitFormBoundaryZrM0cm9BrTspWpgg\r\nContent-Disposition: form-data; name': '"profile"; filename="@��.jpg"\r\nContent-Type: image/jpeg\r\n\r\n����\u0000\u0010JFIF\u0000\u0001\u0001\u0000\u0000\u0001\u0000\u0001\u0000\u0000��\u0000�\u0000\t\u0006\u0007\u0010\u0010\u0010\u0010\u000f\u000f\u000f\u000f\u000f\u000f\u000f\u000f\u000f\u000f\r\u000f\r\r\u000f\r\r\r\u000f\u0015\u0011\u0016\u0016\u0015\u0011\u0015\u0015\u0018\u001d( \u0018\u001a%\u001b\u0015\u0015!1!%) ...\u0017\u001f385,7(-. \u0001\n\n\n\u000e\r\u000e\u0017\u0010\u0010\u0017-\u001d\u001d\u001d--- ------------ --- - --- ---  ---- - -- -1 7   -��\u0000\u0011\b\u0000�\u0000�\u0003\u0001"\u0000\u0002\u0011\u0001\u0003\u0011\u0001��\u0000\u001b\u0000\u0000\u0001\u0005\u0001\u0001\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0001\u0002\u0003\u0004\u0006\u0005\u0007��\u00007\u0010\u0000\u0002\u0001\u0003\u0002\u0004\u0004\u0004\u0005\u0002\u0006\u0003\u0000\u0000\u0000\u0000\u0000\u0001\u0002\u0003\u0004\u0011!1\u0005\u0012AQ\u0006aq�"2��\u0013#R��Brb�����\u0015\u0016$��\u0000\u001a\u0001\u0000\u0003\u0001\u0001\u0001\u0001\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0002\u0003\u0001\u0004\u0005\u0006��\u0000(\u0011\u0001\u0001\u0000\u0002\u0001\u0004\u0001\u0003\u0004\u0003\u0001\u0000\u0000\u0000\u0000\u0000\u0000\u0001\u0002\u0011\u0003\u0004\u0012!12\u0013AQ\u0005"aq3B�\u0015��\u0000\f\u0003\u0001\u0000\u0002\u0011\u0003\u0011\u0000?\u0000\n\u0000k�\u0000\u0000\u0000�(\u0000 \n!��f;����\'�k.�����]����k���������W�_"Z���\u0012',
+  'Y���%\u0014�m$S�5~\f��J�Mi\r}̷Q��m�\u0007\u000fT�F8�\u001a����*1�\'D\9]�)\u001c�En�ڔ�-�m�\u000b�\'���6��_��?T~�ER/f�����\u0004��o�.��rlطJ/��$h�B�)����S;U�E����񹼤ֺ2��:�}JC�cn6;hQ������]���5l\u0000.\u0000\nP\u0000\u0019�j': 'V��s}��\u0014�Ĵ۩*\u00053��\u0000F�E�t�\u00014@\u001b',
+  '�,��p\r)�\'�3\u0019},d�q5�3\u0019�c�<��A?m�ܚ��`I���y5\u0012RZ����\u000eJ*Mk,3��7�]z��)���cEB\u0011��$�����F_d���\n��\u000b�\u0018�\u0012�G?�֫\u0015�ig��έԔ����񅡽��n�\u001b۫wQ"��d���C�]F��*�M6�f���u G3Ma�8<��������-�': '',
+  ']�ЩZ ����8��ѝ��:�\u001b��\u001d���\u001a��ORˡ�j��H�y�Vm��L��8C��': '>��;J\u0002\u0000��\u00002u\u0012�?�6co�',
+  '�V6�?Q�in��Du\u001a��': '���o�����\td���o質��f�V6�o�%F��m����m\\s,��L �f�?�ug��쳪��%"���\u001f�\u001e>䠞\u001cU/���g\u0015ٛK���\u001by\u001ei4O\'��_\u0015�\u001d\u0013a��\'N�\u001b��\u0016�k\u0018Y�!�\u0000�*�4e\u0004�{<z\u0011�ǯy\'����[T�x՛��C)��<����j\r}�g-�t!@P*9E\u0010գ\u0017в��2�8�\u001c\u001e��\\#���?Rե�a��IvE�\u0011P�R�u��U��\u0013�V�\nY\u0015',
+  'S�\u0017�NQ�:鿡\u0005:ʥ5%�ű�6���2�': '',
+  's��g�^�c��\u001f\u000bB\u0002�\u0011�����\u0003�b�9��.�^�}Q(�g�1g���4��{i�\tQ<�v�E�\u001d,���O�>��4��g\u0017��\u0000|-\u0004������:k�I$�c� "K9�\u0018��\u001b3�\u001b8����<\u0012\r�zc�r0�])���fR�>z� V�H��e�S���_\u0007[�%��B.~�I$�}': '?��1��\u001c>�B�bָY _b\r�#�wr�\u0007��\u001az�I�$a)U���I���9n��V\u0018ܷ���\t>w.��H�pj\u001c�Y�\u0007]\u0016ƹs�T�Q��5�\u001a�\b`1�����ll2H�U��z\u0014*,e�ħ�mG���).�\u0006w��8f\u0012zKo',
+  'A�> S����I��ʫy�R*\u000f;g������:�d�,�t\u0019\u001a�"����n3!�G<-�ֈ�)�#Ό': '<>i��\u0000\u000f��\u0000\u0003@\u0000\u0014ƀ\u0000\u0000\u0000\u0004\u0000��\u001c�q��*�>�asQu�7�i',
+  '^fG��T���Z{ũ$��ꟓ\u0013�n;z;m�O���������q\u000bxU�ON]�?���WTUZou������,tp瓒�����OB8�]4-ī),�!"�T2��\u000eL`�3\u0000\u0000�1��ɏdr2���*Wdח\u0010������%��J��\u0014b��Ւ�ޟ�ϗ�^��\u0014��)E>��ѳ�\ts(��S�y�z�|��K��H��\'#d����\u001cծ�\u0011�[#�ku�d�\�m��[\u0005$%�xm��2_2�': '',
+  '��K': '',
+  '�\u000fB�o\u0013��8p\u0000\u0014p����6���\u001d\f�\u001eS�j�VK��@\f \u0001\u0005\u0000\u0000\u0000�\f�l��\u001a�|�?N����h~%9�x�2�W�>��O7���(O���\u001f\': '$�5��P��m2����-q\u001cJK�hfN{���Iۿ/T�|U�Ó��cMJG��>�\u0000\u0015T\u001b��z]\n�|k���Wn�X����"c9�F �6f�\u001b WR{\u0013�5�[\u0019�/�\'Y��^]\f�\u0012�J\r�ry�="��q�II�]��t}O��銺���y��)����N�����8N\u001c��7qn|���K�T��*̯7���',
+  '�m.\d�fz%���\u0017�#� �@��~z\u0010��\u0017�S\u0007���\u001f�\u001a��\u0000�#T�\u0002\u0003J\u0002\n�\u0000\u00004\u0000\u0000\u0000\u0001�\u0000y��m�;�����\u001fG��6^8��aY-c���^�����\u0019MW��|�S�_�����%�d��z�\u0000\u000f��\b�L���z��e�mJ]����\'U5\u001d�u\t\u0015R�bJX\u0017n\u001d:\u0011��9p����w)�e��lj![\u0006i\rY\u001c��N�\u000eey�*�WN%�\r\r�\u0014�����f\u001a��d�a\u001d���^r"\t0\u001d|1�\u0006��\u0015�\u001a��%%��\u0000F9��\u0007W����8���_q��\�\u001fw\u000e_��Q\u0000���iJ��4~�O�d��^r����\b�\r�/)\u0005\u0004\u0000�\u0000\u0000\u0000\u0000\u0000\u0000\u00000 ��*��N[J-{�<���t��%�h�C��[\u0015(��^��6��Wo�\'�x': '������<��p�{\u001f�h��Z��c/�|_r9O\u000fS��x�V�4 B���F��v9\u00177\u0015)�#A4U�k\u0019hыq�\'�',
+  '�\u001fk�B�?\u0011�\u001c�%�ZM�_��^�po����|yM����4�\u001cK�7���RWR���\u0015 ��Q�': '',
+  'Ǐ\u0019�;\O��,d�ԞF\u0000�я\u001c�Q\u0001\u001a�Qg�W�:���g\u001c�gR� ���wcg��ߋ\u001e�`?�5;�n���\u0000�����U1�d��g\u0019%!�\u0014��厌x���': '',
+  '\u0000\u0000L\u0000\u0000\u0000\u0000\u0006\u0000\u0000\u0018\u0000\b�h��Q}Q(\u0000�O.��ҧRQi�7�{e�\u000fáF���N\u001fH$e�8,n*�{b�\��b�Z6U\te4�o?��\u001f�Q�l�L�֎q\u0015����2�\u0014�)�Q�# ǡ\u0016��j2|j��#��Lu}�\t': '�ud%�X�\u0001Q�삆\u0004l\u0000b�\u0005F�� \u0000i^�G86�}���"\u0003��X嫰\u0000\u0000��\\\u0000\u0002`\\\u0000\u0000\u0000\u0000\u0000\u0000\u001d\u001e\u001fg�r_ھ�喡���u\u0013p�n_��\\�\u0011\u0012l����q��DB1�\u0011�R\u0019$C2vCU\u0018h�pg��3�GV\'.��Lt����_[a�s',
+  '�w\u0011���]Qi�����\u0001�\u001di@\u0000\u0003@���\u0011��\u0005\u0000c��\u0000�|�\u0014AP\u0000\u0000\u0000\u0000\u0001$)\u0006�D:0o�f4K4(�|)�\u001b6�����dt�\u0012(r!���0�c<\f\rhp1)���H��i�����2�H�kS�\H\'\u0003\u0014���3�J�}\r�j99w��\t]Xro�y��\u0017\u0016@i8V5���\f\u0017��/��\u0011f���W2�b��i�z�\u001b\u001fk�����-wO|,��� ]��\u0017�G�d�6�\u0005 ���\u0000\u0005KO]\u0000\u0003���P@\u0000\u000f�6iP���\u0001�4�\f)\u0012�\u0004�#�5I���': '1���c�:\u001c��!�r�iO\f\b��6\u001c�\rhx��\u00042�։�\u001aњn�8�N%����6��\u0002�jY:\u0012�\u0005H\u0019�̙�)g��1<Fߕ�Ӯ)e\u0019.?c�c��Ӈ',
+  '�\u001d$"x�\u0012TD��\u001eNf�����:�|u� �g\u001c�z\u0012�>W,�5�Y��E��ѭ��Z��X��)-�|��s�(�$ր\u0000\b��@\u0005K;\u001dO�,VtE�\u0016�Տ����r�CH�8~Q�\u000b�?\u0001�Tј\u0017\u0003�\u0006\r\u001a*\u0017\u0002\u00008tfG�ȶ\u001bk\nD�eE"jr\'�S\u001c�1\u0000\u0019 \u000e\u0006�A�\u0011�\fh�DlZh�H�h�D21��G\u000f���Yߒ9���h|\'�g��6����My���Ⱦ^lI?�ei,k�N��f�-I\u0005:0��i�7\u0018��5��:2�y{�\'��?\nҜ90��\u0015�': '',
+  '�ӯ}ʧR��\u0014g�i4�����c�~g,\���\u001c��l\u0000\u0000�': 't�cC���N�r��v��\u000b\u001d���.<wvU\u0011p(\f��\b<c\u0006\u0001\u0005\u0000\u0004\u0001D1�\u0011��\u0000F,d5�\u0016���u2HQR,R��YEq�0�\u0004���\u001c�\u001b#���\f�\u001b%�\u0018M�$S�[���U�a\u001c���\u001d�^\u001f��GtqiT�P�H�EJ.SRXo;i�����\u0019���!�� ���������[�J5�G����eK�<��y\u001c�\u000f�\u001axk\u0003H��^�|�?$�\n\u0006i>��Y|�]t\u0000t���z9\b\u0000j�c@\u0000\u0000\u0000\u0006\u0000`\u0000\rcX\u0001� \u0000\u0005\u0004\u001d\u000e�\u0004�n>��0\u0002\u0015�\b��\u0005��Hd�\f\u0015\u0014�5�\u000bq�rr��9w�E\u0003�\u0017',
+  '?6;�����@����^\u000f�\u0001���\r\n------WebKitFormBoundaryZrM0cm9BrTspWpgg\r\nContent-Disposition: form-data; name': '"username"\r\n\r\n김다은\r\n------WebKitFormBoundaryZrM0cm9BrTspWpgg\r\nContent-Disposition: form-data; name="gender"\r\n\r\n1\r\n------WebKitFormBoundaryZrM0cm9BrTspWpgg\r\nContent-Disposition: form-data; name="lifestyle"\r\n\r\n4\r\n------WebKitFormBoundaryZrM0cm9BrTspWpgg\r\nContent-Disposition: form-data; name="region"\r\n\r\n2\r\n------WebKitFormBoundaryZrM0cm9BrTspWpgg\r\nContent-Disposition: form-data; name="other_pets"\r\n\r\n0\r\n------WebKitFormBoundaryZrM0cm9BrTspWpgg\r\nContent-Disposition: form-data; name="family_size"\r\n\r\n3\r\n------WebKitFormBoundaryZrM0cm9BrTspWpgg--\r\n' }
+[0mPOST /profiles [33m401 [0m17.571 ms - 31[0m
+{ '------WebKitFormBoundaryrqwadjOIPkxglEkK\r\nContent-Disposition: form-data; name': '"profile"; filename="@��.jpg"\r\nContent-Type: image/jpeg\r\n\r\n����\u0000\u0010JFIF\u0000\u0001\u0001\u0000\u0000\u0001\u0000\u0001\u0000\u0000��\u0000�\u0000\t\u0006\u0007\u0010\u0010\u0010\u0010\u000f\u000f\u000f\u000f\u000f\u000f\u000f\u000f\u000f\u000f\r\u000f\r\r\u000f\r\r\r\u000f\u0015\u0011\u0016\u0016\u0015\u0011\u0015\u0015\u0018\u001d( \u0018\u001a%\u001b\u0015\u0015!1!%) ...\u0017\u001f385,7(-. \u0001\n\n\n\u000e\r\u000e\u0017\u0010\u0010\u0017-\u001d\u001d\u001d--- ------------ --- - --- ---  ---- - -- -1 7   -��\u0000\u0011\b\u0000�\u0000�\u0003\u0001"\u0000\u0002\u0011\u0001\u0003\u0011\u0001��\u0000\u001b\u0000\u0000\u0001\u0005\u0001\u0001\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0001\u0002\u0003\u0004\u0006\u0005\u0007��\u00007\u0010\u0000\u0002\u0001\u0003\u0002\u0004\u0004\u0004\u0005\u0002\u0006\u0003\u0000\u0000\u0000\u0000\u0000\u0001\u0002\u0003\u0004\u0011!1\u0005\u0012AQ\u0006aq�"2��\u0013#R��Brb�����\u0015\u0016$��\u0000\u001a\u0001\u0000\u0003\u0001\u0001\u0001\u0001\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0002\u0003\u0001\u0004\u0005\u0006��\u0000(\u0011\u0001\u0001\u0000\u0002\u0001\u0004\u0001\u0003\u0004\u0003\u0001\u0000\u0000\u0000\u0000\u0000\u0000\u0001\u0002\u0011\u0003\u0004\u0012!12\u0013AQ\u0005"aq3B�\u0015��\u0000\f\u0003\u0001\u0000\u0002\u0011\u0003\u0011\u0000?\u0000\n\u0000k�\u0000\u0000\u0000�(\u0000 \n!��f;����\'�k.�����]����k���������W�_"Z���\u0012',
+  'Y���%\u0014�m$S�5~\f��J�Mi\r}̷Q��m�\u0007\u000fT�F8�\u001a����*1�\'D\9]�)\u001c�En�ڔ�-�m�\u000b�\'���6��_��?T~�ER/f�����\u0004��o�.��rlطJ/��$h�B�)����S;U�E����񹼤ֺ2��:�}JC�cn6;hQ������]���5l\u0000.\u0000\nP\u0000\u0019�j': 'V��s}��\u0014�Ĵ۩*\u00053��\u0000F�E�t�\u00014@\u001b',
+  '�,��p\r)�\'�3\u0019},d�q5�3\u0019�c�<��A?m�ܚ��`I���y5\u0012RZ����\u000eJ*Mk,3��7�]z��)���cEB\u0011��$�����F_d���\n��\u000b�\u0018�\u0012�G?�֫\u0015�ig��έԔ����񅡽��n�\u001b۫wQ"��d���C�]F��*�M6�f���u G3Ma�8<��������-�': '',
+  ']�ЩZ ����8��ѝ��:�\u001b��\u001d���\u001a��ORˡ�j��H�y�Vm��L��8C��': '>��;J\u0002\u0000��\u00002u\u0012�?�6co�',
+  '�V6�?Q�in��Du\u001a��': '���o�����\td���o質��f�V6�o�%F��m����m\\s,��L �f�?�ug��쳪��%"���\u001f�\u001e>䠞\u001cU/���g\u0015ٛK���\u001by\u001ei4O\'��_\u0015�\u001d\u0013a��\'N�\u001b��\u0016�k\u0018Y�!�\u0000�*�4e\u0004�{<z\u0011�ǯy\'����[T�x՛��C)��<����j\r}�g-�t!@P*9E\u0010գ\u0017в��2�8�\u001c\u001e��\\#���?Rե�a��IvE�\u0011P�R�u��U��\u0013�V�\nY\u0015',
+  'S�\u0017�NQ�:鿡\u0005:ʥ5%�ű�6���2�': '',
+  's��g�^�c��\u001f\u000bB\u0002�\u0011�����\u0003�b�9��.�^�}Q(�g�1g���4��{i�\tQ<�v�E�\u001d,���O�>��4��g\u0017��\u0000|-\u0004������:k�I$�c� "K9�\u0018��\u001b3�\u001b8����<\u0012\r�zc�r0�])���fR�>z� V�H��e�S���_\u0007[�%��B.~�I$�}': '?��1��\u001c>�B�bָY _b\r�#�wr�\u0007��\u001az�I�$a)U���I���9n��V\u0018ܷ���\t>w.��H�pj\u001c�Y�\u0007]\u0016ƹs�T�Q��5�\u001a�\b`1�����ll2H�U��z\u0014*,e�ħ�mG���).�\u0006w��8f\u0012zKo',
+  'A�> S����I��ʫy�R*\u000f;g������:�d�,�t\u0019\u001a�"����n3!�G<-�ֈ�)�#Ό': '<>i��\u0000\u000f��\u0000\u0003@\u0000\u0014ƀ\u0000\u0000\u0000\u0004\u0000��\u001c�q��*�>�asQu�7�i',
+  '^fG��T���Z{ũ$��ꟓ\u0013�n;z;m�O���������q\u000bxU�ON]�?���WTUZou������,tp瓒�����OB8�]4-ī),�!"�T2��\u000eL`�3\u0000\u0000�1��ɏdr2���*Wdח\u0010������%��J��\u0014b��Ւ�ޟ�ϗ�^��\u0014��)E>��ѳ�\ts(��S�y�z�|��K��H��\'#d����\u001cծ�\u0011�[#�ku�d�\�m��[\u0005$%�xm��2_2�': '',
+  '��K': '',
+  '�\u000fB�o\u0013��8p\u0000\u0014p����6���\u001d\f�\u001eS�j�VK��@\f \u0001\u0005\u0000\u0000\u0000�\f�l��\u001a�|�?N����h~%9�x�2�W�>��O7���(O���\u001f\': '$�5��P��m2����-q\u001cJK�hfN{���Iۿ/T�|U�Ó��cMJG��>�\u0000\u0015T\u001b��z]\n�|k���Wn�X����"c9�F �6f�\u001b WR{\u0013�5�[\u0019�/�\'Y��^]\f�\u0012�J\r�ry�="��q�II�]��t}O��銺���y��)����N�����8N\u001c��7qn|���K�T��*̯7���',
+  '�m.\d�fz%���\u0017�#� �@��~z\u0010��\u0017�S\u0007���\u001f�\u001a��\u0000�#T�\u0002\u0003J\u0002\n�\u0000\u00004\u0000\u0000\u0000\u0001�\u0000y��m�;�����\u001fG��6^8��aY-c���^�����\u0019MW��|�S�_�����%�d��z�\u0000\u000f��\b�L���z��e�mJ]����\'U5\u001d�u\t\u0015R�bJX\u0017n\u001d:\u0011��9p����w)�e��lj![\u0006i\rY\u001c��N�\u000eey�*�WN%�\r\r�\u0014�����f\u001a��d�a\u001d���^r"\t0\u001d|1�\u0006��\u0015�\u001a��%%��\u0000F9��\u0007W����8���_q��\�\u001fw\u000e_��Q\u0000���iJ��4~�O�d��^r����\b�\r�/)\u0005\u0004\u0000�\u0000\u0000\u0000\u0000\u0000\u0000\u00000 ��*��N[J-{�<���t��%�h�C��[\u0015(��^��6��Wo�\'�x': '������<��p�{\u001f�h��Z��c/�|_r9O\u000fS��x�V�4 B���F��v9\u00177\u0015)�#A4U�k\u0019hыq�\'�',
+  '�\u001fk�B�?\u0011�\u001c�%�ZM�_��^�po����|yM����4�\u001cK�7���RWR���\u0015 ��Q�': '',
+  'Ǐ\u0019�;\O��,d�ԞF\u0000�я\u001c�Q\u0001\u001a�Qg�W�:���g\u001c�gR� ���wcg��ߋ\u001e�`?�5;�n���\u0000�����U1�d��g\u0019%!�\u0014��厌x���': '',
+  '\u0000\u0000L\u0000\u0000\u0000\u0000\u0006\u0000\u0000\u0018\u0000\b�h��Q}Q(\u0000�O.��ҧRQi�7�{e�\u000fáF���N\u001fH$e�8,n*�{b�\��b�Z6U\te4�o?��\u001f�Q�l�L�֎q\u0015����2�\u0014�)�Q�# ǡ\u0016��j2|j��#��Lu}�\t': '�ud%�X�\u0001Q�삆\u0004l\u0000b�\u0005F�� \u0000i^�G86�}���"\u0003��X嫰\u0000\u0000��\\\u0000\u0002`\\\u0000\u0000\u0000\u0000\u0000\u0000\u001d\u001e\u001fg�r_ھ�喡���u\u0013p�n_��\\�\u0011\u0012l����q��DB1�\u0011�R\u0019$C2vCU\u0018h�pg��3�GV\'.��Lt����_[a�s',
+  '�w\u0011���]Qi�����\u0001�\u001di@\u0000\u0003@���\u0011��\u0005\u0000c��\u0000�|�\u0014AP\u0000\u0000\u0000\u0000\u0001$)\u0006�D:0o�f4K4(�|)�\u001b6�����dt�\u0012(r!���0�c<\f\rhp1)���H��i�����2�H�kS�\H\'\u0003\u0014���3�J�}\r�j99w��\t]Xro�y��\u0017\u0016@i8V5���\f\u0017��/��\u0011f���W2�b��i�z�\u001b\u001fk�����-wO|,��� ]��\u0017�G�d�6�\u0005 ���\u0000\u0005KO]\u0000\u0003���P@\u0000\u000f�6iP���\u0001�4�\f)\u0012�\u0004�#�5I���': '1���c�:\u001c��!�r�iO\f\b��6\u001c�\rhx��\u00042�։�\u001aњn�8�N%����6��\u0002�jY:\u0012�\u0005H\u0019�̙�)g��1<Fߕ�Ӯ)e\u0019.?c�c��Ӈ',
+  '�\u001d$"x�\u0012TD��\u001eNf�����:�|u� �g\u001c�z\u0012�>W,�5�Y��E��ѭ��Z��X��)-�|��s�(�$ր\u0000\b��@\u0005K;\u001dO�,VtE�\u0016�Տ����r�CH�8~Q�\u000b�?\u0001�Tј\u0017\u0003�\u0006\r\u001a*\u0017\u0002\u00008tfG�ȶ\u001bk\nD�eE"jr\'�S\u001c�1\u0000\u0019 \u000e\u0006�A�\u0011�\fh�DlZh�H�h�D21��G\u000f���Yߒ9���h|\'�g��6����My���Ⱦ^lI?�ei,k�N��f�-I\u0005:0��i�7\u0018��5��:2�y{�\'��?\nҜ90��\u0015�': '',
+  '�ӯ}ʧR��\u0014g�i4�����c�~g,\���\u001c��l\u0000\u0000�': 't�cC���N�r��v��\u000b\u001d���.<wvU\u0011p(\f��\b<c\u0006\u0001\u0005\u0000\u0004\u0001D1�\u0011��\u0000F,d5�\u0016���u2HQR,R��YEq�0�\u0004���\u001c�\u001b#���\f�\u001b%�\u0018M�$S�[���U�a\u001c���\u001d�^\u001f��GtqiT�P�H�EJ.SRXo;i�����\u0019���!�� ���������[�J5�G����eK�<��y\u001c�\u000f�\u001axk\u0003H��^�|�?$�\n\u0006i>��Y|�]t\u0000t���z9\b\u0000j�c@\u0000\u0000\u0000\u0006\u0000`\u0000\rcX\u0001� \u0000\u0005\u0004\u001d\u000e�\u0004�n>��0\u0002\u0015�\b��\u0005��Hd�\f\u0015\u0014�5�\u000bq�rr��9w�E\u0003�\u0017',
+  '?6;�����@����^\u000f�\u0001���\r\n------WebKitFormBoundaryrqwadjOIPkxglEkK\r\nContent-Disposition: form-data; name': '"username"\r\n\r\n김다다다다은\r\n------WebKitFormBoundaryrqwadjOIPkxglEkK\r\nContent-Disposition: form-data; name="gender"\r\n\r\n1\r\n------WebKitFormBoundaryrqwadjOIPkxglEkK\r\nContent-Disposition: form-data; name="lifestyle"\r\n\r\n4\r\n------WebKitFormBoundaryrqwadjOIPkxglEkK\r\nContent-Disposition: form-data; name="region"\r\n\r\n2\r\n------WebKitFormBoundaryrqwadjOIPkxglEkK\r\nContent-Disposition: form-data; name="other_pets"\r\n\r\n0\r\n------WebKitFormBoundaryrqwadjOIPkxglEkK\r\nContent-Disposition: form-data; name="family_size"\r\n\r\n3\r\n------WebKitFormBoundaryrqwadjOIPkxglEkK--\r\n' }
+[0mPOST /profiles [33m401 [0m13.466 ms - 31[0m
+{ '------WebKitFormBoundary52G3etvvTYQv87IW\r\nContent-Disposition: form-data; name': '"profile"; filename="@��.jpg"\r\nContent-Type: image/jpeg\r\n\r\n����\u0000\u0010JFIF\u0000\u0001\u0001\u0000\u0000\u0001\u0000\u0001\u0000\u0000��\u0000�\u0000\t\u0006\u0007\u0010\u0010\u0010\u0010\u000f\u000f\u000f\u000f\u000f\u000f\u000f\u000f\u000f\u000f\r\u000f\r\r\u000f\r\r\r\u000f\u0015\u0011\u0016\u0016\u0015\u0011\u0015\u0015\u0018\u001d( \u0018\u001a%\u001b\u0015\u0015!1!%) ...\u0017\u001f385,7(-. \u0001\n\n\n\u000e\r\u000e\u0017\u0010\u0010\u0017-\u001d\u001d\u001d--- ------------ --- - --- ---  ---- - -- -1 7   -��\u0000\u0011\b\u0000�\u0000�\u0003\u0001"\u0000\u0002\u0011\u0001\u0003\u0011\u0001��\u0000\u001b\u0000\u0000\u0001\u0005\u0001\u0001\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0001\u0002\u0003\u0004\u0006\u0005\u0007��\u00007\u0010\u0000\u0002\u0001\u0003\u0002\u0004\u0004\u0004\u0005\u0002\u0006\u0003\u0000\u0000\u0000\u0000\u0000\u0001\u0002\u0003\u0004\u0011!1\u0005\u0012AQ\u0006aq�"2��\u0013#R��Brb�����\u0015\u0016$��\u0000\u001a\u0001\u0000\u0003\u0001\u0001\u0001\u0001\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0002\u0003\u0001\u0004\u0005\u0006��\u0000(\u0011\u0001\u0001\u0000\u0002\u0001\u0004\u0001\u0003\u0004\u0003\u0001\u0000\u0000\u0000\u0000\u0000\u0000\u0001\u0002\u0011\u0003\u0004\u0012!12\u0013AQ\u0005"aq3B�\u0015��\u0000\f\u0003\u0001\u0000\u0002\u0011\u0003\u0011\u0000?\u0000\n\u0000k�\u0000\u0000\u0000�(\u0000 \n!��f;����\'�k.�����]����k���������W�_"Z���\u0012',
+  'Y���%\u0014�m$S�5~\f��J�Mi\r}̷Q��m�\u0007\u000fT�F8�\u001a����*1�\'D\9]�)\u001c�En�ڔ�-�m�\u000b�\'���6��_��?T~�ER/f�����\u0004��o�.��rlطJ/��$h�B�)����S;U�E����񹼤ֺ2��:�}JC�cn6;hQ������]���5l\u0000.\u0000\nP\u0000\u0019�j': 'V��s}��\u0014�Ĵ۩*\u00053��\u0000F�E�t�\u00014@\u001b',
+  '�,��p\r)�\'�3\u0019},d�q5�3\u0019�c�<��A?m�ܚ��`I���y5\u0012RZ����\u000eJ*Mk,3��7�]z��)���cEB\u0011��$�����F_d���\n��\u000b�\u0018�\u0012�G?�֫\u0015�ig��έԔ����񅡽��n�\u001b۫wQ"��d���C�]F��*�M6�f���u G3Ma�8<��������-�': '',
+  ']�ЩZ ����8��ѝ��:�\u001b��\u001d���\u001a��ORˡ�j��H�y�Vm��L��8C��': '>��;J\u0002\u0000��\u00002u\u0012�?�6co�',
+  '�V6�?Q�in��Du\u001a��': '���o�����\td���o質��f�V6�o�%F��m����m\\s,��L �f�?�ug��쳪��%"���\u001f�\u001e>䠞\u001cU/���g\u0015ٛK���\u001by\u001ei4O\'��_\u0015�\u001d\u0013a��\'N�\u001b��\u0016�k\u0018Y�!�\u0000�*�4e\u0004�{<z\u0011�ǯy\'����[T�x՛��C)��<����j\r}�g-�t!@P*9E\u0010գ\u0017в��2�8�\u001c\u001e��\\#���?Rե�a��IvE�\u0011P�R�u��U��\u0013�V�\nY\u0015',
+  'S�\u0017�NQ�:鿡\u0005:ʥ5%�ű�6���2�': '',
+  's��g�^�c��\u001f\u000bB\u0002�\u0011�����\u0003�b�9��.�^�}Q(�g�1g���4��{i�\tQ<�v�E�\u001d,���O�>��4��g\u0017��\u0000|-\u0004������:k�I$�c� "K9�\u0018��\u001b3�\u001b8����<\u0012\r�zc�r0�])���fR�>z� V�H��e�S���_\u0007[�%��B.~�I$�}': '?��1��\u001c>�B�bָY _b\r�#�wr�\u0007��\u001az�I�$a)U���I���9n��V\u0018ܷ���\t>w.��H�pj\u001c�Y�\u0007]\u0016ƹs�T�Q��5�\u001a�\b`1�����ll2H�U��z\u0014*,e�ħ�mG���).�\u0006w��8f\u0012zKo',
+  'A�> S����I��ʫy�R*\u000f;g������:�d�,�t\u0019\u001a�"����n3!�G<-�ֈ�)�#Ό': '<>i��\u0000\u000f��\u0000\u0003@\u0000\u0014ƀ\u0000\u0000\u0000\u0004\u0000��\u001c�q��*�>�asQu�7�i',
+  '^fG��T���Z{ũ$��ꟓ\u0013�n;z;m�O���������q\u000bxU�ON]�?���WTUZou������,tp瓒�����OB8�]4-ī),�!"�T2��\u000eL`�3\u0000\u0000�1��ɏdr2���*Wdח\u0010������%��J��\u0014b��Ւ�ޟ�ϗ�^��\u0014��)E>��ѳ�\ts(��S�y�z�|��K��H��\'#d����\u001cծ�\u0011�[#�ku�d�\�m��[\u0005$%�xm��2_2�': '',
+  '��K': '',
+  '�\u000fB�o\u0013��8p\u0000\u0014p����6���\u001d\f�\u001eS�j�VK��@\f \u0001\u0005\u0000\u0000\u0000�\f�l��\u001a�|�?N����h~%9�x�2�W�>��O7���(O���\u001f\': '$�5��P��m2����-q\u001cJK�hfN{���Iۿ/T�|U�Ó��cMJG��>�\u0000\u0015T\u001b��z]\n�|k���Wn�X����"c9�F �6f�\u001b WR{\u0013�5�[\u0019�/�\'Y��^]\f�\u0012�J\r�ry�="��q�II�]��t}O��銺���y��)����N�����8N\u001c��7qn|���K�T��*̯7���',
+  '�m.\d�fz%���\u0017�#� �@��~z\u0010��\u0017�S\u0007���\u001f�\u001a��\u0000�#T�\u0002\u0003J\u0002\n�\u0000\u00004\u0000\u0000\u0000\u0001�\u0000y��m�;�����\u001fG��6^8��aY-c���^�����\u0019MW��|�S�_�����%�d��z�\u0000\u000f��\b�L���z��e�mJ]����\'U5\u001d�u\t\u0015R�bJX\u0017n\u001d:\u0011��9p����w)�e��lj![\u0006i\rY\u001c��N�\u000eey�*�WN%�\r\r�\u0014�����f\u001a��d�a\u001d���^r"\t0\u001d|1�\u0006��\u0015�\u001a��%%��\u0000F9��\u0007W����8���_q��\�\u001fw\u000e_��Q\u0000���iJ��4~�O�d��^r����\b�\r�/)\u0005\u0004\u0000�\u0000\u0000\u0000\u0000\u0000\u0000\u00000 ��*��N[J-{�<���t��%�h�C��[\u0015(��^��6��Wo�\'�x': '������<��p�{\u001f�h��Z��c/�|_r9O\u000fS��x�V�4 B���F��v9\u00177\u0015)�#A4U�k\u0019hыq�\'�',
+  '�\u001fk�B�?\u0011�\u001c�%�ZM�_��^�po����|yM����4�\u001cK�7���RWR���\u0015 ��Q�': '',
+  'Ǐ\u0019�;\O��,d�ԞF\u0000�я\u001c�Q\u0001\u001a�Qg�W�:���g\u001c�gR� ���wcg��ߋ\u001e�`?�5;�n���\u0000�����U1�d��g\u0019%!�\u0014��厌x���': '',
+  '\u0000\u0000L\u0000\u0000\u0000\u0000\u0006\u0000\u0000\u0018\u0000\b�h��Q}Q(\u0000�O.��ҧRQi�7�{e�\u000fáF���N\u001fH$e�8,n*�{b�\��b�Z6U\te4�o?��\u001f�Q�l�L�֎q\u0015����2�\u0014�)�Q�# ǡ\u0016��j2|j��#��Lu}�\t': '�ud%�X�\u0001Q�삆\u0004l\u0000b�\u0005F�� \u0000i^�G86�}���"\u0003��X嫰\u0000\u0000��\\\u0000\u0002`\\\u0000\u0000\u0000\u0000\u0000\u0000\u001d\u001e\u001fg�r_ھ�喡���u\u0013p�n_��\\�\u0011\u0012l����q��DB1�\u0011�R\u0019$C2vCU\u0018h�pg��3�GV\'.��Lt����_[a�s',
+  '�w\u0011���]Qi�����\u0001�\u001di@\u0000\u0003@���\u0011��\u0005\u0000c��\u0000�|�\u0014AP\u0000\u0000\u0000\u0000\u0001$)\u0006�D:0o�f4K4(�|)�\u001b6�����dt�\u0012(r!���0�c<\f\rhp1)���H��i�����2�H�kS�\H\'\u0003\u0014���3�J�}\r�j99w��\t]Xro�y��\u0017\u0016@i8V5���\f\u0017��/��\u0011f���W2�b��i�z�\u001b\u001fk�����-wO|,��� ]��\u0017�G�d�6�\u0005 ���\u0000\u0005KO]\u0000\u0003���P@\u0000\u000f�6iP���\u0001�4�\f)\u0012�\u0004�#�5I���': '1���c�:\u001c��!�r�iO\f\b��6\u001c�\rhx��\u00042�։�\u001aњn�8�N%����6��\u0002�jY:\u0012�\u0005H\u0019�̙�)g��1<Fߕ�Ӯ)e\u0019.?c�c��Ӈ',
+  '�\u001d$"x�\u0012TD��\u001eNf�����:�|u� �g\u001c�z\u0012�>W,�5�Y��E��ѭ��Z��X��)-�|��s�(�$ր\u0000\b��@\u0005K;\u001dO�,VtE�\u0016�Տ����r�CH�8~Q�\u000b�?\u0001�Tј\u0017\u0003�\u0006\r\u001a*\u0017\u0002\u00008tfG�ȶ\u001bk\nD�eE"jr\'�S\u001c�1\u0000\u0019 \u000e\u0006�A�\u0011�\fh�DlZh�H�h�D21��G\u000f���Yߒ9���h|\'�g��6����My���Ⱦ^lI?�ei,k�N��f�-I\u0005:0��i�7\u0018��5��:2�y{�\'��?\nҜ90��\u0015�': '',
+  '�ӯ}ʧR��\u0014g�i4�����c�~g,\���\u001c��l\u0000\u0000�': 't�cC���N�r��v��\u000b\u001d���.<wvU\u0011p(\f��\b<c\u0006\u0001\u0005\u0000\u0004\u0001D1�\u0011��\u0000F,d5�\u0016���u2HQR,R��YEq�0�\u0004���\u001c�\u001b#���\f�\u001b%�\u0018M�$S�[���U�a\u001c���\u001d�^\u001f��GtqiT�P�H�EJ.SRXo;i�����\u0019���!�� ���������[�J5�G����eK�<��y\u001c�\u000f�\u001axk\u0003H��^�|�?$�\n\u0006i>��Y|�]t\u0000t���z9\b\u0000j�c@\u0000\u0000\u0000\u0006\u0000`\u0000\rcX\u0001� \u0000\u0005\u0004\u001d\u000e�\u0004�n>��0\u0002\u0015�\b��\u0005��Hd�\f\u0015\u0014�5�\u000bq�rr��9w�E\u0003�\u0017',
+  '?6;�����@����^\u000f�\u0001���\r\n------WebKitFormBoundary52G3etvvTYQv87IW\r\nContent-Disposition: form-data; name': '"username"\r\n\r\n김다은\r\n------WebKitFormBoundary52G3etvvTYQv87IW\r\nContent-Disposition: form-data; name="gender"\r\n\r\n1\r\n------WebKitFormBoundary52G3etvvTYQv87IW\r\nContent-Disposition: form-data; name="lifestyle"\r\n\r\n4\r\n------WebKitFormBoundary52G3etvvTYQv87IW\r\nContent-Disposition: form-data; name="region"\r\n\r\n2\r\n------WebKitFormBoundary52G3etvvTYQv87IW\r\nContent-Disposition: form-data; name="other_pets"\r\n\r\n0\r\n------WebKitFormBoundary52G3etvvTYQv87IW\r\nContent-Disposition: form-data; name="family_size"\r\n\r\n3\r\n------WebKitFormBoundary52G3etvvTYQv87IW--\r\n' }
+[0mPOST /profiles [33m401 [0m7.794 ms - 31[0m
+[0mGET /doglists?page=0 [32m200 [0m10.267 ms - 876[0m
+{ username: '김사월',
+  gender: '3',
+  lifestyle: '12',
+  region: '서울',
+  family_size: '2',
+  other_pets: '2' }
+{ username: '김사월',
+  gender: '3',
+  lifestyle: '12',
+  region: '서울',
+  family_size: '2',
+  other_pets: '2' }
+[0mPOST /profiles [31m500 [0m282.112 ms - 14[0m
+[0mGET /doglists?page=0 [32m200 [0m9.576 ms - 876[0m
+[0mGET /doglists?page=0 [32m200 [0m6.176 ms - 876[0m
+{ username: '김사월',
+  gender: '3',
+  lifestyle: '12',
+  region: '서울',
+  family_size: '2',
+  other_pets: '2' }
+{ username: '김사월',
+  gender: '3',
+  lifestyle: '12',
+  region: '서울',
+  family_size: '2',
+  other_pets: '2' }
+[0mPOST /profiles [31m500 [0m657.987 ms - 14[0m
+[0mGET /doglists?page=0 [32m200 [0m12.746 ms - 876[0m
+{ username: '김사월',
+  gender: '3',
+  lifestyle: '12',
+  region: '서울',
+  family_size: '2',
+  other_pets: '2' }
+{ username: '김사월',
+  gender: '3',
+  lifestyle: '12',
+  region: '서울',
+  family_size: '2',
+  other_pets: '2' }
+[0mPOST /profiles [31m500 [0m257.957 ms - 14[0m
+{ username: '김사월',
+  gender: '3',
+  lifestyle: '12',
+  region: '서울',
+  family_size: '2',
+  other_pets: '2' }
+{ username: '김사월',
+  gender: '3',
+  lifestyle: '12',
+  region: '서울',
+  family_size: '2',
+  other_pets: '2' }
+[0mPOST /profiles [31m500 [0m252.792 ms - 14[0m
+[0mPOST /profiles [31m500 [0m169.286 ms - 241[0m
+[0mPOST /profiles [31m500 [0m271.317 ms - 214[0m
+[0mPOST /profiles [31m500 [0m299.362 ms - 241[0m
+[0mPOST /profiles [31m500 [0m291.584 ms - 244[0m
+[0mPOST /profiles [31m500 [0m175.000 ms - 241[0m
+[0mPOST /profiles [31m500 [0m221.823 ms - 241[0m
+[0mGET /doglists?page=0 [32m200 [0m168.212 ms - 1635[0m
+[0mGET /doglists?page=0 [32m200 [0m7.939 ms - 1635[0m
+[0mGET /doglists?page=0 [32m200 [0m5.348 ms - 1635[0m
+[0mGET / [32m200 [0m4.556 ms - 27577[0m
+[0mGET /doglists?page=0 [32m200 [0m4.551 ms - 1635[0m
+{ Error: ER_BAD_FIELD_ERROR: Unknown column 'p.region' in 'where clause'
+    at Query.Sequence._packetToError (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/sequences/Sequence.js:52:14)
+    at Query.ErrorPacket (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/sequences/Query.js:77:18)
+    at Protocol._parsePacket (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/Protocol.js:280:23)
+    at Parser.write (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/Parser.js:75:12)
+    at Protocol.write (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/Protocol.js:39:16)
+    at Socket.<anonymous> (/home/ubuntu/dogeun/node_modules/mysql/lib/Connection.js:103:28)
+    at emitOne (events.js:96:13)
+    at Socket.emit (events.js:191:7)
+    at readableAddChunk (_stream_readable.js:178:18)
+    at Socket.Readable.push (_stream_readable.js:136:10)
+    at TCP.onread (net.js:561:20)
+    --------------------
+    at Protocol._enqueue (/home/ubuntu/dogeun/node_modules/mysql/lib/protocol/Protocol.js:141:48)
+    at PoolConnection.query (/home/ubuntu/dogeun/node_modules/mysql/lib/Connection.js:208:25)
+    at /home/ubuntu/dogeun/node_modules/promise-mysql/lib/helper.js:16:24
+    at Promise._execute (/home/ubuntu/dogeun/node_modules/bluebird/js/release/debuggability.js:300:9)
+    at Promise._resolveFromExecutor (/home/ubuntu/dogeun/node_modules/bluebird/js/release/promise.js:483:18)
+    at new Promise (/home/ubuntu/dogeun/node_modules/bluebird/js/release/promise.js:79:10)
+    at PoolConnection.promiseCallback (/home/ubuntu/dogeun/node_modules/promise-mysql/lib/helper.js:6:10)
+    at connection.query (/home/ubuntu/dogeun/node_modules/promise-mysql/lib/connection.js:64:28)
+    at Function.DogList.getLists (/home/ubuntu/dogeun/model/doglists.js:150:39)
+  code: 'ER_BAD_FIELD_ERROR',
+  errno: 1054,
+  sqlState: '42S22',
+  index: 0 }
+[0mGET /doglists?page=0&spiece=null&gender=null&region=null&age=null [31m500 [0m6.734 ms - 91[0m
+[0mGET /doglists?page=0&spiece=null&gender=null&region1=null&region2=null&age=null [32m200 [0m4.177 ms - 6[0m
+[0mGET /doglists?page=0&spiece=null&gender=null&region1=null&region2=null&age=null [32m200 [0m4.820 ms - 6[0m
+[0mGET /doglists?page=0&spiece=null&gender=null&region1=null&region2=null&age=null [32m200 [0m4.272 ms - 6[0m
+[0mGET /doglists?page=0 [32m200 [0m3.978 ms - 1635[0m
+[0mGET /doglists?page=0 [32m200 [0m4.498 ms - 1635[0m
+[0mGET /doglists?page=0&spiece=null&gender=null&region1=null&region2=null&age=null [32m200 [0m4.608 ms - 6[0m
+[0mGET /favicon.ico [33m404 [0m7.204 ms - 1427[0m
+[0mGET /doglists?page=0 [32m200 [0m7.271 ms - 1635[0m
+[0mGET /doglists?page=0 [32m200 [0m5.788 ms - 1635[0m
+[0mGET /doglists?page=0 [32m200 [0m7.154 ms - 1635[0m
+[0mGET /doglists?page=0 [32m200 [0m4.198 ms - 1635[0m
+[0mGET /doglists?page=0 [32m200 [0m98.592 ms - 1635[0m
+[0mGET /doglists?page=0 [32m200 [0m7.140 ms - 1635[0m
+[0mGET /doglists?page=0 [32m200 [0m5.047 ms - 1635[0m
+[0mGET /doglists?page=0 [32m200 [0m4.351 ms - 1635[0m
+[0mGET /doglists?page=0 [32m200 [0m4.115 ms - 1635[0m
+[0mGET /doglists?page=0 [32m200 [0m4.179 ms - 1635[0m
+[0mGET /doglists?page=0 [32m200 [0m4.624 ms - 1635[0m
+[0mGET /doglists?page=0 [32m200 [0m5.040 ms - 1635[0m
+[0mGET /doglists?page=0 [32m200 [0m8.760 ms - 1635[0m
+[0mGET /doglists?page=0 [32m200 [0m4.111 ms - 1635[0m
+[0mGET /doglists?page=0&spiece=&region1=&region2=&gender=&age= [32m200 [0m5.913 ms - 1635[0m
+[0mGET /doglists?page=0&spiece=&region1=&region2=&gender=&age= [32m200 [0m6.320 ms - 1635[0m
+[0mGET /doglists?page=0&spiece=null&gender=null&region1=null&region2=null&age=null [32m200 [0m4.455 ms - 6[0m
+[0mGET /doglists?page=0 [32m200 [0m4.932 ms - 1247[0m
+[0mGET /doglists?page=0 [32m200 [0m4.199 ms - 1247[0m
+[0mGET /doglists?page=0 [32m200 [0m5.659 ms - 1247[0m
+[0mGET /doglists?page=0 [32m200 [0m5.237 ms - 1247[0m
+[0mGET /doglists?page=0 [32m200 [0m4.073 ms - 1247[0m
+[0mGET /doglists?page=0 [32m200 [0m4.512 ms - 1247[0m
+[0mGET /doglists?page=0 [32m200 [0m4.203 ms - 1247[0m
+[0mGET /doglists?page=0 [32m200 [0m4.235 ms - 1247[0m
+[0mGET /doglists?page=0 [32m200 [0m8.257 ms - 1247[0m
+[0mGET /doglists?page=0 [32m200 [0m4.537 ms - 1247[0m
+[0mGET /doglists?page=0 [32m200 [0m7.901 ms - 1247[0m
+[0mGET /doglists?page=0 [32m200 [0m4.242 ms - 1247[0m
+[0mGET /doglists?page=0 [32m200 [0m7.996 ms - 1247[0m
+[0mGET /doglists?page=0 [32m200 [0m7.197 ms - 1247[0m
+[0mGET /doglists?page=0 [32m200 [0m4.072 ms - 1247[0m
+[0mGET /doglists?page=0 [32m200 [0m4.061 ms - 1247[0m
+[0mGET /doglists?page=0 [32m200 [0m5.515 ms - 1247[0m
+[0mGET /doglists?page=0 [32m200 [0m4.127 ms - 1247[0m
+[0mGET /doglists?page=0 [32m200 [0m4.127 ms - 1247[0m
+[0mGET /doglists?page=0&spiece=&region1=&region2=&gender=&age= [32m200 [0m5.096 ms - 1247[0m
+[0mGET /doglists?page=0 [32m200 [0m4.289 ms - 1247[0m
+[0mGET /doglists?page=0 [32m200 [0m4.145 ms - 1247[0m
+[0mGET /doglists?page=0 [32m200 [0m4.151 ms - 1247[0m
+[0mGET /doglists?page=0 [32m200 [0m5.569 ms - 1247[0m
+[0mGET /doglists?page=0 [32m200 [0m5.190 ms - 1247[0m
+[0mGET /doglists?page=0 [32m200 [0m4.738 ms - 1247[0m
+[0mGET /doglists?page=0 [32m200 [0m5.247 ms - 1247[0m
+[0mGET /doglists?page=0 [32m200 [0m4.193 ms - 1247[0m
+[0mGET /doglists?page=0 [32m200 [0m4.017 ms - 1247[0m
+[0mGET /doglists?page=0 [32m200 [0m7.117 ms - 1247[0m
+[0mGET /doglists?page=0 [32m200 [0m9.798 ms - 1247[0m
+[0mGET /doglists?page=0 [32m200 [0m3.974 ms - 1247[0m
+[0mGET /doglists?page=0 [32m200 [0m5.359 ms - 1247[0m
+[0mGET /doglists?page=0 [32m200 [0m5.428 ms - 1247[0m
+[0mGET /doglists?page=0 [32m200 [0m4.802 ms - 1247[0m
+[0mGET /doglists?page=0 [32m200 [0m4.034 ms - 1247[0m
+[0mGET /doglists?page=0 [32m200 [0m4.209 ms - 1247[0m
+[0mGET /doglists?page=0 [32m200 [0m4.269 ms - 1247[0m
+[0mGET /doglists?page=0 [32m200 [0m4.003 ms - 1247[0m
+[0mGET /doglists?page=0 [32m200 [0m4.161 ms - 1247[0m
+[0mGET /doglists?page=0 [32m200 [0m11.507 ms - 1247[0m
+[0mGET /doglists?page=0 [32m200 [0m4.152 ms - 1247[0m
+[0mGET /doglists?page=0 [32m200 [0m4.994 ms - 1247[0m
+[0mGET /doglists?page=0 [32m200 [0m3.970 ms - 1247[0m
+[0mGET /doglists?page=0 [32m200 [0m4.155 ms - 1247[0m
+[0mGET /doglists?page=0&spiece=&region1=&region2=&gender=&age= [32m200 [0m4.085 ms - 1247[0m
+[0mPOST /doglists [32m200 [0m2000.256 ms - 18[0m
+[0mGET /doglists?page=0&spiece=&region1=&region2=&gender=&age= [32m200 [0m7.956 ms - 1441[0m
+[0mGET / [32m200 [0m2.871 ms - 27577[0m
+[0mGET / [32m200 [0m8.129 ms - 27577[0m
+[0mGET /vendor/bootstrap.min.css [32m200 [0m1.908 ms - 121200[0m
+[0mGET /css/style.css [32m200 [0m0.776 ms - 10418[0m
+[0mGET /vendor/prettify.css [32m200 [0m1.571 ms - 1956[0m
+[0mGET /vendor/require.min.js [32m200 [0m1.930 ms - 15825[0m
+[0mGET /vendor/polyfill.js [32m200 [0m0.380 ms - 2900[0m
+[0mGET /main.js [32m200 [0m0.671 ms - 28722[0m
+[0mGET /img/favicon.ico [32m200 [0m0.415 ms - 894[0m
+[0mGET /locales/locale.js?v=1496407612735 [32m200 [0m1.980 ms - 1226[0m
+[0mGET /vendor/lodash.custom.min.js?v=1496407612735 [32m200 [0m2.108 ms - 19579[0m
+[0mGET /api_project.js?v=1496407612735 [32m200 [0m2.055 ms - 355[0m
+[0mGET /vendor/jquery.min.js?v=1496407612735 [32m200 [0m2.374 ms - 85630[0m
+[0mGET /api_data.js?v=1496407612735 [32m200 [0m0.468 ms - 1729[0m
+[0mGET /utils/send_sample_request.js?v=1496407612735 [32m200 [0m0.726 ms - 6144[0m
+[0mGET /vendor/semver.min.js?v=1496407612735 [32m200 [0m4.376 ms - 12950[0m
+[0mGET /vendor/webfontloader.js?v=1496407612735 [32m200 [0m0.407 ms - 12492[0m
+[0mGET /vendor/path-to-regexp/index.js?v=1496407612735 [32m200 [0m2.749 ms - 5147[0m
+[0mGET /vendor/list.min.js?v=1496407612735 [32m200 [0m0.541 ms - 15952[0m
+[0mGET /vendor/prettify/prettify.js?v=1496407612735 [32m200 [0m0.374 ms - 15261[0m
+[0mGET /vendor/handlebars.min.js?v=1496407612735 [32m200 [0m1.136 ms - 72614[0m
+[0mGET /vendor/bootstrap.min.js?v=1496407612735 [32m200 [0m0.376 ms - 37045[0m
+[0mGET /utils/handlebars_helper.js?v=1496407612735 [32m200 [0m0.593 ms - 10277[0m
+[0mGET /vendor/diff_match_patch.min.js?v=1496407612735 [32m200 [0m0.580 ms - 19192[0m
+[0mGET /locales/ca.js?v=1496407612735 [32m200 [0m3.561 ms - 1225[0m
+[0mGET /locales/de.js?v=1496407612735 [32m200 [0m2.497 ms - 1234[0m
+[0mGET /locales/es.js?v=1496407612735 [32m200 [0m2.622 ms - 1244[0m
+[0mGET /locales/fr.js?v=1496407612735 [32m200 [0m2.756 ms - 1264[0m
+[0mGET /locales/it.js?v=1496407612735 [32m200 [0m2.910 ms - 1249[0m
+[0mGET /locales/nl.js?v=1496407612735 [32m200 [0m4.409 ms - 1241[0m
+[0mGET /locales/pl.js?v=1496407612735 [32m200 [0m0.579 ms - 1226[0m
+[0mGET /locales/pt_br.js?v=1496407612735 [32m200 [0m1.395 ms - 1236[0m
+[0mGET /locales/ro.js?v=1496407612735 [32m200 [0m1.559 ms - 1238[0m
+[0mGET /locales/ru.js?v=1496407612735 [32m200 [0m2.231 ms - 1481[0m
+[0mGET /locales/tr.js?v=1496407612735 [32m200 [0m2.133 ms - 1246[0m
+[0mGET /locales/vi.js?v=1496407612735 [32m200 [0m1.214 ms - 1328[0m
+[0mGET /locales/zh.js?v=1496407612735 [32m200 [0m0.486 ms - 1163[0m
+[0mGET /locales/zh_cn.js?v=1496407612735 [32m200 [0m0.585 ms - 1186[0m
+[0mGET /dogllists?page=0 [33m404 [0m12.004 ms - 1427[0m
+[0mGET /favicon.ico [33m404 [0m1.736 ms - 1427[0m
+[0mGET /doglists?page=0 [32m200 [0m64.787 ms - 1441[0m
+[0mGET /parcel [33m404 [0m2.717 ms - 1427[0m
+[0mGET / [32m200 [0m0.685 ms - 27577[0m
+[0mGET /vendor/prettify.css [32m200 [0m0.357 ms - 1956[0m
+[0mGET /css/style.css [32m200 [0m0.626 ms - 10418[0m
+[0mGET /vendor/bootstrap.min.css [32m200 [0m0.585 ms - 121200[0m
+[0mGET /vendor/polyfill.js [32m200 [0m0.392 ms - 2900[0m
+[0mGET /vendor/require.min.js [32m200 [0m1.902 ms - 15825[0m
+[0mGET /main.js [32m200 [0m0.639 ms - 28722[0m
+[0mGET /img/favicon.ico [32m200 [0m0.417 ms - 894[0m
+[0mGET /vendor/jquery.min.js?v=1496424223120 [32m200 [0m0.351 ms - 85630[0m
+[0mGET /vendor/lodash.custom.min.js?v=1496424223120 [32m200 [0m0.364 ms - 19579[0m
+[0mGET /locales/locale.js?v=1496424223120 [32m200 [0m0.360 ms - 1226[0m
+[0mGET /api_project.js?v=1496424223120 [32m200 [0m0.352 ms - 355[0m
+[0mGET /api_data.js?v=1496424223120 [32m200 [0m0.357 ms - 1729[0m
+[0mGET /utils/send_sample_request.js?v=1496424223120 [32m200 [0m0.739 ms - 6144[0m
+[0mGET /vendor/semver.min.js?v=1496424223120 [32m200 [0m0.908 ms - 12950[0m
+[0mGET /vendor/webfontloader.js?v=1496424223120 [32m200 [0m0.382 ms - 12492[0m
+[0mGET /vendor/path-to-regexp/index.js?v=1496424223120 [32m200 [0m0.372 ms - 5147[0m
+[0mGET /vendor/list.min.js?v=1496424223120 [32m200 [0m0.354 ms - 15952[0m
+[0mGET /vendor/prettify/prettify.js?v=1496424223120 [32m200 [0m0.732 ms - 15261[0m
+[0mGET /vendor/handlebars.min.js?v=1496424223120 [32m200 [0m0.351 ms - 72614[0m
+[0mGET /vendor/bootstrap.min.js?v=1496424223120 [32m200 [0m0.395 ms - 37045[0m
+[0mGET /utils/handlebars_helper.js?v=1496424223120 [32m200 [0m0.399 ms - 10277[0m
+[0mGET /vendor/diff_match_patch.min.js?v=1496424223120 [32m200 [0m0.369 ms - 19192[0m
+[0mGET /locales/ca.js?v=1496424223120 [32m200 [0m0.416 ms - 1225[0m
+[0mGET /locales/de.js?v=1496424223120 [32m200 [0m6.852 ms - 1234[0m
+[0mGET /locales/es.js?v=1496424223120 [32m200 [0m5.151 ms - 1244[0m
+[0mGET /locales/fr.js?v=1496424223120 [32m200 [0m6.097 ms - 1264[0m
+[0mGET /locales/it.js?v=1496424223120 [32m200 [0m3.460 ms - 1249[0m
+[0mGET /locales/nl.js?v=1496424223120 [32m200 [0m0.894 ms - 1241[0m
+[0mGET /locales/pl.js?v=1496424223120 [32m200 [0m0.529 ms - 1226[0m
+[0mGET /locales/pt_br.js?v=1496424223120 [32m200 [0m0.348 ms - 1236[0m
+[0mGET /locales/ro.js?v=1496424223120 [32m200 [0m3.626 ms - 1238[0m
+[0mGET /locales/ru.js?v=1496424223120 [32m200 [0m0.287 ms - 1481[0m
+[0mGET /locales/tr.js?v=1496424223120 [32m200 [0m0.324 ms - 1246[0m
+[0mGET /locales/vi.js?v=1496424223120 [32m200 [0m0.327 ms - 1328[0m
+[0mGET /locales/zh.js?v=1496424223120 [32m200 [0m0.370 ms - 1163[0m
+[0mGET /locales/zh_cn.js?v=1496424223120 [32m200 [0m1.822 ms - 1186[0m
+[0mGET /parcel [33m404 [0m1.073 ms - 1427[0m
+[0mGET / [32m200 [0m0.522 ms - 27577[0m
+[0mGET /vendor/bootstrap.min.css [32m200 [0m2.070 ms - 121200[0m
+[0mGET /vendor/prettify.css [32m200 [0m0.615 ms - 1956[0m
+[0mGET /vendor/polyfill.js [32m200 [0m1.003 ms - 2900[0m
+[0mGET /css/style.css [32m200 [0m1.119 ms - 10418[0m
+[0mGET /vendor/require.min.js [32m200 [0m1.472 ms - 15825[0m
+[0mGET /main.js [32m200 [0m0.431 ms - 28722[0m
+[0mGET /vendor/lodash.custom.min.js?v=1496429816551 [32m200 [0m0.665 ms - 19579[0m
+[0mGET /locales/locale.js?v=1496429816551 [32m200 [0m0.945 ms - 1226[0m
+[0mGET /api_project.js?v=1496429816551 [32m200 [0m0.701 ms - 355[0m
+[0mGET /api_data.js?v=1496429816551 [32m200 [0m0.798 ms - 1729[0m
+[0mGET /vendor/jquery.min.js?v=1496429816551 [32m200 [0m0.537 ms - 85630[0m
+[0mGET /utils/send_sample_request.js?v=1496429816551 [32m200 [0m2.226 ms - 6144[0m
+[0mGET /vendor/semver.min.js?v=1496429816551 [32m200 [0m1.029 ms - 12950[0m
+[0mGET /vendor/webfontloader.js?v=1496429816551 [32m200 [0m0.474 ms - 12492[0m
+[0mGET /vendor/path-to-regexp/index.js?v=1496429816551 [32m200 [0m0.532 ms - 5147[0m
+[0mGET /vendor/list.min.js?v=1496429816551 [32m200 [0m0.337 ms - 15952[0m
+[0mGET /vendor/prettify/prettify.js?v=1496429816551 [32m200 [0m0.361 ms - 15261[0m
+[0mGET /vendor/handlebars.min.js?v=1496429816551 [32m200 [0m1.702 ms - 72614[0m
+[0mGET /vendor/bootstrap.min.js?v=1496429816551 [32m200 [0m0.995 ms - 37045[0m
+[0mGET /utils/handlebars_helper.js?v=1496429816551 [32m200 [0m0.522 ms - 10277[0m
+[0mGET /vendor/diff_match_patch.min.js?v=1496429816551 [32m200 [0m0.410 ms - 19192[0m
+[0mGET /locales/de.js?v=1496429816551 [32m200 [0m3.986 ms - 1234[0m
+[0mGET /locales/ca.js?v=1496429816551 [32m200 [0m4.205 ms - 1225[0m
+[0mGET /locales/es.js?v=1496429816551 [32m200 [0m2.543 ms - 1244[0m
+[0mGET /locales/fr.js?v=1496429816551 [32m200 [0m2.613 ms - 1264[0m
+[0mGET /locales/it.js?v=1496429816551 [32m200 [0m2.727 ms - 1249[0m
+[0mGET /locales/nl.js?v=1496429816551 [32m200 [0m2.521 ms - 1241[0m
+[0mGET /locales/pl.js?v=1496429816551 [32m200 [0m0.548 ms - 1226[0m
+[0mGET /locales/pt_br.js?v=1496429816551 [32m200 [0m0.351 ms - 1236[0m
+[0mGET /locales/ro.js?v=1496429816551 [32m200 [0m1.006 ms - 1238[0m
+[0mGET /locales/ru.js?v=1496429816551 [32m200 [0m2.218 ms - 1481[0m
+[0mGET /locales/tr.js?v=1496429816551 [32m200 [0m3.182 ms - 1246[0m
+[0mGET /locales/vi.js?v=1496429816551 [32m200 [0m0.366 ms - 1328[0m
+[0mGET /locales/zh.js?v=1496429816551 [32m200 [0m3.788 ms - 1163[0m
+[0mGET /locales/zh_cn.js?v=1496429816551 [32m200 [0m3.928 ms - 1186[0m

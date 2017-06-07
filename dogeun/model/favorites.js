@@ -54,3 +54,4 @@ Favor.setFavorites = async function(parcel_id, user_id){
 };
 
 module.exports = Favor;
+

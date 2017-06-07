@@ -38,7 +38,7 @@ DogList.postParcel = async function (parcelRecord, parentRecord, petRecord) { //
     try {
         connection = await pool.getConnection();
         await connection.beginTransaction();
-        let query1 = 'INSERT INTO parcels SET ? ';
+        let query1 = 'INSERT INTO parcel SET ? ';
         let parcelOutput = await connection.query(query1, parcelRecord); //분양글 저장 -> 분양글 id가 parcel_id에 저장
         let outputId = parcelOutput.insertId;
         parcelRecord.parcel_id = outputId;
@@ -78,7 +78,7 @@ DogList.updateParcel = async function (id, parcel_record) { //분양글 수정�
     try {
         connection = await pool.getConnection();
         await connection.beginTransaction();
-        let query1 = 'UPDATE parcels SET ? WHERE parcel_id = ?';
+        let query1 = 'UPDATE parcel SET ? WHERE parcel_id = ?';
         let parcel_output = await connection.query(query1,[parcel_record, id]);
         console.log(parcel_output);
 
@@ -212,7 +212,7 @@ DogList.completeParcel = async function(parcelID){ //분양완료 or 완료 취�
       let query = 'select is_parceled from parcel where parcel_id = ?';
       let is_parceled = await connection.query(query, parcelID);
 
-      let query2 = 'update parcels set is_parceled = ? where parcel_id = ?';
+      let query2 = 'update parcel set is_parceled = ? where parcel_id = ?';
       let result;
       if(is_parceled[0].is_parceled==0) result = await connection.query(query2, [1, parcelID]);
       else result = await connection.query(query2, [0, parcelID]);
@@ -224,6 +224,7 @@ DogList.completeParcel = async function(parcelID){ //분양완료 or 완료 취�
       pool.releaseConnection(connection);
     }
 };
+
 
 
 module.exports = DogList;
