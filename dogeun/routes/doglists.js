@@ -28,9 +28,9 @@ router.post('/', arrUpload, async function(req,res){
     }
     
     // 없으면 디폴트 0 값
-    if(!req.body.kennel) req.body.kennel=0;
-    if(!req.body.corona) req.body.corona=0;
-    if(!req.body.DHPPL) req.body.DHPPL = 0;
+    // if(!req.body.kennel) req.body.kennel=0;
+    // if(!req.body.corona) req.body.corona=0;
+    // if(!req.body.DHPPL) req.body.DHPPL = 0;
 
 
     //파일 제외하고 body부분 record

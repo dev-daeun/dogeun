@@ -61,7 +61,7 @@ Profile.saveProfile = async function(req){
                 let thumb_path = 'thumbnail/'+ thumb_name; //썸네일 저장 경로
                 await easyimage.rescrop({
                     name: thumb_name,
-                    src: location,
+                    src: req.file.location,
                     dst: thumb_path, //로컬 디렉토리에 썸네일 저장
                     width: 300, height: 300
                 });
@@ -98,7 +98,7 @@ Profile.editProfile = async function(req){
             let thumb_path = 'thumbnail/'+ thumb_name; //썸네일 저장 경로
             await easyimage.rescrop({
                 name: thumb_name,
-                src: location,
+                src: req.file.location,
                 dst: thumb_path, //로컬 디렉토리에 썸네일 저장
                 width: 300, height: 300
             });

@@ -13,7 +13,7 @@ router.post('/', upload.single('profile'), async function(req, res){
             res.status(401).send({ message: 'input unsatisfied' });
         else {
             let ret = await Profile.saveProfile(req);
-            res.status(201).send({ message: 'success', profile_id: ret });
+            res.status(201).send({ message: 'success', profile_id: ret.insertId });
         }
     }
     catch(err) {
