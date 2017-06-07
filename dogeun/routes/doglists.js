@@ -89,7 +89,7 @@ router.post('/', arrUpload, async function(req,res){
     try {
         let result = [];
         result = await Doglist.postParcels(parcelRecords, parentImageRecords, petImageRecords, thumbnailInfo);
-        res.status(200).send({ message: 'save', result: result });
+        res.status(200).send({ message: 'save', results: result });
     }
     catch (err) {
         console.log('error message : ', err);
@@ -103,8 +103,8 @@ router.put('/', arrUpload, async function (req, res) {
     let changeId = req.body.parcel_id;
 
     try {
-        let removePet;
-        let removePetNums;
+        let removePet; // 삭제 요청 받은 펫 이미지 id
+        let removePetNums; // 삭제 요청 받은 펫 이미지 개수 (null 체크 하기 위해)
         
         // 삭제할 이미지가 있으면 
         if (req.body.pet_image_id) {
@@ -114,10 +114,11 @@ router.put('/', arrUpload, async function (req, res) {
             //삭제할 이미지가 없으면
             removePetNums = 0;
         }
-
+        
+        // 펫 이미지 레코드
         let petImageRecords = [];
 
-        let newPetNums;
+        let newPetNums; // 새로 업로드할 펫 이미지 개수 
 
         // 새로운 펫 이미지 파일이 있으면
         if (req.files['pet']) {
@@ -139,6 +140,7 @@ router.put('/', arrUpload, async function (req, res) {
               return;
         }
     
+        // 업데이트할 글 레코드 
         let parcelRecords = {
             spiece: req.body.spiece,
             gender: req.body.gender,
@@ -157,12 +159,15 @@ router.put('/', arrUpload, async function (req, res) {
             DHPPL: req.body.DHPPL
         };
 
+        // 삭제 요청 받은 부모견 이미지 id
         let removeParent;
+
         // 삭제할 부모견 이미지가 있으면 
         if (req.body.parent_image_id) {
             removeParent = [req.body.parent_image_id];
         }
-
+        
+        // 부모견 이미지 레코드 
         let parentImageRecords = [];
 
         // 새로운 부모견 이미지 파일이 있으면
@@ -171,7 +176,7 @@ router.put('/', arrUpload, async function (req, res) {
                 parentImageRecords.push({ 'image': item.location, 'parcel_id': changeId });
             }
         }
-        let result = [];
+        let result = []; // 배열로 결과 
         result = await Doglist.updateParcels(changeId, removePet, petImageRecords, parcelRecords, removeParent, parentImageRecords);
         res.send({ message: 'save', 'results': result });
     } catch (err) {
