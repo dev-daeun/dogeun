@@ -1,9 +1,12 @@
+const Sequelize = require('sequelize');
 const pool = require('../config/db_pool');
+const user = require('../config/ORM');
 const AWS = require('../config/AWS');
 const s3 = AWS.getS3();
 const fs = require('fs');
 const easyimage = require('easyimage');
-const user = require('./models').users;
+
+
 class Profile {}
 
 Profile.getRecord = function(req){  //저장, 수정에 들어갈 레코드 반환하는 메소드
