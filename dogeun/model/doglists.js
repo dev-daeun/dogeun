@@ -116,7 +116,7 @@ DogList.postParcels = async function (parcelRecord, parentRecord, petRecord, thu
         let parcelOutput = await connection.query(query1, parcelRecord);
         let outputId = parcelOutput.insertId; //분양글 저장 -> 분양글 id가 parcel_id에 저장
         parcelRecord.parcel_id = outputId;
-        data.parcelInfo = parcelRecord;
+        data = parcelRecord;
 
         // 부모견 이미지 저장
         if (parentRecord && parentRecord.length > 0 ) {
@@ -124,8 +124,7 @@ DogList.postParcels = async function (parcelRecord, parentRecord, petRecord, thu
                 parent.parcel_id = outputId;
                 let query2 = 'INSERT INTO parent_pet_images SET ? ';
                 let parentOutput = await connection.query(query2, parent);
-                data.paretImage = parent;
-                //data.push({ 'parent_pet_images': parent });
+                data.parent = parent;
             }
         }
 
@@ -136,8 +135,7 @@ DogList.postParcels = async function (parcelRecord, parentRecord, petRecord, thu
                 pet.parcel_id = outputId;
                 let query3 = 'INSERT INTO pet_images SET ? ';
                 await connection.query(query3, pet);
-                data.petImage = pet;
-                //data.push({ 'pet_images': pet });
+                data.pet = pet;
             }
         }
 
@@ -193,8 +191,7 @@ DogList.updateParcels = async function (changeId, removePet, petRecord, parcelRe
                 let query3 = 'insert into pet_images set ?';
                 let newPet = await connection.query(query3, pet);
                 pet.image_id = newPet.insertId;
-                // data.push({ 'pet_images': pet });
-                data.petImage = pet;
+                data.pet = pet;
 
             }
         }
@@ -202,8 +199,7 @@ DogList.updateParcels = async function (changeId, removePet, petRecord, parcelRe
         // 분양글 항목 업데이트
         let query5 = 'UPDATE parcel SET ? WHERE parcel_id = ?';
         let parcelOutput = await connection.query(query5, [parcelRecord, changeId]);
-        // data.push(parcelRecord);
-        data.parcelInfo = parcelRecord;
+        data = parcelRecord;
 
 
         // 삭제할 부모견 사진 아이디가 있다면
@@ -232,8 +228,7 @@ DogList.updateParcels = async function (changeId, removePet, petRecord, parcelRe
                 let query8 = 'insert into parent_pet_images set ?';
                 let newParent = await connection.query(query8, parent);
                 parent.image_id = newParent.insertId;
-                // data.push({ 'parent_pet_images': parent });
-                data.parentImage = parent;
+                data.parent = parent;
             }
         }
         // 응답 record 리턴
