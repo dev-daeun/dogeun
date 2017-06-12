@@ -12,18 +12,26 @@ const upload = aws.getUpload();
 const arrUpload = upload.fields([{ name: 'pet', maxCount: 5 }, { name: 'lineage', maxCount: 1 }, { name: 'parent', maxCount: 2 }]);
 
 router.post('/', arrUpload, async function(req,res){
+
+    //토큰 검증 TODO: aouth 토큰으로 변경
+    let user_id = req.headers.user_token;
+    if(user_id!=20){
+        res.status(400).send({message: 'wrong user_token'});
+        return;
+    } 
+    
     //error 처리
     if (!req.body.user_id || !req.body.spiece || !req.body.gender || !req.body.age || !req.body.region1
         || !req.body.region2 || !req.body.price || !req.body.size || !req.body.introduction
         || !req.body.condition || !req.body.title) {
 
-        res.status(400).send({ message: 'fail' });
+        res.status(400).send({ message: 'please input all of data' });
         return;
     }
 
     // pet 이미지는 필수 
     if(!req.files['pet']){
-        res.status(400).send({message: 'fail'});
+        res.status(400).send({message: 'please input pet image'});
         return;
     }
     
