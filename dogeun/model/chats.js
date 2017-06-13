@@ -149,8 +149,9 @@ RoomSchema.methods.getRooms = async function getRooms(id){ //사용자 id
                 room_id: rooms[i]._id+"",
                 sent_time: msg.sent_time,
                 sender_name: msg.sender_name,
-                content: msg.content,
-                profile_thumbnail: profile.dataValues.profile_thumbnail
+                sender_profile: profile.dataValues.profile_thumbnail,
+                content: msg.content
+               
             };       
             recent_array.push(recent_msg);
         }
