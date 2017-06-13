@@ -131,5 +131,4 @@ Profile.editProfile = async function(req){
     }
 };
 
-
 module.exports = Profile;

@@ -24,6 +24,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static('apidoc'));
 
 app.use('/', index);
+app.use( (req, res, next) => {req.user= {}, next();});
 app.use('/users', users);
 app.use('/doglists', doglists);
 app.use('/profiles', profiles);
