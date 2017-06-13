@@ -13,11 +13,10 @@ const Schema = mongoose.Schema;
 const ObjectId = mongoose.Schema.Types.ObjectId;
 
 /*--------------------------  Message Schema  -----------------------------*/
-const MessageSchema = new Schema({ //메세지 스키마
-    sender_id: Number,
-    sender_name: String,
-    receiver_id: Number,
-    receiver_name: String,
+
+const MessageSchema = new Schema({
+    sender: String,
+    receiver: String,
     sent_time: String,
     content: String,
     is_read: Boolean,
