@@ -29,12 +29,6 @@ router.post('/', arrUpload, async function(req,res){
         return;
     }
 
-    // 없으면 디폴트 0 값
-    if (!req.body.kennel) req.body.kennel = 0;
-    if (!req.body.corona) req.body.corona = 0;
-    if (!req.body.DHPPL) req.body.DHPPL = 0;
-
-
     //파일 제외하고 body부분 record
     //let parcelRecords = req.body; 에러날 가능성 있다.
     let parcelRecords = {
@@ -89,7 +83,7 @@ router.post('/', arrUpload, async function(req,res){
     try {
         let result = [];
         result = await Doglist.postParcels(parcelRecords, parentImageRecords, petImageRecords, thumbnailInfo);
-        res.status(200).send({ message: 'save', results: result });
+        res.status(200).send({ results: result });
     }
     catch (err) {
         console.log('error message : ', err);
@@ -178,7 +172,7 @@ router.put('/', arrUpload, async function (req, res) {
         }
         let result = []; // 배열로 결과 
         result = await Doglist.updateParcels(changeId, removePet, petImageRecords, parcelRecords, removeParent, parentImageRecords);
-        res.send({ message: 'save', 'results': result });
+        res.send({ 'results': result });
     } catch (err) {
         console.log('err message : ', err);
         res.status(500).send({ message: 'fail' });
