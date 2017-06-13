@@ -34,12 +34,6 @@ router.post('/', arrUpload, async function(req,res){
         res.status(400).send({message: 'please input pet image'});
         return;
     }
-    
-    // 없으면 디폴트 0 값
-    // if(!req.body.kennel) req.body.kennel=0;
-    // if(!req.body.corona) req.body.corona=0;
-    // if(!req.body.DHPPL) req.body.DHPPL = 0;
-
 
     //파일 제외하고 body부분 record
     //let parcelRecords = req.body; 에러날 가능성 있다.
@@ -54,7 +48,7 @@ router.post('/', arrUpload, async function(req,res){
         size: req.body.size,
         introduction: req.body.introduction,
         condition: req.body.condition,
-        fur: req.body.fur,
+        fur: req.body.fur ,
         title: req.body.title,
         kennel: req.body.kennel,
         corona: req.body.corona,
@@ -87,7 +81,7 @@ router.post('/', arrUpload, async function(req,res){
 
   
     // 썸네일 만드는 부분 
-    let thumbnailFileName = 'thumnbnail_' + req.files['pet'][0].key;
+    let thumbnailFileName = 'thumbnail_' + req.files['pet'][0].key;
 
     let thumbnailPath = 'thumbnail/' + thumbnailFileName;
 
