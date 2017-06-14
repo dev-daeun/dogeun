@@ -3,10 +3,15 @@
 /**
  * Module dependencies.
  */
-
+var fs = require('fs');
 var app = require('../app');
 var debug = require('debug')('dogeun:server');
 var http = require('http');
+<<<<<<< HEAD
+
+
+=======
+>>>>>>> 0d314bba816316916422b5263624a4da4e30dea0
 /**
  * Get port from environment and store in Express.
  */

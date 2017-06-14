@@ -26,17 +26,29 @@ router.post('/', arrUpload, async function(req,res){
         || !req.body.region2 || !req.body.price || !req.body.size || !req.body.introduction
         || !req.body.condition || !req.body.title) {
 
+<<<<<<< HEAD
+        res.status(400).send({ message: 'please input all info' });
+=======
         res.status(400).send({ message: 'please input all of data' });
+>>>>>>> 0d314bba816316916422b5263624a4da4e30dea0
         return;
     }
 
     // pet 이미지는 필수 
+<<<<<<< HEAD
+    if (!req.files['pet']) {
+        res.status(400).send({ message: 'please upload pet images' });
+        return;
+    }
+
+=======
     if(!req.files['pet']){
         res.status(400).send({message: 'please input pet image'});
         return;
     }
 
 
+>>>>>>> 0d314bba816316916422b5263624a4da4e30dea0
     //파일 제외하고 body부분 record
     //let parcelRecords = req.body; 에러날 가능성 있다.
     let parcelRecords = {
@@ -106,7 +118,7 @@ router.post('/', arrUpload, async function(req,res){
     try {
         let result = [];
         result = await Doglist.postParcels(parcelRecords, parentImageRecords, petImageRecords, thumbnailInfo);
-        res.status(200).send({ message: 'save', results: result });
+        res.status(200).send({ results: result });
     }
     catch (err) {
         console.log('error message : ', err);
@@ -195,7 +207,7 @@ router.put('/', arrUpload, async function (req, res) {
         }
         let result = []; // 배열로 결과 
         result = await Doglist.updateParcels(changeId, removePet, petImageRecords, parcelRecords, removeParent, parentImageRecords);
-        res.send({ message: 'save', 'results': result });
+        res.send({ 'results': result });
     } catch (err) {
         console.log('err message : ', err);
         res.status(500).send({ message: 'fail' });
@@ -257,6 +269,8 @@ router.put('/:id/done', async function(req, res){ //분양완료/완료취소하
 })
 
 
+<<<<<<< HEAD
+=======
 async function deleteInS3(itemKey) {
     return new Promise((resolve, reject) => {
        
@@ -311,4 +325,5 @@ async function uploadToS3(itemKey, path) {
     })
 }
 
+>>>>>>> 0d314bba816316916422b5263624a4da4e30dea0
 module.exports = router;

@@ -6,4 +6,11 @@ ImageMagick-7.0.5-9/
 .npm/
 ImageMagick-7.0.5-9/www/css/magick.css
 ImageMagick-7.0.5-9/www/js/magick.js
+letsencrypt/ 
+.viminfo
+.pm2
+.vim
+.bashrc
+.bash_history
+.bash_logout
 

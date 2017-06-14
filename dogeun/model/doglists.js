@@ -94,7 +94,7 @@ DogList.postParcels = async function (parcelRecord, parentRecord, petRecord, thu
         // 썸네일 만들기 
         // TODO : 데이터베이스에 키 저장
         if (thumbnailInfo) {
-            let thumbnailFileName = 'thumnbnail_' + thumbnailInfo[0].key;
+            let thumbnailFileName = 'thumbnail_' + thumbnailInfo[0].key;
 
             let thumbnailPath = 'thumbnail/' + thumbnailFileName;
 
@@ -117,25 +117,48 @@ DogList.postParcels = async function (parcelRecord, parentRecord, petRecord, thu
         let outputId = parcelOutput.insertId; //분양글 저장 -> 분양글 id가 parcel_id에 저장
         parcelRecord.parcel_id = outputId;
         data = parcelRecord;
+<<<<<<< HEAD
+
+        let id = parcelRecord.user_id;
+        let query = 'SELECT username FROM users WHERE user_id = ? ';
+        let users = await connection.query(query, id);
+        if(users && users.length > 0){
+            data.username = users[0].username;
+        }
+=======
+>>>>>>> 0d314bba816316916422b5263624a4da4e30dea0
 
         // 부모견 이미지 저장
+        data.parent = [];
         if (parentRecord && parentRecord.length > 0 ) {
             for (let parent of parentRecord) {
                 parent.parcel_id = outputId;
                 let query2 = 'INSERT INTO parent_pet_images SET ? ';
                 let parentOutput = await connection.query(query2, parent);
+<<<<<<< HEAD
+                parent.image_id = parentOutput.insertId;
+                data.parent.push(parent);
+=======
                 data.parent = parent;
+>>>>>>> 0d314bba816316916422b5263624a4da4e30dea0
             }
         }
 
         // 펫 이미지 저장 
+        data.pet = [];
         if (petRecord && petRecord.length > 0) {
 
             for (let pet of petRecord) {
                 pet.parcel_id = outputId;
                 let query3 = 'INSERT INTO pet_images SET ? ';
+<<<<<<< HEAD
+                let petOutput = await connection.query(query3, pet);
+                pet.image_id = petOutput.insertId;
+                data.pet.push(pet);
+=======
                 await connection.query(query3, pet);
                 data.pet = pet;
+>>>>>>> 0d314bba816316916422b5263624a4da4e30dea0
             }
         }
 
@@ -185,13 +208,18 @@ DogList.updateParcels = async function (changeId, removePet, petRecord, parcelRe
         }
 
         // 새로 추가할 펫 이미지가 있다면
+        data.pet = [];
         if (petRecord && petRecord.length > 0) {
 
             for (let pet of petRecord) {
                 let query3 = 'insert into pet_images set ?';
                 let newPet = await connection.query(query3, pet);
                 pet.image_id = newPet.insertId;
+<<<<<<< HEAD
+                data.pet.push(pet); 
+=======
                 data.pet = pet;
+>>>>>>> 0d314bba816316916422b5263624a4da4e30dea0
 
             }
         }
@@ -200,6 +228,16 @@ DogList.updateParcels = async function (changeId, removePet, petRecord, parcelRe
         let query5 = 'UPDATE parcel SET ? WHERE parcel_id = ?';
         let parcelOutput = await connection.query(query5, [parcelRecord, changeId]);
         data = parcelRecord;
+<<<<<<< HEAD
+
+        let id = parcelRecord.user_id; 
+        let query = 'select username FROM users where user_id = ?';
+        let users = await connection.query(query,id);
+        if(users && users.length > 0){
+            data.username = users[0].username;
+        }
+=======
+>>>>>>> 0d314bba816316916422b5263624a4da4e30dea0
 
 
         // 삭제할 부모견 사진 아이디가 있다면
@@ -222,13 +260,18 @@ DogList.updateParcels = async function (changeId, removePet, petRecord, parcelRe
         }
 
         // 새로운 부모견 사진이 있다면
+        data.parent = [];
         if (parentRecord && parentRecord.length > 0) {
 
             for (let parent of parentRecord) {
                 let query8 = 'insert into parent_pet_images set ?';
                 let newParent = await connection.query(query8, parent);
                 parent.image_id = newParent.insertId;
+<<<<<<< HEAD
+                data.parent.push(parent); 
+=======
                 data.parent = parent;
+>>>>>>> 0d314bba816316916422b5263624a4da4e30dea0
             }
         }
         // 응답 record 리턴
@@ -304,8 +347,8 @@ DogList.getWhere = function(qs){ //검색조회에 필요한 쿼리 만드는 �
     for(let i in qs){
       if(i=='page') continue;
       else if(qs[i]) {
-          param_array.push(qs[i]);
-          where += ' and p.'+i+ ' = ? ';
+	param_array.push(qs[i]);
+      	where += ' and p.'+i+ ' = ? ';
       }
       
     }
@@ -320,12 +363,12 @@ DogList.getLists = async function(qs){ //전체목록 조회하기
            (select 1 from favorites as f where p.parcel_id=f.parcel_id and f.user_id = ?) 
            as favorite from parcel as p, users as u where u.user_id = p.user_id`;
            let data;
-           let where = this.getWhere(qs).where; //검색어 쿼리스트링으로 조건절 만들어서 가져오기
-           let param_array = this.getWhere(qs).param_array; //placeholder에 들어갈 배열 가져오기
-           param_array.unshift(1); // TODO: placeholder에 들어갈 user_id 앞에다 추가(가라로 추가함)
-           data = await connection.query(query+where+' order by parcel_id desc;', param_array); //검색어로 쿼리 때리기. 
+              let where = this.getWhere(qs).where; //검색어 쿼리스트링으로 조건절 만들어서 가져오기
+              let param_array = this.getWhere(qs).param_array; //placeholder에 들어갈 배열 가져오기
+              param_array.unshift(1); //placeholder에 들어갈 user_id 앞에다 추가(가라로 추가함)
+              data = await connection.query(query+where+' order by parcel_id desc;', param_array); //검색어로 쿼리 때리기. 
              //user_id는 현재 사용자 id. 토큰이냐 세션이냐 미정.
-           if(qs.page * 10 > data.length) return []; //게시글 갯수를 넘기는 페이지 넘버가 날아오면 null 리턴
+           if(qs.page * 10 > data.length) return [null]; //게시글 갯수를 넘기는 페이지 넘버가 날아오면 null 리턴
            else {
                let start = Math.min(data.length-1, qs.page * 10);
                let end = Math.min(data.length-1, start + 9);
