@@ -67,7 +67,7 @@ router.post('/', arrUpload, async function (req, res) {
 
     //pet_images 테이블에 들어갈 record 배열 
     let petImageRecords = [];
-
+    
     for (let petImage of req.files['pet']) {
         //petImageRecords.push({ 'image': petImage.location, 'key': petImage.key});
         petImageRecords.push({ 'image': petImage.location, 'image_key': petImage.key });
@@ -78,6 +78,8 @@ router.post('/', arrUpload, async function (req, res) {
     // 썸네일 만드는 부분 
     let thumbnailInfo = [];
     thumbnailInfo.push({ 'key': req.files['pet'][0].key, 'location': req.files['pet'][0].location });
+    
+    //console.log('thumbnail : ',thumbnailInfo);
 
     //console.log('thumbnail : ',thumbnailInfo);
 
@@ -140,6 +142,7 @@ router.put('/', arrUpload, async function (req, res) {
 
         // 업데이트할 글 레코드 
         let parcelRecords = {
+            parcel_id: changeId,
             spiece: req.body.spiece,
             gender: req.body.gender,
             age: req.body.age,
@@ -178,7 +181,7 @@ router.put('/', arrUpload, async function (req, res) {
         // 새로운 부모견 이미지 파일이 있으면
         if (req.files['parent']) {
             for (let item of req.files['parent']) {
-                parentImageRecords.push({ 'image': item.location, 'parcel_id': changeId, 'image_key': item.key });
+                parentImageRecords.push({ 'image': item.location, 'parcel_id': changeId , 'image_key': item.key});
             }
         }
 

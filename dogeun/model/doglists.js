@@ -93,7 +93,6 @@ DogList.postParcels = async function (parcelRecord, parentRecord, petRecord, thu
 
         // 썸네일 만들기 
         if (thumbnailInfo && thumbnailInfo.length > 0) {
-
             let thumbnailFileName = 'thumbnail_' + thumbnailInfo[0].key;
             let thumbnailPath = 'thumbnail/' + thumbnailFileName;
 
@@ -164,7 +163,6 @@ DogList.postParcels = async function (parcelRecord, parentRecord, petRecord, thu
                     });
 
                     let petThumbnail = await DogList.uploadToS3(thumbnailFileName, thumbnailPath);
-
                     pet.thumbnail = petThumbnail;
                     pet.thumbnail_key = thumbnailFileName;
                     console.log('pet thumbnail success');
@@ -214,7 +212,7 @@ DogList.updateParcels = async function (changeId, userId, removePet, petRecord, 
         if (removePet && removePet.length > 0) {
             for (let item of removePet) {
                 // s3 삭제를 위해 url 
-                let query1 = 'select image_key, thumbnail_key from pet_images where pet_images.parcel_id = ? and pet_images.image_id = ? ';
+                let query1 = 'select image_key, thumbnail_key from pet_images where parcel_id = ? and image_id = ? ';
                 let petImage = await connection.query(query1, [changeId, item]);
 
 
@@ -245,8 +243,7 @@ DogList.updateParcels = async function (changeId, userId, removePet, petRecord, 
             }
 
         }
-        console.log('original', data.pet);
-
+        console.log('delete pet success');
 
 
         // 새로 추가할 펫 이미지가 있다면
