@@ -49,13 +49,6 @@
         <option value="room">room</option>
     </select>
 
-    <span>사용자</span>
-    <select id="users" class="form-control">
-        <option value="아이유">아이유</option>
-        <option value="설현">설현</option>
-        <option value="태연">태연</option>
-        <option value="수지">수지</option>
-    </select>
     <input type="button" id="joinButton" value="입장" class="btn btn-default">
 </div>
 
@@ -70,44 +63,66 @@
 
     var socket = io.connect();
     var user;
-    socket.on('connect', function () {
-        console.log('connect');
+    var participant;
+    socket.on('connect', () => {
+       alert('connect');
         // 채팅방 목록 요청
-        socket.emit('showList', 30);
+        socket.emit('showList', 20); //TODO : 요청 id 클라이언트에서 넘겨줘야
     });
 
 
     // 채팅방 목록 요청 결과 (목록 출력)
-    socket.on('showListResults', (roomlist) => {
-        console.log('chat rooms :', roomlist);
+    socket.on('showListResults', roomlist => {
+        $("#rooms").empty();
+        // 채팅방 목록 갱신
+        for(var i = 0 ; i < roomlist.length ; i++) {
+            var room = roomlist[i].room_id;
+            var option = $("<option value='" + room + "'>").text(room);
+            $("#rooms").append(option);
+        }
     });
+    // 채팅방 입장
+    $(() => {
+        $("#joinButton").click(() => {
+        var room = $("#rooms").val();
+        socket.emit("enterRoom", room);
+        });
+    });
+    
 
     //특정 채팅방 입장 결과(채팅방 메세지 내역 모두 출력)
-    socket.emit('enterRoom', "593a25f6c67b70e65c6d20b4");
-
     socket.on('enterRoomResults', data => {
-      console.log(data);
+        $('#messages').empty();
+        for(let i = 0; i<data.length; i++){
+            $('#messages').append($('<li>').text(data[i].sender_name+data[i].sent_time_data[i].sender_profile));
+            $('#messages').append($('<li>').text(data[i].content));
+        }
+    });
+
+    // 메세지 전송
+    $(() => {
+        $("#sendButton").click(() => {
+            socket.emit('sendMessage', {
+            content: 'where do you live?',
+            receiver_id: 30,
+            sender_id: 28,
+            room_id: $("#rooms").val()
+        });
     });
 
 
-    socket.emit('sendMessage', {
-      content: 'where do you live?',
-      receiver_id: 30,
-      sender_id: 28,
-      room_id: "593a25f6c67b70e65c6d20b4"
-    });
 
     function appendMessage(msg) {
         $('#messages').append($('<li>').text(msg));
     }
 
 
-    socket.on('notice', function(data) {
+    socket.on('notice',data => {
         appendMessage(data.user + ' >> ' + data.message);
     });
 
 
-    socket.on('joinRoomResult', function (data) {
+    socket.on('joinRoomResult', data => {
         console.log('join room result :', data);
         if ( data.room ) {
             appendMessage(data.user + ' 님이 ' + data.room + '에 입장했습니다');
@@ -120,7 +135,7 @@
     });
 
 
-    socket.on('unreadMessageResult', function(data) {
+    socket.on('unreadMessageResult', data => {
         for(var i = 0 ; i < data.length ; i++) {
             var item = data[i];
             const sender = item.sender;
@@ -130,7 +145,7 @@
     });
 
 
-    socket.on('messageReceive', function (data) {
+    socket.on('messageReceive', data => {
         console.log('message receive', data);
         const sender = data.sender;
         const message = sender + ' >> ' + data.message;
@@ -155,13 +170,7 @@
     });
 
 
-    // 채팅방 입장
-    $("#joinButton").on("click", function () {
-        user = $("#users").val();
-        var room = $("#rooms").val();
-        console.log("trying to join user :", user, " room :", room);
-        socket.emit("joinRoom", {user: user, room: room});
-    });
+
 </script>
 </body>
 </html>

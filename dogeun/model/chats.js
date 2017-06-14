@@ -15,8 +15,10 @@ const ObjectId = mongoose.Schema.Types.ObjectId;
 /*--------------------------  Message Schema  -----------------------------*/
 
 const MessageSchema = new Schema({
-    sender: String,
-    receiver: String,
+    sender_id: Number,
+    sender_name: String,
+    receiver_id: Number,
+    receiver_name: String,
     sent_time: String,
     content: String,
     is_read: Boolean,
@@ -129,6 +131,7 @@ RoomSchema.methods.addMessage = async function addMessage(new_msg){
     return ret;
 };
 
+
 RoomSchema.methods.getRooms = async function getRooms(id){ //사용자 id
     try {
         let rooms = await Room.find(  //채팅목록 조회
@@ -136,20 +139,21 @@ RoomSchema.methods.getRooms = async function getRooms(id){ //사용자 id
             { messages: 1, _id: 1 }
         ); //결과 : 해당 사용자가 참여중인 채팅방의 모든 메세지 내역
         
-        let recent_array = []; //메세지를 보낸 sender들의 프로필 썸네일 url을 담을 배열
+        let recent_array = []; 
         for(let i = 0; i< rooms.length; i++){
             let recent = rooms[i].messages.length-1;
-            let msg = rooms[i].messages[recent]; 
+            let msg = rooms[i].messages[recent];
             let profile = await User.findOne({
                 attributes: ['profile_thumbnail'],
-                where: { user_id: rooms[i].messages[recent].sender_id }}); 
+                where: { user_id: msg.sender_id }}); 
                 //채팅방 별 가장 최근에 도착한 메세지를 보낸 사람의 id로 보낸 사람 프로필 썸네일 가져오기
             let recent_msg = {
                 room_id: rooms[i]._id+"",
                 sent_time: msg.sent_time,
                 sender_name: msg.sender_name,
                 content: msg.content,
-                profile_thumbnail: profile.dataValues.profile_thumbnail
+                profile_thumbnail: profile.dataValues.profile_thumbnail,
+                receiver_name: msg.receiver_name //TODO: 안드에서는 불필요(지워야)
             };       
             recent_array.push(recent_msg);
         }
@@ -164,10 +168,20 @@ RoomSchema.methods.getRooms = async function getRooms(id){ //사용자 id
 
 RoomSchema.methods.enterRoom = async function enterRoom(room_id){
     try {
-        let room = await Room.findOne({
-            _id: room_id
-        });
-        return room.messages;
+        let messages = await Room.findOne(
+            { _id: room_id },
+            { messages: 1 }
+        );
+        for(let i = 0; i<messages.length; i++){
+            messages[i].sender_profile  = await User.findOne({
+                attributes: ['profile_thumbnail'],
+                where: { user_id: messages[i].sender_id }
+            });
+            delete messages[i].receiver_id;
+            delete messages[i].receiver_name;
+        }
+        console.log(messages);
+        return messages;
     }
     catch(err) {
         console.log(err);

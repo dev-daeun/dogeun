@@ -73,6 +73,7 @@ Profile.saveProfile = async function(req){
                 record.profile_thumbnail = thumbnail_url;
                 result = await connection.query(query, record);
             }
+            console.log(result);
             return result;
     } 
     catch(err) {
@@ -87,13 +88,12 @@ Profile.editProfile = async function(req){
     try { 
          let result;
          let record = this.getRecord(req);
-         let profile = await user.findAll({ where: {user_id: req.params.id}}); //TODO : 토큰 검증해서 값 가져오기
-         let original_url = profile[0].dataValues.profile_image; //원본 이미지 url 가져오기
+         let profile = await user.findOne({where: { user_id: req.params.id } }); //TODO : 토큰 검증해서 값 가져오기
+         let original_url = profile.dataValues.profile_image; //원본 이미지 url 가져오기
 
         if(req.file){
             if(original_url){ //원래 프로필에 이미지가 있었으면(null이 아니면)
                 let key = original_url.split('/')[3];
-                console.log(key);
                 await this.deleteFromS3(key); //s3에서 원본 이미지 삭제
                 await this.deleteFromS3('thumbnail_'+key); //s3에서 썸네일 삭제
             }
@@ -108,13 +108,11 @@ Profile.editProfile = async function(req){
             let thumbnail_url = await this.uploadThumbToS3(thumb_name, thumb_path); //로컬에 저장된 썸네일을 s3에 업로드
             record.profile_image = req.file.location; //수정할 레코드에 새 이미지url 추가
             record.profile_thumbnail = thumbnail_url;       
-            result = await user.update(record, { where:{ user_id: req.params.id }}); 
-            return result;
         }
-        else {
-            result = await user.update(record,{ where:{ user_id: req.params.id }}); 
-            return result;
-        }
+       
+        result = await user.update(record,{ where:{ user_id: req.params.id }}); 
+        return result;
+        
 
     }
     catch(err) {
