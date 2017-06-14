@@ -8,7 +8,6 @@ var doglists = require('./routes/doglists');
 var profiles = require('./routes/profiles');
 var favorites = require('./routes/favorites');
 var login = require('./routes/login');
-var chats = require('./routes/chats');
 var secretKey = require('./config/secretKey');
 var app = express();
 
@@ -16,6 +15,7 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 app.set('secret-key', secretKey.secretKey);
+
 // uncomment after placing your favicon in /public
 // app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
@@ -24,20 +24,18 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static('apidoc'));
-
-
 app.use( (req, res, next) => {req.user= {}, next();});
 app.use('/doglists', doglists);
 app.use('/profiles', profiles);
 app.use('/favorites', favorites);
 app.use('/login', login);
-app.use('/chats', chats);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
   err.status = 404;
   next(err);
 });
+
 
 // error handler
 app.use(function(err, req, res, next) {
@@ -49,5 +47,6 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
 
 module.exports = app;

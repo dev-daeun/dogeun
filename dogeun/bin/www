@@ -3,10 +3,15 @@
 /**
  * Module dependencies.
  */
-
+var fs = require('fs');
 var app = require('../app');
 var debug = require('debug')('dogeun:server');
 var http = require('http');
+<<<<<<< HEAD
+
+
+=======
+>>>>>>> 0d314bba816316916422b5263624a4da4e30dea0
 /**
  * Get port from environment and store in Express.
  */
@@ -100,8 +105,7 @@ io.on('connection', socket => {
     //채팅 목록 조회 
     socket.on('showList', async user_id => {
       user = user_id;
-      var roomlist = await room.getRooms(user_id);
-      console.log(roomlist);
+      var roomlist = await room.getRooms(user_id); //현재 사용자id로 사용자가 참여중인 채팅목록 가져오기
       socket.emit('showListResults', roomlist);
     });
 
@@ -116,8 +120,8 @@ io.on('connection', socket => {
     });
     
     socket.on('sendMessage', async message => {
-        message.save(message);
-        room.save({_id: message.room_id}, message);
+        // await message.save(message);
+        // await room.save({_id: message.room_id}, message);
     });
 
     socket.on('readMessage', room_id => {

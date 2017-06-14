@@ -8,6 +8,7 @@ const Doglist = require('../model/doglists');
 const easyimg = require('easyimage');
 const fs = require('fs');
 const s3 = aws.getS3();
+
 const upload = aws.getUpload();
 const arrUpload = upload.fields([{ name: 'pet', maxCount: 5 }, { name: 'lineage', maxCount: 1 }, { name: 'parent', maxCount: 2 }]);
 
@@ -25,13 +26,13 @@ router.post('/', arrUpload, async function(req,res){
         || !req.body.region2 || !req.body.price || !req.body.size || !req.body.introduction
         || !req.body.condition || !req.body.title) {
 
-        res.status(400).send({ message: 'please input all of data' });
+        res.status(400).send({ message: 'please input all info' });
         return;
     }
 
     // pet 이미지는 필수 
-    if(!req.files['pet']){
-        res.status(400).send({message: 'please input pet image'});
+    if (!req.files['pet']) {
+        res.status(400).send({ message: 'please upload pet images' });
         return;
     }
 
@@ -53,14 +54,14 @@ router.post('/', arrUpload, async function(req,res){
         kennel: req.body.kennel,
         corona: req.body.corona,
         DHPPL: req.body.DHPPL
-    }
+    };
 
-  
+
     //parcel 테이블에 들어갈 파일 record 추가
-    if(!req.files['lineage']){
+    if (!req.files['lineage']) {
         parcelRecords.lineage = null;
-    }else{
-    parcelRecords.lineage = req.files['lineage'][0].location;
+    } else {
+        parcelRecords.lineage = req.files['lineage'][0].location;
     }
 
     // parentImageRecords 테이블에 들어갈 record 추가
@@ -73,13 +74,12 @@ router.post('/', arrUpload, async function(req,res){
     }
 
     //pet_images 테이블에 들어갈 record 배열 
-    let imageRecords = [];
+    let petImageRecords = [];
 
-    for(let petImage of req.files['pet']){
-        imageRecords.push({'image': petImage.location});
+    for (let petImage of req.files['pet']) {
+        petImageRecords.push({ 'image': petImage.location });
     }
 
-  
     // 썸네일 만드는 부분 
     let thumbnailFileName = 'thumbnail_' + req.files['pet'][0].key;
 
@@ -96,13 +96,16 @@ router.post('/', arrUpload, async function(req,res){
 
     // 썸네일도 레코드에 추가
     parcelRecords.pet_thumbnail = petThumbnail;
+    let thumbnailInfo = [];
+    thumbnailInfo.push({ 'key': req.files['pet'][0].key, 'location': req.files['pet'][0].location });
 
     // 함수 호출부분 
     // record 넘기고 클라이언트에 응답
 
     try {
-        let ret = await Doglist.postParcel(parcelRecords, parentImageRecords, imageRecords);
-        res.status(200).send({ message: 'save' });
+        let result = [];
+        result = await Doglist.postParcels(parcelRecords, parentImageRecords, petImageRecords, thumbnailInfo);
+        res.status(200).send({ results: result });
     }
     catch (err) {
         console.log('error message : ', err);
@@ -112,48 +115,98 @@ router.post('/', arrUpload, async function(req,res){
 
 });
 
+router.put('/', arrUpload, async function (req, res) {
+    let changeId = req.body.parcel_id;
+
+    try {
+        let removePet; // 삭제 요청 받은 펫 이미지 id
+        let removePetNums; // 삭제 요청 받은 펫 이미지 개수 (null 체크 하기 위해)
+        
+        // 삭제할 이미지가 있으면 
+        if (req.body.pet_image_id) {
+            removePet = [req.body.pet_image_id];
+            removePetNums = removePet.length;
+        }else{
+            //삭제할 이미지가 없으면
+            removePetNums = 0;
+        }
+        
+        // 펫 이미지 레코드
+        let petImageRecords = [];
+
+        let newPetNums; // 새로 업로드할 펫 이미지 개수 
+
+        // 새로운 펫 이미지 파일이 있으면
+        if (req.files['pet']) {
+            for (let item of req.files['pet']) {
+                petImageRecords.push({ 'image': item.location, 'parcel_id': changeId });
+            }
+            newPetNums = req.files['pet'].length;
+        }else{
+            // 새로운 펫이미지가 없으면 
+           newPetNums = 0;
+        }
+        
+        // 기존의 펫 이미지 개수 
+        let imageNums = await Doglist.checkImages(changeId);
+     
+        // 널값 확인하기 위해
+        if(imageNums - removePetNums + newPetNums <= 0 ){
+             res.status(400).send({ message: 'fail' });
+              return;
+        }
+    
+        // 업데이트할 글 레코드 
+        let parcelRecords = {
+            spiece: req.body.spiece,
+            gender: req.body.gender,
+            age: req.body.age,
+            region1: req.body.region1,
+            region2: req.body.region2,
+            price: req.body.price,
+            size: req.body.size,
+            introduction: req.body.introduction,
+            condition: req.body.condition,
+            fur: req.body.fur,
+            lineage: req.files['lineage'].location,
+            title: req.body.title,
+            kennel: req.body.kennel,
+            corona: req.body.corona,
+            DHPPL: req.body.DHPPL
+        };
+
+        // 삭제 요청 받은 부모견 이미지 id
+        let removeParent;
+
+        // 삭제할 부모견 이미지가 있으면 
+        if (req.body.parent_image_id) {
+            removeParent = [req.body.parent_image_id];
+        }
+        
+        // 부모견 이미지 레코드 
+        let parentImageRecords = [];
+
+        // 새로운 부모견 이미지 파일이 있으면
+        if (req.files['parent']) {
+            for (let item of req.files['parent']) {
+                parentImageRecords.push({ 'image': item.location, 'parcel_id': changeId });
+            }
+        }
+        let result = []; // 배열로 결과 
+        result = await Doglist.updateParcels(changeId, removePet, petImageRecords, parcelRecords, removeParent, parentImageRecords);
+        res.send({ 'results': result });
+    } catch (err) {
+        console.log('err message : ', err);
+        res.status(500).send({ message: 'fail' });
+    }
+
+});
+
 router.delete('/:parcel_id', async function (req, res) {
     let removeId = req.params.parcel_id;
 
     try {
-        // s3 이미지 지우기
-        let whatIs = 'pet';
-        let pets = await Doglist.searchImage(removeId, whatIs);
-        var petKey = [];
-
-        for (let petItem of pets) {
-            petKey = petItem.image.split('/');
-            await deleteInS3(petKey[petKey.length - 1]);
-        }
-
-        whatIs = 'parent';
-        let parents = await Doglist.searchImage(removeId, whatIs);
-        var parentKey = [];
-
-        if (parents.image) {
-            for (let parentItem of parents) {
-                parentKey = parentItem.image.split('/');
-
-                await deleteInS3(parentKey[parentKey.length - 1]);
-            }
-        }
-        whatIs = 'parcel';
-        let parcels = await Doglist.searchImage(removeId, whatIs);
-        var thumbnailKey = [];
-
-        thumbnailKey = parcels[0].pet_thumbnail.split('/');
-        await deleteInS3(thumbnailKey[thumbnailKey.length - 1]);
-
-        var lineageKey = [];
-
-        if (parcels[0].lineage) {
-            lineageKey = parcels[0].lineage.split('/');
-            await deleteInS3(lineageKey[lineageKey.length - 1]);
-        }
-        //await deleteInS3(lineageKey[lineageKey.length-1]);
-
-        let result = Doglist.deleteParcel(removeId);
-
+        let result = Doglist.deleteParcles(removeId);
         res.send({ message: 'save' });
     } catch (err) {
         console.log('err message : ', err);
@@ -200,61 +253,7 @@ router.put('/:id/done', async function(req, res){ //분양완료/완료취소하
     catch(err) {
         res.status(500).send( { message: 'fail: '+err });
     }
-})
+});
 
-
-async function deleteInS3(itemKey) {
-    return new Promise((resolve, reject) => {
-       
-        const params = {
-            Bucket: 'yeonsudogndogn',
-            //Key : itemKey
-            Delete: {
-                Objects: [
-                    { 
-                        Key: itemKey 
-                    }
-                ]
-            }
-
-        }
-
-        s3.deleteObjects(params, (err, data) => {
-            if (err) {
-                reject(err);
-            } else {
-                console.log(data);
-                resolve(data);
-            }
-        });
-    })
-};
-
-
-// 만든 파일을 s3에 업로드하기위해, 업로드 후 썸네일 삭제
-async function uploadToS3(itemKey, path) {
-    return new Promise((resolve, reject) => {
-
-        const params = {
-            Bucket: 'yeonsudogndogn',
-            Key: itemKey,
-            ACL: 'public-read',
-            Body: fs.createReadStream(path)
-        }
-        
-        s3.putObject(params, (err, data) => {
-            if (err) {
-                fs.unlinkSync(path);
-                reject(err);
-            }
-            else {
-                const imageUrl = s3.endpoint.href + params.Bucket + path;
-                fs.unlinkSync(path);
-                resolve(imageUrl);
-
-            }
-        })
-    })
-}
 
 module.exports = router;
