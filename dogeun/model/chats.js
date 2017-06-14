@@ -204,9 +204,6 @@ RoomSchema.methods.deleteRoom = async function deleteRoom(user_id, room_id){
   
 };
 
-
-
-
 const Room = mongoose.model('Room', RoomSchema); 
 const Message = mongoose.model('Message', MessageSchema);
 module.exports.Room = Room;

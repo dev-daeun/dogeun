@@ -35,10 +35,10 @@ router.put('/:id', upload.single('profile'), async function(req ,res){
             res.status(401).send({ message: 'input unsatisfied' });
         else {
             let ret = await Profile.editProfile(req);
-            res.status(201).send({ message: 'success', profile_id: ret });
+            res.status(201).send({ message: 'success', user_id: ret });
         }
         let ret = await Profile.editProfile(req);
-        res.status(201).send({ message: 'success', profile_id: ret });
+        res.status(201).send({ message: 'success' });
     }
     catch(err) {
         res.status(500).send({ message: err });
