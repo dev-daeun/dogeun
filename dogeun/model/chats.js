@@ -168,20 +168,25 @@ RoomSchema.methods.getRooms = async function getRooms(id){ //사용자 id
 
 RoomSchema.methods.enterRoom = async function enterRoom(room_id){
     try {
-        let messages = await Room.findOne(
+        let room = await Room.findOne(
             { _id: room_id },
             { messages: 1 }
         );
-        for(let i = 0; i<messages.length; i++){
-            messages[i].sender_profile  = await User.findOne({
+        let array = [];
+        for(let i = 0; i<room.messages.length; i++){
+           let msg = room.messages[i];
+           let profile = await User.findOne({
                 attributes: ['profile_thumbnail'],
-                where: { user_id: messages[i].sender_id }
-            });
-            delete messages[i].receiver_id;
-            delete messages[i].receiver_name;
+                where: { user_id: msg.sender_id }
+           });
+           array.push({
+               sender_id: msg.sender_id,
+               sender_name: msg.sender_name,
+               sender_profile: profile.dataValues.profile_thumbnail,
+               content: msg.content
+           });
         }
-        console.log(messages);
-        return messages;
+        return array;
     }
     catch(err) {
         console.log(err);

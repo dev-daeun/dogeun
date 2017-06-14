@@ -8,6 +8,7 @@
     <script src="/socket.io/socket.io.js"></script>
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon"> 
     <style>
         body {
             margin-left: 10px;
@@ -65,7 +66,6 @@
     var user;
     var participant;
     socket.on('connect', () => {
-       alert('connect');
         // 채팅방 목록 요청
         socket.emit('showList', 20); //TODO : 요청 id 클라이언트에서 넘겨줘야
     });
@@ -82,7 +82,7 @@
         }
     });
     // 채팅방 입장
-    $(() => {
+    $(function(){
         $("#joinButton").click(() => {
         var room = $("#rooms").val();
         socket.emit("enterRoom", room);
@@ -94,13 +94,15 @@
     socket.on('enterRoomResults', data => {
         $('#messages').empty();
         for(let i = 0; i<data.length; i++){
-            $('#messages').append($('<li>').text(data[i].sender_name+data[i].sent_time_data[i].sender_profile));
+            $('#messages').append($('<li>').text(data[i].sender_id));
+            $('#messages').append($('<li>').text(data[i].sender_name));
+            $('#messages').append($('<li>').text(data[i].sender_profile));
             $('#messages').append($('<li>').text(data[i].content));
         }
     });
 
     // 메세지 전송
-    $(() => {
+ 
         $("#sendButton").click(() => {
             socket.emit('sendMessage', {
             content: 'where do you live?',
@@ -157,7 +159,7 @@
 
 
     // 메세지 보내기
-    $("#chatInput").submit(function () {
+    $("#chatInput").submit(function() {
         var message = $("#userInput").val();
         if ( ! user || ! room ) {
             window.alert('채팅방에 먼저 입장하세요.');
@@ -168,9 +170,6 @@
         console.log('user :', user, 'message :', message);
         return false;
     });
-
-
-
 </script>
 </body>
 </html>

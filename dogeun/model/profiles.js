@@ -1,6 +1,5 @@
 const Sequelize = require('sequelize');
 const pool = require('../config/db_pool');
-const user = require('../config/ORM');
 const AWS = require('../config/AWS');
 const s3 = AWS.getS3();
 const fs = require('fs');
@@ -86,10 +85,11 @@ Profile.saveProfile = async function(req){
 
 Profile.editProfile = async function(req){
     try { 
+         var connection = await pool.getConnection();
          let result;
          let record = this.getRecord(req);
-         let profile = await user.findOne({where: { user_id: req.params.id } }); //TODO : 토큰 검증해서 값 가져오기
-         let original_url = profile.dataValues.profile_image; //원본 이미지 url 가져오기
+         let profile = await user.findOne({where: { user_id: req.params.id } });
+         let original_url = profile[0].profile_image; //원본 이미지 url 가져오기
 
         if(req.file){
             if(original_url){ //원래 프로필에 이미지가 있었으면(null이 아니면)
