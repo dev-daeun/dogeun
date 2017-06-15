@@ -51,6 +51,29 @@ Profile.deleteFromS3 = function(key){
     });
 };
 
+
+Profile.readProfile = async function(id){
+    let connection;
+    let data = {};
+    try{
+        connection = await pool.getConnection();
+        let query = 'select profile_image, username, gender, lifestyle, region, other_pets, family_size, profile_thumbnail from users where user_id = ? ';
+        let user = await connection.query(query, id);
+        return user[0];
+    //    let keys = Object.keys(user[0]);
+    //    for(let item of keys ){
+    //        console.log(user[0][item]);
+    //        data[item] = user[0][item];
+    //    }
+    //     return data;
+    }catch(err){
+        console.log(err);
+        throw err;
+    }finally{
+        pool.releaseConnection(connection);
+    }
+;}
+
 Profile.saveProfile = async function(req){
     try {
             var connection = await pool.getConnection();
