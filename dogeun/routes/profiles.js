@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Profile = require('../model/profiles');
+const Doglist = require('../model/doglists');
 const AWS = require('../config/AWS');
 AWS.loadAccess();
 const upload = AWS.getUpload();
@@ -16,12 +17,13 @@ router.use(function(req, res, next){
 router.get('/:user_id', async function(req,res){
     try{
         let userId = req.params.user_id;
-
         if(!userId){
             res.status(400).send({message: 'no user error'});
         }else{
-            let ret = await Profile.readProfile(userId);
-            res.status(200).send(ret);
+            let profile = await Profile.readProfile(userId);
+            let mylist = await Doglist.getMyLists(userId);
+            profile.mylist = mylist;
+            res.status(200).send(profile);
         }
         
     }catch(err){

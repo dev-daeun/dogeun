@@ -517,7 +517,16 @@ DogList.getEmergencyLists = async function () { //메인화면 가로에 들어�
     finally { pool.releaseConnection(connection); }
 };
      
-     
+
+DogList.getMyLists = async function(user_id) { //메인화면 가로에 들어갈 분양 가장 시급한 글 6개 조회
+    try {
+        var connection = await pool.getConnection();
+        let query = 'select parcel_id, title, pet_thumbnail from parcel where user_id = ? order by parcel_id desc';
+        let data = await connection.query(query, user_id);
+        return data;
+    } catch (err) { throw err; }
+    finally { pool.releaseConnection(connection); }
+};     
 
 DogList.getOneList = async function(parcelID){ //게시글 상세조회
     try {
