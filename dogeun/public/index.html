@@ -90,6 +90,14 @@
     });
     
 
+    // 메세지 전송
+    $(function(){
+        $("#sendButton").click(() => {
+        var room = $("#rooms").val();
+        socket.emit("enterRoom", {room_id: room});
+        });
+    });
+    
     //특정 채팅방 입장 결과(채팅방 메세지 내역 모두 출력) -done
     socket.on('enterRoomResults', data => {
         $('#messages').empty();

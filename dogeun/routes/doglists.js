@@ -170,9 +170,9 @@ router.put('/', arrUpload, async function (req, res) {
             fur: req.body.fur,
             lineage: req.files['lineage'].location,
             title: req.body.title,
-            kennel: req.body.kennel,
-            corona: req.body.corona,
-            DHPPL: req.body.DHPPL
+            kennel: req.body.kennel || 0,
+            corona: req.body.corona || 0,
+            DHPPL: req.body.DHPPL || 0
         };
 
         // 삭제 요청 받은 부모견 이미지 id
@@ -194,7 +194,7 @@ router.put('/', arrUpload, async function (req, res) {
         }
         let result = []; // 배열로 결과 
         result = await Doglist.updateParcels(changeId, removePet, petImageRecords, parcelRecords, removeParent, parentImageRecords);
-        res.send({ 'results': result });
+        res.status(201).send({ 'results': result });
     } catch (err) {
         console.log('err message : ', err);
         res.status(500).send({ message: 'fail' });
@@ -238,7 +238,8 @@ router.get('/emergency', async function(req, res){
 router.get('/:id', async function(req, res){
     try {
         let ret = await Doglist.getOneList(req.params.id);
-        res.status(200).send(ret);
+        if(ret===0) res.status(400).send({message: 'parcel does not exist'});
+        else res.status(200).send(ret);
     }
     catch(err) {
         res.status(500).send({ message: 'fail: '+err });
@@ -248,7 +249,7 @@ router.get('/:id', async function(req, res){
 router.put('/:id/done', async function(req, res){ //분양완료/완료취소하기
     try {
         let ret = Doglist.completeParcel(req.params.id);
-        if(ret==={}) res.status(400).send({message: 'parcel does not exist'});
+        if(ret===0) res.status(400).send({message: 'parcel does not exist'});
         else res.status(201).send( { message: 'success'});
     }
     catch(err) {

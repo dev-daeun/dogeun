@@ -7,7 +7,7 @@ class Favor {}
 Favor.getFavorites = async function(token_id){
     try {
         var connection = await pool.getConnection();
-        let parcel_ids = await connection.query('select parcel_id from favorites where user_id = ?', token_id); //분양글 id 가져오기
+        let parcel_ids = await connection.query('select parcel_id from favorites where user_id = ? order by createdAt desc', token_id); //분양글 id 가져오기
         let parcels = [];
         let query = `select parcel_id, title, pet_thumbnail, username from parcel, users 
                      where users.user_id = parcel.user_id and parcel_id = ?`;
@@ -33,7 +33,6 @@ Favor.setFavorites = async function(parcel_id, user_id){
         let query = 'select count(*) from favorites where parcel_id = ? and user_id = ?';
         let count = await connection.query(query, [parcel_id, user_id]);
         let result, query2;
-        console.log(count);
         if(count[0]["count(*)"]>0) {
             query2 = 'delete from favorites where parcel_id = ? and user_id = ?'
             result = await connection.query(query2, [parcel_id, user_id]);

@@ -376,51 +376,55 @@ DogList.getLists = async function(qs){ //전체목록 조회하기
 };
      
      
- DogList.getOneList = async function(parcelID){ //게시글 상세조회
+
+DogList.getOneList = async function(parcelID){ //게시글 상세조회
     try {
       var connection = await pool.getConnection();
       let query3 = 'select * from parcel where parcel_id = ?';
       let parcel = await connection.query(query3, parcelID);
-      if(parcel.length==0) return {};
+      if(parcel.length==0) return 0;
+      else {
+        let query1 = 'select image_id, image from pet_images where parcel_id = ?';
+        let petImages = await connection.query(query1, parcelID);
 
-      let query1 = 'select image_id, image from pet_images where parcel_id = ?';
-      let petImages = await connection.query(query1, parcelID);
+        let query2 = 'select image_id, image from parent_pet_images where parcel_id = ?'
+        let parentPetImages =  await connection.query(query2, parcelID);
+        delete parcel[0].createdAt;
+        delete parcel[0].updatedAt;
+        let query4 = 'select username from users where user_id = ?';
+        let username = await connection.query(query4, parcel[0].user_id);
+      
+        let query5 = 'select count(*) from favorites where parcel_id = ?'
+        let favor = await connection.query(query5, parcelID);
+        parcel[0].username = username[0].username;
+        parcel[0].parent_pet_images = parentPetImages;
+        parcel[0].pet_images = petImages;
+        parcel[0].favorite_number = favor[0]["count(*)"];
+        return parcel[0];
+      }
 
-      let query2 = 'select image_id, image from parent_pet_images where parcel_id = ?'
-      let parentPetImages =  await connection.query(query2, parcelID);
-      
-      delete parcel[0].createdAt;
-      delete parcel[0].updatedAt;
-      let query4 = 'select username from users where user_id = ?';
-      let username = await connection.query(query4, parcel[0].user_id);
-      
-      let query5 = 'select count(*) from favorites where parcel_id = ?'
-      let favor = await connection.query(query5, parcelID);
-      //TODO : parcel 유무 예외처리 필요
-      parcel[0].username = username[0].username;
-      parcel[0].parent_pet_images = parentPetImages;
-      parcel[0].pet_images = petImages;
-      parcel[0].favorite_number = favor[0]["count(*)"];
-      return parcel[0];
     }
     catch(err) {
-      throw err;
+        console.log(err);
+        throw err;
     }
     finally {
       pool.releaseConnection(connection);
     }
-  }
+  };
 
 DogList.completeParcel = async function(parcelID){ //분양완료 or 완료 취소하기
     try {
       var connection = await pool.getConnection();
       let query = 'select is_parceled from parcel where parcel_id = ?';
       let is_parceled = await connection.query(query, parcelID);
-
-      let query2 = 'update parcel set is_parceled = ? where parcel_id = ?';
-      let result;
-      if(is_parceled[0].is_parceled==0) result = await connection.query(query2, [1, parcelID]);
-      else result = await connection.query(query2, [0, parcelID]);
+      if(is_parceled.length==0) return 0;
+      else {
+        let query2 = 'update parcel set is_parceled = ? where parcel_id = ?';
+        let result;
+        if(is_parceled[0].is_parceled==0) result = await connection.query(query2, [1, parcelID]);
+        else result = await connection.query(query2, [0, parcelID]);
+      }
     }
     catch(err) {
       throw err;

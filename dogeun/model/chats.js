@@ -114,6 +114,7 @@ RoomSchema.methods.creatRoom = async function createRoom(creator_id, participant
             messages: []
           });
           let result = await new_room.save(); //save()는 생성된 객체 그대로 리턴
+          console.log(result);
           return result;
     }
     catch(err) {
