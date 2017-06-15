@@ -105,14 +105,19 @@ router.put('/:parcel_id', arrUpload, async function (req, res) {
         let removePetNums; // 삭제 요청 받은 펫 이미지 개수 (null 체크 하기 위해)
 
         // 삭제할 이미지가 있으면 
+    
         if (req.body.pet_image_id) {
-            removePet = [req.body.pet_image_id];
-            removePetNums = removePet.length;
+            removePet = req.body.pet_image_id;
+            if(removePet instanceof Array){
+                removePetNums = removePet.length;
+            }else{
+                removePetNums = 1;
+            }
         } else {
             //삭제할 이미지가 없으면
             removePetNums = 0;
         }
-
+       
         // 펫 이미지 레코드
         let petImageRecords = [];
 
@@ -132,9 +137,10 @@ router.put('/:parcel_id', arrUpload, async function (req, res) {
         // 기존의 펫 이미지 개수 
         let imageNums = await Doglist.checkImages(changeId);
 
+
         // 널값 확인하기 위해
         if (imageNums - removePetNums + newPetNums <= 0) {
-            res.status(400).send({ message: 'fail' });
+            res.status(400).send({ message: 'pet image null error' });
             return;
         }
 
@@ -169,7 +175,7 @@ router.put('/:parcel_id', arrUpload, async function (req, res) {
 
         // 삭제할 부모견 이미지가 있으면 
         if (req.body.parent_image_id) {
-            removeParent = [req.body.parent_image_id];
+            removeParent = req.body.parent_image_id;
         }
 
         // 부모견 이미지 레코드 
