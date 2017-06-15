@@ -20,7 +20,7 @@ Profile.uploadThumbToS3 = function (name, path) {
         s3.putObject(params, (err, data) => { //s3에 읽어온 썸네일 올리기
             if (err) reject(err);
             else {
-                const imageUrl = s3.endpoint.href + params.Bucket + '/' +path; //s3주소 + 버킷이름 + 썸네일 로컬 위치
+                const imageUrl = s3.endpoint.href + params.Bucket + '/' +name; //s3주소 + 버킷이름 + 썸네일 로컬 위치
                 fs.unlinkSync(path); //로컬 디렉토리에 썸네일은 불필요하므로 삭제
                 fulfill(imageUrl); //s3에 올라간 썸네일 url 반환.
             }
