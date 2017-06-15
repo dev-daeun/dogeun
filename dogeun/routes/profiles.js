@@ -10,7 +10,7 @@ router.get('/:user_id', async function(req,res){
         let userId = req.params.user_id;
 
         if(!userId){
-            res.status(400).send({message: 'fail'});
+            res.status(400).send({message: 'no user error'});
         }else{
             let ret = await Profile.readProfile(userId);
             res.status(200).send(ret);

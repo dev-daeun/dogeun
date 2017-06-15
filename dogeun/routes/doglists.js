@@ -96,8 +96,9 @@ router.post('/', arrUpload, async function (req, res) {
 
 });
 
-router.put('/', arrUpload, async function (req, res) {
-    let changeId = req.body.parcel_id;
+// 분양글 수정하기 
+router.put('/:parcel_id', arrUpload, async function (req, res) {
+    let changeId = req.params.parcel_id;
     let userId = req.body.user_id;
 
     try {
