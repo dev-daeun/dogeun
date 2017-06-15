@@ -51,7 +51,7 @@ DogList.uploadToS3 = async function (itemKey, path) {
                 reject(err);
             }
             else {
-                const imageUrl = s3.endpoint.href + params.Bucket + path;
+                const imageUrl = s3.endpoint.href + params.Bucket+ '/'+ itemKey;
                 fs.unlinkSync(path);
                 resolve(imageUrl);
 

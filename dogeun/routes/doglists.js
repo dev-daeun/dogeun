@@ -78,7 +78,6 @@ router.post('/', arrUpload, async function (req, res) {
     let thumbnailInfo = [];
     thumbnailInfo.push({ 'key': req.files['pet'][0].key, 'location': req.files['pet'][0].location });
 
-    //console.log('thumbnail : ',thumbnailInfo);
 
 
     // 함수 호출부분 
