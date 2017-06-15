@@ -102,7 +102,7 @@ DogList.postParcels = async function (parcelRecord, parentRecord, petRecord, thu
                     name: thumbnailFileName,
                     src: thumbnailInfo[0].location,
                     dst: thumbnailPath,
-                    width: 300, height: 400
+                    width: 400, height: 300
                 });
 
                 let petThumbnail = await DogList.uploadToS3(thumbnailFileName, thumbnailPath);
@@ -162,7 +162,7 @@ DogList.postParcels = async function (parcelRecord, parentRecord, petRecord, thu
                         name: thumbnailFileName,
                         src: pet.image,
                         dst: thumbnailPath,
-                        width: 300, height: 400
+                        width: 400, height: 300
                     });
 
                     let petThumbnail = await DogList.uploadToS3(thumbnailFileName, thumbnailPath);

@@ -51,9 +51,9 @@ router.post('/', arrUpload, async function (req, res) {
         condition: req.body.condition,
         fur: req.body.fur ,
         title: req.body.title,
-        kennel: req.body.kennel,
-        corona: req.body.corona,
-        DHPPL: req.body.DHPPL
+        kennel: req.body.kennel || 0,
+        corona: req.body.corona || 0,
+        DHPPL: req.body.DHPPL || 0
     };
 
     //parcel 테이블에 들어갈 파일 record 추가
