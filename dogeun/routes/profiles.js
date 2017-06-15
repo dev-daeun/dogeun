@@ -5,6 +5,25 @@ const AWS = require('../config/AWS');
 AWS.loadAccess();
 const upload = AWS.getUpload();
 
+router.get('/:user_id', async function(req,res){
+    try{
+        let userId = req.params.user_id;
+
+        if(!userId){
+            res.status(400).send({message: 'fail'});
+        }else{
+            let ret = await Profile.readProfile(userId);
+            res.status(200).send(ret);
+        }
+        
+    }catch(err){
+        console.log(err);
+        throw err;
+    }
+})
+
+
+
 
 router.post('/', upload.single('profile'), async function(req, res){
     try {
