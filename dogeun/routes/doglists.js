@@ -12,7 +12,7 @@ const s3 = aws.getS3();
 const upload = aws.getUpload();
 const arrUpload = upload.fields([{ name: 'pet', maxCount: 5 }, { name: 'lineage', maxCount: 1 }, { name: 'parent', maxCount: 2 }]);
 
-router.post('/', arrUpload, async function(req,res){
+router.post('/', arrUpload, async function (req, res) {
 
     //토큰 검증 TODO: aouth 토큰으로 변경
     let user_id = req.headers.user_token;
@@ -56,7 +56,6 @@ router.post('/', arrUpload, async function(req,res){
         DHPPL: req.body.DHPPL
     };
 
-
     //parcel 테이블에 들어갈 파일 record 추가
     if (!req.files['lineage']) {
         parcelRecords.lineage = null;
@@ -69,7 +68,7 @@ router.post('/', arrUpload, async function(req,res){
 
     if (req.files['parent']) {
         for (let parentImage of req.files['parent']) {
-            parentImageRecords.push({ 'image': parentImage.location });
+            parentImageRecords.push({ 'image': parentImage.location, 'image_key': parentImage.key });
         }
     }
 
@@ -77,8 +76,10 @@ router.post('/', arrUpload, async function(req,res){
     let petImageRecords = [];
 
     for (let petImage of req.files['pet']) {
-        petImageRecords.push({ 'image': petImage.location });
+        //petImageRecords.push({ 'image': petImage.location, 'key': petImage.key});
+        petImageRecords.push({ 'image': petImage.location, 'image_key': petImage.key });
     }
+
 
     // 썸네일 만드는 부분 
     let thumbnailFileName = 'thumbnail_' + req.files['pet'][0].key;
@@ -99,6 +100,8 @@ router.post('/', arrUpload, async function(req,res){
     let thumbnailInfo = [];
     thumbnailInfo.push({ 'key': req.files['pet'][0].key, 'location': req.files['pet'][0].location });
 
+
+
     // 함수 호출부분 
     // record 넘기고 클라이언트에 응답
 
@@ -109,28 +112,34 @@ router.post('/', arrUpload, async function(req,res){
     }
     catch (err) {
         console.log('error message : ', err);
-        res.status(500).send({ message: 'fail' });
-
+        res.status(500).send({ message: 'fail' + err.code });
     }
 
 });
 
-router.put('/', arrUpload, async function (req, res) {
-    let changeId = req.body.parcel_id;
+// 분양글 수정하기 
+router.put('/:parcel_id', arrUpload, async function (req, res) {
+    let changeId = req.params.parcel_id;
+    let userId = req.body.user_id;
 
     try {
         let removePet; // 삭제 요청 받은 펫 이미지 id
         let removePetNums; // 삭제 요청 받은 펫 이미지 개수 (null 체크 하기 위해)
-        
+
         // 삭제할 이미지가 있으면 
+    
         if (req.body.pet_image_id) {
-            removePet = [req.body.pet_image_id];
-            removePetNums = removePet.length;
-        }else{
+            removePet = req.body.pet_image_id;
+            if(removePet instanceof Array){
+                removePetNums = removePet.length;
+            }else{
+                removePetNums = 1;
+            }
+        } else {
             //삭제할 이미지가 없으면
             removePetNums = 0;
         }
-        
+       
         // 펫 이미지 레코드
         let petImageRecords = [];
 
@@ -139,23 +148,24 @@ router.put('/', arrUpload, async function (req, res) {
         // 새로운 펫 이미지 파일이 있으면
         if (req.files['pet']) {
             for (let item of req.files['pet']) {
-                petImageRecords.push({ 'image': item.location, 'parcel_id': changeId });
+                petImageRecords.push({ 'image': item.location, 'parcel_id': changeId, 'image_key': item.key });
             }
             newPetNums = req.files['pet'].length;
-        }else{
+        } else {
             // 새로운 펫이미지가 없으면 
-           newPetNums = 0;
+            newPetNums = 0;
         }
-        
+
         // 기존의 펫 이미지 개수 
         let imageNums = await Doglist.checkImages(changeId);
-     
+
+
         // 널값 확인하기 위해
-        if(imageNums - removePetNums + newPetNums <= 0 ){
-             res.status(400).send({ message: 'fail' });
-              return;
+        if (imageNums - removePetNums + newPetNums <= 0) {
+            res.status(400).send({ message: 'pet image null error' });
+            return;
         }
-    
+
         // 업데이트할 글 레코드 
         let parcelRecords = {
             spiece: req.body.spiece,
@@ -168,33 +178,42 @@ router.put('/', arrUpload, async function (req, res) {
             introduction: req.body.introduction,
             condition: req.body.condition,
             fur: req.body.fur,
-            lineage: req.files['lineage'].location,
             title: req.body.title,
             kennel: req.body.kennel || 0,
             corona: req.body.corona || 0,
             DHPPL: req.body.DHPPL || 0
         };
 
+
+        //parcel 테이블에 들어갈 파일 record 추가
+        if (!req.files['lineage']) {
+            parcelRecords.lineage = null;
+        } else {
+            parcelRecords.lineage = req.files['lineage'][0].location;
+        }
+
         // 삭제 요청 받은 부모견 이미지 id
         let removeParent;
 
         // 삭제할 부모견 이미지가 있으면 
         if (req.body.parent_image_id) {
-            removeParent = [req.body.parent_image_id];
+            removeParent = req.body.parent_image_id;
         }
-        
+
         // 부모견 이미지 레코드 
         let parentImageRecords = [];
 
         // 새로운 부모견 이미지 파일이 있으면
         if (req.files['parent']) {
             for (let item of req.files['parent']) {
-                parentImageRecords.push({ 'image': item.location, 'parcel_id': changeId });
+                parentImageRecords.push({ 'image': item.location, 'parcel_id': changeId, 'image_key': item.key });
             }
         }
+
+
         let result = []; // 배열로 결과 
-        result = await Doglist.updateParcels(changeId, removePet, petImageRecords, parcelRecords, removeParent, parentImageRecords);
-        res.status(201).send({ 'results': result });
+        result = await Doglist.updateParcels(changeId, userId, removePet, petImageRecords, parcelRecords, removeParent, parentImageRecords);
+        res.status(200).send({ 'results': result });
     } catch (err) {
         console.log('err message : ', err);
         res.status(500).send({ message: 'fail' });
@@ -207,7 +226,7 @@ router.delete('/:parcel_id', async function (req, res) {
 
     try {
         let result = Doglist.deleteParcles(removeId);
-        res.send({ message: 'save' });
+        res.status(200).send({ message: 'save' });
     } catch (err) {
         console.log('err message : ', err);
         res.status(500).send({ message: 'fail' });
@@ -215,45 +234,63 @@ router.delete('/:parcel_id', async function (req, res) {
 });
 
 
-router.get('/', async function(req, res){
-   try {
-       let ret = await Doglist.getLists(req.query);
-       res.status(200).send(ret);
-   } catch(err) {
-        res.status(500).send({message: "fail : "+err});
+router.get('/', async function (req, res) {
+    try {
+        let ret = await Doglist.getLists(req.query);
+        res.status(200).send(ret);
+    } catch (err) {
         console.log(err);
-   }
+        res.status(500).send({ message: "fail : " + err });
+
+    }
 });
 
-router.get('/emergency', async function(req, res){
-   try {
-       let ret = await Doglist.getEmergencyLists();
-       res.status(200).send(ret);
-   } catch(err) {
-        res.status(500).send({message: "fail : "+err});
+router.get('/emergency', async function (req, res) {
+    try {
+        let ret = await Doglist.getEmergencyLists();
+        res.status(200).send(ret);
+    } catch (err) {
+        res.status(500).send({ message: "fail : " + err });
         console.log(err);
-   }
+    }
 });
 
-router.get('/:id', async function(req, res){
+router.get('/:id', async function (req, res) {
     try {
         let ret = await Doglist.getOneList(req.params.id);
         if(ret===0) res.status(400).send({message: 'parcel does not exist'});
         else res.status(200).send(ret);
     }
-    catch(err) {
-        res.status(500).send({ message: 'fail: '+err });
+    catch (err) {
+        res.status(500).send({ message: 'fail: ' + err });
     }
 });
 
-router.put('/:id/done', async function(req, res){ //분양완료/완료취소하기
+router.put('/:id/done', async function (req, res) { //분양완료/완료취소하기
     try {
         let ret = Doglist.completeParcel(req.params.id);
         if(ret===0) res.status(400).send({message: 'parcel does not exist'});
         else res.status(201).send( { message: 'success'});
     }
-    catch(err) {
-        res.status(500).send( { message: 'fail: '+err });
+    catch (err) {
+        res.status(500).send({ message: 'fail: ' + err });
+    }
+});
+
+router.post('/reports/:parcel_id', async function (req, res) {
+    let parcel_id = req.params.parcel_id;
+
+    let reporter_id = req.body.user_id;
+    let content = req.body.content;
+
+    let reportRecods = [];
+    reportRecods.push({ 'reporter_id': reporter_id, 'parcel_id': parcel_id, 'content': content });
+
+    try {
+        let result = await Doglist.reportParcel(reportRecods);
+        res.status(200).send({ message: "save" });
+    } catch (err) {
+        res.status(500).send({ message: 'fail: ' + err });
     }
 });
 

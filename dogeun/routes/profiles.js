@@ -6,11 +6,29 @@ AWS.loadAccess();
 const upload = AWS.getUpload();
 const User = require('../config/ORM');
 
+
 router.use(function(req, res, next){
   if(!req.headers.user_token) res.status(401).send({ message: 'user unauthorized'});
   else if(req.headers.user_token!=20) res.status(400).send({message: 'wrong token'});
   else next();
 });
+
+router.get('/:user_id', async function(req,res){
+    try{
+        let userId = req.params.user_id;
+
+        if(!userId){
+            res.status(400).send({message: 'no user error'});
+        }else{
+            let ret = await Profile.readProfile(userId);
+            res.status(200).send(ret);
+        }
+        
+    }catch(err){
+        console.log(err);
+        throw err;
+    }
+})
 
 router.post('/', upload.single('profile'),async function(req, res){
     try {

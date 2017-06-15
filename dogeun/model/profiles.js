@@ -72,7 +72,6 @@ Profile.saveProfile = async function(req){
                 record.profile_thumbnail = thumbnail_url;
                 result = await connection.query(query, record);
             }
-            console.log(result);
             return result;
     } 
     catch(err) {
