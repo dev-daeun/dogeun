@@ -28,10 +28,10 @@ const MessageSchema = new Schema({
 
 
 
-MessageSchema.methods.getUnreadCount = async function(room_id){
+MessageSchema.methods.getUnreadCount = async function(room_id, user_id){
     try {
         //is_read가 false인 메세지들의 갯수를 리턴
-        let count = await Message.find({ room_id: room_id, is_read: false }).count(); 
+        let count = await Message.find({ room_id: room_id, is_read: false, receiver_id: user_id }).count(); 
         return count;
     }
     catch(err){
@@ -124,6 +124,7 @@ RoomSchema.methods.creatRoom = async function createRoom(creator_id, participant
 
 
 RoomSchema.methods.addMessage = async function addMessage(new_msg){
+    //TODO: Message.saveMessage먼저 호출해야.(message _id 필요함)
     let ret = await Room.update( //Room 컬렉션에 message 추가
             { _id: room_id },
             { $push: { messages: new_msg }}
@@ -166,8 +167,29 @@ RoomSchema.methods.getRooms = async function getRooms(id){ //사용자 id
   
 };
 
-RoomSchema.methods.enterRoom = async function enterRoom(room_id){
+RoomSchema.methods.enterRoom = async function enterRoom(room_id, user_id){
     try {
+        // let edited_msg = await Message.find( //아직 읽지 않은 메세지들의 _id를 먼저 가져옴.
+        //    { is_read : false, receiver_id: user_id, room_id: room_id },
+        //    { _id: 1 }         
+        // ); // [{_id: ...},{_id: ...}] 형태
+        
+        // for(let i = 0; i<edited_msg.length; i++) edited_msg[i] = edited_msg[i]._id;
+        // await Message.update( //방에 입장하면 읽지 않았던 메세지들을 읽은 것으로 변경한다.
+        //    { is_read : false, receiver_id: user_id, room_id: room_id },
+        //    { is_read: true } 
+        // );
+
+        // let result = await Room.update(
+        //     { 
+        //         _id: room_id, 
+        //         messages: { $elemMatch: { receiver_id: user_id, is_read: false }} 
+        //     },
+        //     { 
+        //         messages : { $where: "receiver_id==user_id", is_read :true } 
+        //     });
+
+   
         let room = await Room.findOne(
             { _id: room_id },
             { messages: 1 }

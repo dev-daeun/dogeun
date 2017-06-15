@@ -248,7 +248,8 @@ router.get('/:id', async function(req, res){
 router.put('/:id/done', async function(req, res){ //분양완료/완료취소하기
     try {
         let ret = Doglist.completeParcel(req.params.id);
-        res.status(201).send( { message: 'success'});
+        if(ret==={}) res.status(400).send({message: 'parcel does not exist'});
+        else res.status(201).send( { message: 'success'});
     }
     catch(err) {
         res.status(500).send( { message: 'fail: '+err });

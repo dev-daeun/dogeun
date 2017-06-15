@@ -67,11 +67,11 @@
     var participant;
     socket.on('connect', () => {
         // 채팅방 목록 요청
-        socket.emit('showList', 20); //TODO : 요청 id 클라이언트에서 넘겨줘야
+        socket.emit('showList', {user_id: 20}); //TODO : 요청 id 클라이언트에서 넘겨줘야
     });
 
 
-    // 채팅방 목록 요청 결과 (목록 출력)
+    // 채팅방 목록 요청 결과 (목록 출력) -done
     socket.on('showListResults', roomlist => {
         $("#rooms").empty();
         // 채팅방 목록 갱신
@@ -85,12 +85,12 @@
     $(function(){
         $("#joinButton").click(() => {
         var room = $("#rooms").val();
-        socket.emit("enterRoom", room);
+        socket.emit("enterRoom", {room_id: room});
         });
     });
     
 
-    //특정 채팅방 입장 결과(채팅방 메세지 내역 모두 출력)
+    //특정 채팅방 입장 결과(채팅방 메세지 내역 모두 출력) -done
     socket.on('enterRoomResults', data => {
         $('#messages').empty();
         for(let i = 0; i<data.length; i++){

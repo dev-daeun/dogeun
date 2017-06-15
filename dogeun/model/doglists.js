@@ -379,15 +379,16 @@ DogList.getLists = async function(qs){ //전체목록 조회하기
  DogList.getOneList = async function(parcelID){ //게시글 상세조회
     try {
       var connection = await pool.getConnection();
+      let query3 = 'select * from parcel where parcel_id = ?';
+      let parcel = await connection.query(query3, parcelID);
+      if(parcel.length==0) return {};
+
       let query1 = 'select image_id, image from pet_images where parcel_id = ?';
       let petImages = await connection.query(query1, parcelID);
 
       let query2 = 'select image_id, image from parent_pet_images where parcel_id = ?'
       let parentPetImages =  await connection.query(query2, parcelID);
-
-      let query3 = 'select * from parcel where parcel_id = ?';
-      let parcel = await connection.query(query3, parcelID);
-
+      
       delete parcel[0].createdAt;
       delete parcel[0].updatedAt;
       let query4 = 'select username from users where user_id = ?';
