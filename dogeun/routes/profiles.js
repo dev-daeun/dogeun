@@ -24,7 +24,6 @@ router.get('/:user_id', async function(req,res){
 
 
 
-
 router.post('/', upload.single('profile'), async function(req, res){
     try {
 	let body = req.body;

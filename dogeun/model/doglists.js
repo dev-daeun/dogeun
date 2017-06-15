@@ -245,8 +245,8 @@ DogList.updateParcels = async function (changeId, userId, removePet, petRecord, 
             }
 
         }
-        console.log('original', data.pet);
-
+     
+        console.log('delete pet success');
 
 
         // 새로 추가할 펫 이미지가 있다면
@@ -546,16 +546,23 @@ DogList.completeParcel = async function (parcelID) { //분양완료 or 완료 �
     }
 };
 
-DogList.reportParcel = async function (parcel_id, reporter_id, content) {
+DogList.reportParcel = async function (record) {
+    let data;
+    let connection;
     try {
+        connection = await pool.getConnection();
         let query1 = 'insert into report set ? ';
-        let report = await connection.query(query1);
+        let report = await connection.query(query1,record);
 
-        
+        data = report.report_id;
+        return data;
 
     } catch (err) {
+        console.log(err);
+        throw err;
 
     } finally {
+        pool.releaseConnection(connection);
 
     }
 }

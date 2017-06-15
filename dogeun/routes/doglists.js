@@ -73,13 +73,13 @@ router.post('/', arrUpload, async function (req, res) {
         petImageRecords.push({ 'image': petImage.location, 'image_key': petImage.key });
     }
 
-    //console.log('pet',petImageRecords);
 
     // 썸네일 만드는 부분 
     let thumbnailInfo = [];
     thumbnailInfo.push({ 'key': req.files['pet'][0].key, 'location': req.files['pet'][0].location });
 
     //console.log('thumbnail : ',thumbnailInfo);
+
 
     // 함수 호출부분 
     // record 넘기고 클라이언트에 응답

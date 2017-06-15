@@ -94,6 +94,55 @@ Profile.saveProfile = async function (req) {
         return result;
     }
     catch (err) {
+
+Profile.readProfile = async function(id){
+    let connection;
+    let data = {};
+    try{
+        connection = await pool.getConnection();
+        
+        let query = 'select profile_image, username, gender, lifestyle, region, other_pets, family_size, profile_thumbnail from users where user_id = ? ';
+        let user = await connection.query(query, id);
+       
+       let keys = Object.keys(user[0]);
+       for(let item of keys ){
+           console.log(user[0][item]);
+           data[item] = user[0][item];
+       }
+
+        return data;
+    }catch(err){
+        console.log(err);
+        throw err;
+    }finally{
+        pool.releaseConnection(connection);
+    }
+}
+Profile.saveProfile = async function(req){
+    try {
+            var connection = await pool.getConnection();
+            let record = req.body;
+            let query = 'insert into users set ?';
+            let result;
+            if(!req.file) result = await connection.query(query, record);
+            else {
+                let thumbnail_name = 'thumbnail_' + req.file.key; //썸네일이미지 이름
+                let thumbnail_path = 'thumbnail/'+ thumbnail_name; //썸네일 저장 경로
+                await easyimage.rescrop({
+                    name: thumbnail_name,
+                    src: req.file.location,
+                    dst: thumbnail_path, //썸네일 저장 경로에 파일을 저장하겠다?
+                    width: 300, height: 300
+                });
+                let thumbnail_url = await this.uploadThumbToS3(thumbnail_name, thumbnail_path); //2. 로컬 디렉토리에 저장된 이미지를 s3에 올리기
+                //let thumbnail_url = await this.uploadToS3(thumbnail_name, thumbnail_path); //2. 로컬 디렉토리에 저장된 이미지를 s3에 올리기
+                record.profile_image = req.file.location;
+                record.profile_thumbnail = thumbnail_url;
+                result = await connection.query(query, record);
+            }
+            return result;
+    } 
+    catch(err) {
         throw err;
     }
     finally {
