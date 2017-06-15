@@ -1,4 +1,5 @@
 dogeun_doc/
+config/
 node_modules/
 aws_config.json
 db_pool.js
