@@ -237,6 +237,12 @@ router.delete('/:parcel_id', async function (req, res) {
 router.get('/', async function (req, res) {
     try {
         let ret = await Doglist.getLists(req.query);
+        let result = {
+            paging: {page:0, limit:10, query:'abc' , total: 100, maxpage:5},
+            count: ret.length,
+            data : ret
+        };
+
         res.status(200).send(ret);
     } catch (err) {
         console.log(err);
