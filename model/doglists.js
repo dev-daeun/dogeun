@@ -496,7 +496,7 @@ DogList.getLists = async function (user_id, keywords, page) { //전체목록 조
         const total = await Parcel.count({ //조화한 결과 총 개수 
                 where: keywords
         });
-
+        console.log(total);
         const start = Math.min( ( (page-1) * 10) , total - 1 );
         const end = Math.min( page * 10, total - 1 );
 
