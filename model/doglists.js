@@ -471,6 +471,7 @@ DogList.getWhere = function (qs) { //검색조회에 필요한 쿼리 만드는 
     for (let i in qs) {
         if (i == 'page') continue;
         else if (qs[i]) {
+            console.log(qs[i]);
             param_array.push(qs[i]);
             where += ' and p.' + i + ' = ? ';
         }
@@ -518,7 +519,22 @@ DogList.getEmergencyLists = async function () { //메인화면 가로에 들어�
 };
      
      
+DogList.getMyList = async function(user_id){
+	let query = 'select parcel_id, title, pet_thumbnail from parcel where user_id = ? order by parcel_id desc';
+	try{
+		var connection = await pool.getConnection();
+		let data = await connection.query(query, user_id);
+		return data;
+		
+	}
+	catch(err){
+		throw err;
+	}
+	finally{
+		pool.releaseConnection(connection);
+	}
 
+};
 DogList.getOneList = async function(parcelID){ //게시글 상세조회
     try {
       var connection = await pool.getConnection();
