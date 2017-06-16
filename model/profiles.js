@@ -58,7 +58,7 @@ Profile.readProfile = async function(id){
     try{
         connection = await pool.getConnection();
         
-        let query = 'select profile_image, username, gender, lifestyle, region, other_pets, family_size, profile_thumbnail from users where user_id = ? ';
+        let query = 'select user_id, profile_image, username, gender, lifestyle, region, other_pets, family_size, profile_thumbnail from users where user_id = ? ';
         let user = await connection.query(query, id);
        
        let keys = Object.keys(user[0]);
