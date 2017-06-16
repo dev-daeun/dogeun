@@ -469,32 +469,53 @@ DogList.deleteParcles = async function (id) {
     }
 };
 
+DogList.getMyList  = async function(user_id){
+    try {
+        let array = [];
+        let ret = await Parcel.findAll({
+            attributes: ['parcel_id','title', 'pet_thumbnail'],
+            where: {user_id: user_id}
+        });
+        for(let i = 0; i<ret.length; i++) array.push({
+            title: ret[i].dataValues.title,
+            pet_thumbnail: ret[i].dataValues.pet_thumbnail,
+            parcel_id: ret[i].dataValues.parcel_id
+        });
+        return array;
+    }
+    catch(err) {
+        console.log(err);
+        throw err;
+    }
 
+
+};
 DogList.getLists = async function (user_id, keywords) { //전체목록 조회하기
-    // try {
-    //     let post_array;
-    //     let posts = await Parcel.findAll({
-    //             attributes: ['parcel_id', 'title', 'pet_thumbnail'],
-    //             include: [{
-    //                         model: User,
-    //                         where: { state: sequelize.col('parcel.user_id') }
-    //                     }],
-    //             where: keywords
-    //     });
-    //     let favorite = Favorites.findAll({
-    //         attributes: ['parcel_id'],
-    //         where: {user_id: user_id}
-    //     })
-    //     for(let i = 0; i<posts.length; i++) {
-    //         posts[i].dataValues.username = posts[i].dataValues.user.username; //사용자이름 뽑아오기
-    //         delete posts[i].dataValues.user;
-    //         post_array.push(posts[i].dataValues);
-    //     }
-    //     console.log(posts);
-    //     return posts;
+    try {
+        let post_array = [];
+        let posts = await Parcel.findAll({
+                attributes: ['parcel_id', 'title', 'pet_thumbnail'],
+                include: [{
+                            model: User,
+                            where: { state: sequelize.col('parcel.user_id') }
+                        }],
+                where: keywords
+        });
+        let favorite = await Favorites.findAll({ //현재 사용자가 찜한 분양글 id 가져오기
+            attributes: ['parcel_id'],
+            where: {user_id: user_id}
+        });
+        console.log(favorite);
+        for(let i = 0; i<posts.length; i++) {
+            posts[i].dataValues.username = posts[i].dataValues.user.username; //사용자이름 뽑아오기
+            delete posts[i].dataValues.user;
+            post_array.push(posts[i].dataValues);
+        }
+        console.log(posts);
+        return posts;
         
-    //  } 
-    //  catch(err){ throw err; }
+     } 
+     catch(err){ throw err; }
        
 };
 
