@@ -37,9 +37,9 @@ router.post('/', upload.single('profile'),async function(req, res){
             return;
         }
         let name_dup = await User.findAll({where: {username: req.body.username}});
-        if(name_dup.length>0) {
-            res.status(400).send({message: 'username already being used'});
-            return;
+        if(name_dup) {
+                res.status(400).send({message: 'username already used'});
+                return;
         }
         else {
             let ret = await Profile.saveProfile(req);
