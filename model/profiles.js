@@ -100,6 +100,7 @@ Profile.saveProfile = async function(req){
             return result;
     } 
     catch(err) {
+        console.log(err);
         throw err;
     }
     finally {
