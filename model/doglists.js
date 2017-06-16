@@ -476,7 +476,7 @@ DogList.getMyList  = async function(user_id){
             attributes: ['parcel_id','title', 'pet_thumbnail'],
             where: {user_id: user_id}
         });
-        for(let i = 0; i<ret.length; i++) array.push({
+        for(let i = ret.length-1; i>-1; i--) array.push({
             title: ret[i].dataValues.title,
             pet_thumbnail: ret[i].dataValues.pet_thumbnail,
             parcel_id: ret[i].dataValues.parcel_id
