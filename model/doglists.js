@@ -492,13 +492,12 @@ DogList.getMyList  = async function(user_id){
 };
 DogList.getLists = async function (user_id, keywords, page) { //전체목록 조회하기
     try {
-        let post_array = [];
         const total = await Parcel.count({ //조화한 결과 총 개수 
                 where: keywords
         });
-        console.log(total);
-        const start = Math.min( ( (page-1) * 10) , total - 1 );
-        const end = Math.min( page * 10, total - 1 );
+
+        const start = Math.min( ( (page-1) * 10) , total );
+        const end = Math.min( page * 10, total );
 
         const posts = await Parcel.findAndCountAll({ //offset & limit으로 page애 해당하는 분양글 find
                 attributes: ['parcel_id', 'title', 'pet_thumbnail'],
@@ -509,17 +508,18 @@ DogList.getLists = async function (user_id, keywords, page) { //전체목록 조
                 where: keywords, 
                 order: sequelize.literal('parcel_id desc'),
                 offset: start,
-                limit: end - start + 1 
+                limit: end - start 
         });
-        const count = posts.rows.length; //페이지 내 글 갯수
-        console.log(posts.rows.length);
+        
+        const count = (end==start) ? 0 : posts.rows.length;
         const next = (end<total-1)? true: false; //다음 페이지 유무 여부
 
         let favorites = await Favorites.findAll({ //현재 사용자가 찜한 분양글 id 가져오기(dataValues배열)
             attributes: ['parcel_id'],
             where: {user_id: user_id}
         });
-  
+        
+        let post_array = [];
         for(let i = start; i<end; i++) { 
             let post = posts.rows[i].dataValues;
             post.username = post.user.username; //사용자이름 뽑아오기

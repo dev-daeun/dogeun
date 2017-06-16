@@ -245,7 +245,6 @@ router.get('/', async function (req, res) {
             if(req.query.region2!="0") keywords.region2 = req.query.region2;
             if(req.query.gender!="0") keywords.gender = req.query.gender;
             if(req.query.age!="0") keywords.age = req.query.age;
-            if(Object.keys(keywords).length==0) keywords = true;
             let ret = await Doglist.getLists(req.headers.user_token, keywords, page);
             res.status(200).send(ret);
         
