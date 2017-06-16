@@ -240,11 +240,11 @@ router.get('/', async function (req, res) {
             if(req.query.page==0) page = 1; //page=0으로 날릴 경우 
             else page = req.query.page || 1;
             let keywords = {}; //TODO : if문 줄일 방법 찾기
-            if(req.query.spiece) keywords.spiece = req.query.spiece;
-            if(req.query.region1) keywords.region1 = req.query.region1;
-            if(req.query.region2) keywords.region2 = req.query.region2;
-            if(req.query.gender) keywords.gender = req.query.gender;
-            if(req.query.age) keywords.age = req.query.age;
+            if(req.query.spiece!=0) keywords.spiece = req.query.spiece;
+            if(req.query.region1!=0) keywords.region1 = req.query.region1;
+            if(req.query.region2!=0) keywords.region2 = req.query.region2;
+            if(req.query.gender!=0) keywords.gender = req.query.gender;
+            if(req.query.age!=0) keywords.age = req.query.age;
             let ret = await Doglist.getLists(req.headers.user_token, keywords, page);
             res.status(200).send(ret);
         
@@ -256,7 +256,7 @@ router.get('/', async function (req, res) {
 
 router.get('/emergency', async function (req, res) {
     try {
-        let ret = await Doglist.getEmergencyLists();
+        let ret = await Doglist.getEmergencyLists(req.headers.user_token);
         res.status(200).send(ret);
     } catch (err) {
         res.status(500).send({ message: "fail : " + err });

@@ -493,28 +493,35 @@ DogList.getMyList  = async function(user_id){
 DogList.getLists = async function (user_id, keywords, page) { //전체목록 조회하기
     try {
         let post_array = [];
-        let posts = await Parcel.findAll({ //dataValues배열
+        const total = await Parcel.count({ //조화한 결과 총 개수 
+                where: keywords
+        });
+
+        const start = Math.min( ( (page-1) * 10) , total - 1 );
+        const end = Math.min( page * 10, total - 1 );
+
+        const posts = await Parcel.findAndCountAll({ //offset & limit으로 page애 해당하는 분양글 find
                 attributes: ['parcel_id', 'title', 'pet_thumbnail'],
                 include: [{
-                            model: User,
-                            where: { state: sequelize.col('parcel.user_id') }
-                        }],
+                    model: User,
+                    where: { state: sequelize.col('parcel.user_id') }
+                }],
                 where: keywords, 
-                order: sequelize.literal('parcel_id desc')
+                order: sequelize.literal('parcel_id desc'),
+                offset: start,
+                limit: end - start + 1 
         });
+        const count = posts.rows.length; //페이지 내 글 갯수
+        console.log(posts.rows.length);
+        const next = (end<total-1)? true: false; //다음 페이지 유무 여부
+
         let favorites = await Favorites.findAll({ //현재 사용자가 찜한 분양글 id 가져오기(dataValues배열)
             attributes: ['parcel_id'],
             where: {user_id: user_id}
         });
-
-        const total = posts.length; //전체 결과갯수
-        const start = Math.min( ( (page-1) * 10) , total - 1 );
-        const end = Math.min( page * 10, total );
-        const count = end - start; //페이지 내 글 갯수
-        const next = (end<total-1)? true: false; //다음 페이지 유무 여부
-       
+  
         for(let i = start; i<end; i++) { 
-            let post = posts[i].dataValues;
+            let post = posts.rows[i].dataValues;
             post.username = post.user.username; //사용자이름 뽑아오기
             post.favorite = 0; //기본적으로 찜 여부는 0
             delete post.user;
@@ -529,28 +536,51 @@ DogList.getLists = async function (user_id, keywords, page) { //전체목록 조
         
         let result = {
             page: parseInt(page),
-            keywords: keywords,
             post_count: count,
             has_next: next,
             result: post_array
         };
         return result;
-        
      } 
-     catch(err){ throw err; }
+     catch(err){ console.log(err); throw err; }
        
 };
 
-DogList.getEmergencyLists = async function () { //메인화면 가로에 들어갈 분양 가장 시급한 글 6개 조회
+DogList.getEmergencyLists = async function(user_id) { //메인화면 가로에 들어갈 분양 가장 시급한 글 6개 조회
     try {
-        var connection = await pool.getConnection();
-        let query = `select p.parcel_id, p.title, p.pet_thumbnail, u.username, 
-           (select 1 from favorites as f where p.parcel_id=f.parcel_id and f.user_id = ?) 
-           as favorite from parcel as p, users as u where u.user_id = p.user_id and p.is_parceled = 0 order by p.parcel_id limit 6`;
-        let data = await connection.query(query, 2); //전체 목록 쿼리 때리기
-        return data;
-    } catch (err) { throw err; }
-    finally { pool.releaseConnection(connection); }
+        let urgent_array = [];
+        let posts = await Parcel.findAll({ //dataValues배열
+                attributes: ['parcel_id', 'title', 'pet_thumbnail'],
+                where: {is_parceled: false},
+                include: [{
+                            model: User,
+                            where: { state: sequelize.col('parcel.user_id') }
+                }],
+                order: sequelize.literal('parcel_id'),
+                limit: 6
+        });
+        let favorites = await Favorites.findAll({ //현재 사용자가 찜한 분양글 id 가져오기(dataValues배열)
+            attributes: ['parcel_id'],
+            where: {user_id: user_id}
+        });
+
+        for(let i = 0; i<posts.length; i++) { 
+            let post = posts[i].dataValues;
+            post.username = post.user.username; //사용자이름 뽑아오기
+            post.favorite = 0; //기본적으로 찜 여부는 0
+            delete post.user;
+            for(let j = 0; j<favorites.length; j++){
+                if(post.parcel_id==favorites[j].dataValues.parcel_id) { //쿼리에 user_id가 없으면 0으로 유지됨.
+                    post.favorite = 1;
+                    break;
+                }
+            }
+            urgent_array.push(post);
+        }
+    
+        return urgent_array;
+    } catch (err) { console.log(err); throw err; }
+
 };
      
      
