@@ -490,29 +490,51 @@ DogList.getMyList  = async function(user_id){
 
 
 };
-DogList.getLists = async function (user_id, keywords) { //전체목록 조회하기
+DogList.getLists = async function (user_id, keywords, page) { //전체목록 조회하기
     try {
         let post_array = [];
-        let posts = await Parcel.findAll({
+        let posts = await Parcel.findAll({ //dataValues배열
                 attributes: ['parcel_id', 'title', 'pet_thumbnail'],
                 include: [{
                             model: User,
                             where: { state: sequelize.col('parcel.user_id') }
                         }],
-                where: keywords
+                where: keywords, 
+                order: sequelize.literal('parcel_id desc')
         });
-        let favorite = await Favorites.findAll({ //현재 사용자가 찜한 분양글 id 가져오기
+        let favorites = await Favorites.findAll({ //현재 사용자가 찜한 분양글 id 가져오기(dataValues배열)
             attributes: ['parcel_id'],
             where: {user_id: user_id}
         });
-        console.log(favorite);
-        for(let i = 0; i<posts.length; i++) {
-            posts[i].dataValues.username = posts[i].dataValues.user.username; //사용자이름 뽑아오기
-            delete posts[i].dataValues.user;
-            post_array.push(posts[i].dataValues);
+
+        const total = posts.length; //전체 결과갯수
+        const start = Math.min( ( (page-1) * 10) , total - 1 );
+        const end = Math.min( page * 10, total );
+        const count = end - start; //페이지 내 글 갯수
+        const next = (end<total-1)? true: false; //다음 페이지 유무 여부
+       
+        for(let i = start; i<end; i++) { 
+            let post = posts[i].dataValues;
+            post.username = post.user.username; //사용자이름 뽑아오기
+            post.favorite = 0; //기본적으로 찜 여부는 0
+            delete post.user;
+            for(let j = 0; j<favorites.length; j++){
+                if(post.parcel_id==favorites[j].dataValues.parcel_id) { //쿼리에 user_id가 없으면 0으로 유지됨.
+                    post.favorite = 1;
+                    break;
+                }
+            }
+            post_array.push(post);
         }
-        console.log(posts);
-        return posts;
+        
+        let result = {
+            page: parseInt(page),
+            keywords: keywords,
+            post_count: count,
+            has_next: next,
+            result: post_array
+        };
+        return result;
         
      } 
      catch(err){ throw err; }
