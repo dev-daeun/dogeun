@@ -1,4 +1,8 @@
 const pool = require('../config/db_pool');
+const sequelize = require('sequelize');
+const User = require('../config/ORM').User;
+const Parcel = require('../config/ORM').Parcel;
+const Favorites = require('../config/ORM').Favorites;
 const aws = require('../config/AWS');
 const fs = require('fs');
 const easyimage = require('easyimage');
@@ -466,43 +470,32 @@ DogList.deleteParcles = async function (id) {
 };
 
 
-DogList.getWhere = function (qs) { //검색조회에 필요한 쿼리 만드는 함수
-    let where = '', param_array = [];
-    for (let i in qs) {
-        if (i == 'page') continue;
-        else if (qs[i]) {
-            param_array.push(qs[i]);
-            where += ' and p.' + i + ' = ? ';
-        }
-
-    }
-    return { where: where, param_array: param_array };
-};
-
-
-DogList.getLists = async function (qs) { //전체목록 조회하기
-    try {
-        var connection = await pool.getConnection();
-        let query = `select p.parcel_id, p.title, p.pet_thumbnail, u.username, 
-           (select 1 from favorites as f where p.parcel_id=f.parcel_id and f.user_id = ?) 
-           as favorite from parcel as p, users as u where u.user_id = p.user_id`;
-           let data;
-              let where = this.getWhere(qs).where; //검색어 쿼리스트링으로 조건절 만들어서 가져오기
-              let param_array = this.getWhere(qs).param_array; //placeholder에 들어갈 배열 가져오기
-              param_array.unshift(1); //placeholder에 들어갈 user_id 앞에다 추가(가라로 추가함)
-              data = await connection.query(query+where+' order by parcel_id desc;', param_array); //검색어로 쿼리 때리기. 
-             //user_id는 현재 사용자 id. 토큰이냐 세션이냐 미정.
-           if(qs.page * 10 > data.length) return [null]; //게시글 갯수를 넘기는 페이지 넘버가 날아오면 null 리턴
-           else {
-               let start = Math.min(data.length-1, qs.page * 10);
-               let end = Math.min(data.length-1, start + 9);
-               let array = [];
-               for(let i = start; i<=end; i++) array.push(data[i]);
-               return array;
-           }
-           
-     } catch(err){ throw err; }
-       finally { pool.releaseConnection(connection); }
+DogList.getLists = async function (user_id, keywords) { //전체목록 조회하기
+    // try {
+    //     let post_array;
+    //     let posts = await Parcel.findAll({
+    //             attributes: ['parcel_id', 'title', 'pet_thumbnail'],
+    //             include: [{
+    //                         model: User,
+    //                         where: { state: sequelize.col('parcel.user_id') }
+    //                     }],
+    //             where: keywords
+    //     });
+    //     let favorite = Favorites.findAll({
+    //         attributes: ['parcel_id'],
+    //         where: {user_id: user_id}
+    //     })
+    //     for(let i = 0; i<posts.length; i++) {
+    //         posts[i].dataValues.username = posts[i].dataValues.user.username; //사용자이름 뽑아오기
+    //         delete posts[i].dataValues.user;
+    //         post_array.push(posts[i].dataValues);
+    //     }
+    //     console.log(posts);
+    //     return posts;
+        
+    //  } 
+    //  catch(err){ throw err; }
+       
 };
 
 DogList.getEmergencyLists = async function () { //메인화면 가로에 들어갈 분양 가장 시급한 글 6개 조회
@@ -517,16 +510,7 @@ DogList.getEmergencyLists = async function () { //메인화면 가로에 들어�
     finally { pool.releaseConnection(connection); }
 };
      
-
-DogList.getMyLists = async function(user_id) { //메인화면 가로에 들어갈 분양 가장 시급한 글 6개 조회
-    try {
-        var connection = await pool.getConnection();
-        let query = 'select parcel_id, title, pet_thumbnail from parcel where user_id = ? order by parcel_id desc';
-        let data = await connection.query(query, user_id);
-        return data;
-    } catch (err) { throw err; }
-    finally { pool.releaseConnection(connection); }
-};     
+     
 
 DogList.getOneList = async function(parcelID){ //게시글 상세조회
     try {

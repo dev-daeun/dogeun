@@ -1,0 +1,129 @@
+#!/usr/bin/env node
+
+/**
+ * Module dependencies.
+ */
+var fs = require('fs');
+var app = require('../app');
+var debug = require('debug')('dogeun:server');
+var http = require('http');
+/**
+ * Get port from environment and store in Express.
+ */
+
+var port = normalizePort(process.env.PORT || '3000');
+app.set('port', port);
+
+/**
+ * Create HTTP server.
+ */
+
+var server = http.createServer(app);
+/**
+ * Listen on provided port, on all network interfaces.
+ */
+
+server.listen(port);
+server.on('error', onError);
+server.on('listening', onListening);
+
+/**
+ * Normalize a port into a number, string, or false.
+ */
+
+function normalizePort(val) {
+  var port = parseInt(val, 10);
+
+  if (isNaN(port)) {
+    // named pipe
+    return val;
+  }
+
+  if (port >= 0) {
+    // port number
+    return port;
+  }
+
+  return false;
+}
+
+/**
+ * Event listener for HTTP server "error" event.
+ */
+
+function onError(error) {
+  if (error.syscall !== 'listen') {
+    throw error;
+  }
+
+  var bind = typeof port === 'string'
+    ? 'Pipe ' + port
+    : 'Port ' + port;
+
+  // handle specific listen errors with friendly messages
+  switch (error.code) {
+    case 'EACCES':
+      console.error(bind + ' requires elevated privileges');
+      process.exit(1);
+      break;
+    case 'EADDRINUSE':
+      console.error(bind + ' is already in use');
+      process.exit(1);
+      break;
+    default:
+      throw error;
+  }
+}
+
+/**
+ * Event listener for HTTP server "listening" event.
+ */
+
+function onListening() {
+  var addr = server.address();
+  var bind = typeof addr === 'string'
+    ? 'pipe ' + addr
+    : 'port ' + addr.port;
+  debug('Listening on ' + bind);
+}
+
+
+/* --------------------  소켓 이벤트  ----------------------- */
+const Message = require('../model/chats').Message;
+const Room = require('../model/chats').Room;
+var io = require('socket.io')(server); //io = 소켓 서버 객체
+const room = new Room();
+const message = new Message(); 
+io.on('connection', socket => {  
+    var user;
+  
+    //채팅 목록 조회 -done
+    socket.on('showList', async obj => { 
+      user = obj.user_id;
+      var roomlist = await room.getRooms(user); //현재 사용자id로 사용자가 참여중인 채팅목록 가져오기
+      for(let i of roomlist){
+        var messageCount = await message.getUnreadCount(i.room_id, user);
+        i.unread_count = messageCount;
+      }
+      socket.emit('showListResults', roomlist);
+    });
+
+    //채팅방 입장 -done 
+    socket.on('enterRoom', async obj => {  
+        var messagelist = await room.enterRoom(obj.room_id, user);
+        socket.emit('enterRoomResults', messagelist);
+    });
+
+    socket.on('removeRoom', room_id => {
+
+    });
+    
+    socket.on('sendMessage', async message => {
+        // await message.save(message);
+        // await room.save({_id: message.room_id}, message);
+    });
+
+    socket.on('readMessage', room_id => {
+
+    });
+});

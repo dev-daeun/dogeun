@@ -1,5 +1,6 @@
 const Sequelize = require('sequelize');
 const pool = require('../config/db_pool');
+const User = require('../config/ORM').User;
 const AWS = require('../config/AWS');
 const s3 = AWS.getS3();
 const fs = require('fs');
@@ -51,7 +52,6 @@ Profile.deleteFromS3 = function(key){
     });
 };
 
-
 Profile.readProfile = async function(id){
     let connection;
     let data = {};
@@ -61,12 +61,13 @@ Profile.readProfile = async function(id){
         let query = 'select profile_image, username, gender, lifestyle, region, other_pets, family_size, profile_thumbnail from users where user_id = ? ';
         let user = await connection.query(query, id);
        
-    //    let keys = Object.keys(user[0]);
-    //    for(let item of keys ){
-    //        console.log(user[0][item]);
-    //        data[item] = user[0][item];
-    //    }
-        return user[0];
+       let keys = Object.keys(user[0]);
+       for(let item of keys ){
+           console.log(user[0][item]);
+           data[item] = user[0][item];
+       }
+
+        return data;
     }catch(err){
         console.log(err);
         throw err;
@@ -74,7 +75,6 @@ Profile.readProfile = async function(id){
         pool.releaseConnection(connection);
     }
 };
-
 
 Profile.saveProfile = async function(req){
     try {
@@ -107,17 +107,27 @@ Profile.saveProfile = async function(req){
     }
 };
 
+Profile.isNameDup = async function(user_id, username){ //사용자이름 중복확인
+    let ret = await User.findAll({
+        attributes: ['username'],
+        where: {username: username, $not: { user_id: user_id }}
+    });
+    if(ret.length>0) return true;
+    else return false;
+};
+
+
 Profile.editProfile = async function(req){
     try { 
-         var connection = await pool.getConnection();
          let result;
          let record = this.getRecord(req);
-         let profile = await user.findOne({where: { user_id: req.params.id } });
-         let original_url = profile[0].profile_image; //원본 이미지 url 가져오기
+         let profile = await User.findOne({where: { user_id: req.params.id } });
+         let original_url = profile.dataValues.profile_image; //원본 이미지 url 가져오기
 
-        if(req.file){
+        if(req.file) {
             if(original_url){ //원래 프로필에 이미지가 있었으면(null이 아니면)
                 let key = original_url.split('/')[3];
+                console.log(key);
                 await this.deleteFromS3(key); //s3에서 원본 이미지 삭제
                 await this.deleteFromS3('thumbnail_'+key); //s3에서 썸네일 삭제
             }
@@ -134,7 +144,7 @@ Profile.editProfile = async function(req){
             record.profile_thumbnail = thumbnail_url;       
         }
        
-        result = await user.update(record,{ where:{ user_id: req.params.id }}); 
+        result = await User.update(record,{ where:{ user_id: req.params.id }}); 
         return result;
         
 
