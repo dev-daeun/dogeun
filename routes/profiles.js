@@ -36,7 +36,7 @@ router.post('/', upload.single('profile'),async function(req, res){
             res.status(400).send({ message: 'input unsatisfied' });
             return;
         }
-        let name_dup = await Profile.isNameDup(req.params.id, req.body.username);
+        let name_dup = await Profile.isNameDup(null, req.body.username);
         if(name_dup) {
                 res.status(400).send({message: 'username already used'});
                 return;
