@@ -194,7 +194,7 @@ RoomSchema.methods.enterRoom = async function enterRoom(room_id, user_id){
             { messages: 1, chatters: 1 }
         );
         let array = [];
-        let the_other = (room.chatters[0]==user_id) ? rooms.chatters[1] : room.chatters[0];
+        let the_other = (room.chatters[0]==user_id) ? room.chatters[1] : room.chatters[0];
         let obj = { participant_id: the_other, user_id: user_id }; //현재 사용자가 대화중인 상대방의 id 
 
         for(let i = 0; i<room.messages.length; i++){
@@ -207,7 +207,7 @@ RoomSchema.methods.enterRoom = async function enterRoom(room_id, user_id){
                sender_id: msg.sender_id,
                sender_thumbnail: profile.dataValues.profile_thumbnail,
                content: msg.content
-           }
+           };
            if(msg.sender_id==the_other) element.sender_name = msg.sender_name;
            array.push(element);
         }

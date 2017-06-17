@@ -119,26 +119,6 @@
 
 
 
-    socket.on('unreadMessageResult', data => {
-        for(var i = 0 ; i < data.length ; i++) {
-            var item = data[i];
-            const sender = item.sender;
-            const message = item.message;
-            appendMessage(sender + ' >> ' + message);
-        }
-    });
-
-
-    socket.on('messageReceive', data => {
-        console.log('message receive', data);
-        const sender = data.sender;
-        const message = sender + ' >> ' + data.message;
-        appendMessage(message);
-        // 메세지 수신 체크
-        var messageId = data.messageId;
-        socket.emit('messageRead', {user:user, messageId:messageId});
-    });
-
 
     // 메세지 보내기
     $("#chatInput").submit(function() {

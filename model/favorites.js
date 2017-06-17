@@ -30,10 +30,10 @@ Favor.getFavorites = async function(token_id){
 Favor.setFavorites = async function(parcel_id, user_id){
     try{
         var connection = await pool.getConnection();
-        let query = 'select count(*) from favorites where parcel_id = ? and user_id = ?';
+        let query = 'select id from favorites where parcel_id = ? and user_id = ?';
         let count = await connection.query(query, [parcel_id, user_id]);
         let result, query2;
-        if(count[0]["count(*)"]>0) {
+        if(count.length>0) {
             query2 = 'delete from favorites where parcel_id = ? and user_id = ?'
             result = await connection.query(query2, [parcel_id, user_id]);
         }
