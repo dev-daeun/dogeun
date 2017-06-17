@@ -32,24 +32,25 @@ Favor.setFavorites = async function(parcel_id, user_id){
         var connection = await pool.getConnection();
         let q1 = 'select * from parcel where parcel_id = ?';
         let parcelExist = await connection.query(q1, parcel_id);
-        if(parcelExist.length==0) return 0;
+        if(parcelExist.length==0) return -1;
 
         let q2 = 'select * from users where user_id = ?';
         let userExist = await connection.query(q2, user_id);
-        if(userExist.length==0) return 0;
-        
+        if(userExist.length==0) return -1;
+
         let query = 'select id from favorites where parcel_id = ? and user_id = ?';
         let count = await connection.query(query, [parcel_id, user_id]);
         let result, query2;
         if(count.length>0) {
             query2 = 'delete from favorites where parcel_id = ? and user_id = ?'
             result = await connection.query(query2, [parcel_id, user_id]);
+            return 'delete';
         }
         else {
             query2 = 'insert into favorites set ?';
             result = await connection.query(query2, {parcel_id: parcel_id, user_id: user_id});
+            return 'insert';
         }
-        return result;
     }
     catch(err){
         console.log(err);
