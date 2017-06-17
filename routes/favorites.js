@@ -35,7 +35,8 @@ router.put('/', async(req, res) => {
         if(!(req.body.parcel_id&&req.body.user_id)) res.status(400).send({message: 'body value required'});
         else {
             let result = await Favorites.setFavorites(req.body.parcel_id, req.body.user_id);
-            res.status(201).send({message: 'success'});
+            if(result==0) res.status(400).send({message: 'user_id or parcel_id do not exist'});
+            else res.status(201).send({message: 'success'});
         }
     }
     catch(err){
