@@ -71,7 +71,7 @@
     });
 
 
-    // 채팅방 목록 요청 결과 (목록 출력) -done
+    // 채팅방 목록 요청 결과 (목록 출력) -DONE
     socket.on('showListResults', roomlist => {
         $("#rooms").empty();
         // 채팅방 목록 갱신
@@ -89,23 +89,16 @@
         });
     });
     
-
-    // 메세지 전송
-    $(function(){
-        $("#sendButton").click(() => {
-        var room = $("#rooms").val();
-        socket.emit("enterRoom", {room_id: room});
-        });
-    });
     
-    //특정 채팅방 입장 결과(채팅방 메세지 내역 모두 출력) -done
+    //특정 채팅방 입장 결과(채팅방 메세지 내역 모두 출력) -DONE
     socket.on('enterRoomResults', data => {
         $('#messages').empty();
-        for(let i = 0; i<data.length; i++){
-            $('#messages').append($('<li>').text(data[i].sender_id));
-            $('#messages').append($('<li>').text(data[i].sender_name));
-            $('#messages').append($('<li>').text(data[i].sender_thumbnail));
-            $('#messages').append($('<li>').text(data[i].content));
+        let msg = data.messages;
+        for(let i = 0; i<data.messages.length; i++){
+            $('#messages').append($('<li>').text(msg[i].sender_id));
+            $('#messages').append($('<li>').text(msg[i].sender_name));
+            $('#messages').append($('<li>').text(msg[i].sender_thumbnail));
+            $('#messages').append($('<li>').text(msg[i].content));
         }
     });
 
@@ -113,10 +106,10 @@
  
         $("#sendButton").click(() => {
             socket.emit('sendMessage', {
-            content: 'where do you live?',
+            content: $('#userInput').val(),
             receiver_id: 21,
-            sender_id: 28,
-            room_id: "594341a980f67e99f681bf7c"
+            sender_id: 28, //TODO : 클라이언트에서 각 사용자 아이디 전달
+            room_id: $("#rooms").val()
         });
     });
 

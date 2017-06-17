@@ -201,9 +201,12 @@ RoomSchema.methods.enterRoom = async function enterRoom(room_id, user_id){
    
         let room = await Room.findOne(
             { _id: room_id },
-            { messages: 1 }
+            { messages: 1, chatters: 1 }
         );
         let array = [];
+        let the_other = (room.chatters[0]==user_id) ? rooms.chatters[1] : room.chatters[0];
+        let obj = { participant_id: the_other, user_id: user_id }; //현재 사용자가 대화중인 상대방의 id 
+
         for(let i = 0; i<room.messages.length; i++){
            let msg = room.messages[i];
            let profile = await User.findOne({
@@ -217,7 +220,9 @@ RoomSchema.methods.enterRoom = async function enterRoom(room_id, user_id){
                content: msg.content
            });
         }
-        return array;
+        obj.messages = array;
+        console.log(obj);
+        return obj;
     }
     catch(err) {
         console.log(err);

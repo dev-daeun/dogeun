@@ -97,7 +97,7 @@ const message = new Message();
 io.on('connection', socket => {  
     var user;
   
-    //채팅 목록 조회 -done
+    //채팅 목록 조회 -DONE
     socket.on('showList', async obj => { 
       user = obj.user_id;
       var roomlist = await room.getRooms(user); //현재 사용자id로 사용자가 참여중인 채팅목록 가져오기
@@ -108,7 +108,7 @@ io.on('connection', socket => {
       socket.emit('showListResults', roomlist);
     });
 
-    //채팅방 입장 -done 
+    //채팅방 입장 
     socket.on('enterRoom', async obj => {  
         var messagelist = await room.enterRoom(obj.room_id, user);
         socket.emit('enterRoomResults', messagelist);
@@ -119,8 +119,8 @@ io.on('connection', socket => {
     });
     
     socket.on('sendMessage', async message => {
-        // await message.save(message);
-        // await room.save({_id: message.room_id}, message);
+        await message.save(message);
+        await room.save({_id: message.room_id}, message);
     });
 
     socket.on('readMessage', room_id => {
