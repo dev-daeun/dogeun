@@ -510,7 +510,7 @@ DogList.getLists = async function (user_id, keywords, page) { //전체목록 조
                 offset: start,
                 limit: end - start 
         });
-        
+        console.log(posts);
         const count = (end==start) ? 0 : posts.rows.length;
         const next = (end<total-1)? true: false; //다음 페이지 유무 여부
 
@@ -520,7 +520,7 @@ DogList.getLists = async function (user_id, keywords, page) { //전체목록 조
         });
         
         let post_array = [];
-        for(let i = start; i<end; i++) { 
+        for(let i = 0; i<end-start; i++) { 
             let post = posts.rows[i].dataValues;
             post.username = post.user.username; //사용자이름 뽑아오기
             post.favorite = 0; //기본적으로 찜 여부는 0
