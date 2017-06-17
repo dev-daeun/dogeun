@@ -80,27 +80,11 @@ router.post('/', arrUpload, async function (req, res) {
         petImageRecords.push({ 'image': petImage.location, 'image_key': petImage.key });
     }
 
-
-    // 썸네일 만드는 부분 
-    let thumbnailFileName = 'thumbnail_' + req.files['pet'][0].key;
-
-    let thumbnailPath = 'thumbnail/' + thumbnailFileName;
-
-    let thumbnail = await easyimg.rescrop({
-        name: thumbnailFileName,
-        src: req.files['pet'][0].location,
-        dst: thumbnailPath,
-        width: 300, height: 400
-    });
-    
-    let petThumbnail = await uploadToS3(thumbnailFileName, thumbnailPath);
-
-    // 썸네일도 레코드에 추가
-    parcelRecords.pet_thumbnail = petThumbnail;
+ 
+     // 썸네일 만드는 부분 
     let thumbnailInfo = [];
     thumbnailInfo.push({ 'key': req.files['pet'][0].key, 'location': req.files['pet'][0].location });
-
-
+  
 
     // 함수 호출부분 
     // record 넘기고 클라이언트에 응답
