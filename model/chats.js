@@ -118,23 +118,24 @@ const RoomSchema = new Schema({
     messages: [MessageSchema] //메세지 담는 배열
 });
 
-RoomSchema.methods.findRoom = async function findRoom(){
-    let exists = await Room.find({
-        chatters: { $all: []}
-    })
+RoomSchema.methods.findRoom = async function findRoom(user_id, participant_id){
+    let exists = await Room.find(
+        { chatters: { $all: [user_id, participant_id] } },
+        { _id: 1 }
+    );
+    if(exists.length>0) return exists._id;
+    else return -1 ;
 };
 
 RoomSchema.methods.creatRoom = async function createRoom(creator_id, participant_id){
     try {
-          let new_room  = new Room({ //Room 모델로 채팅방 객체 생성
+          let new_room  = Room.create({ //Room 모델로 채팅방 객체 생성
             created_time: moment(new Date()).format('YY-MM-DD h:mm:ss a'),
             chatters: [creator_id, participant_id],
             remained_chatters: [creator_id, participant_id],
             messages: []
           });
-          let result = await new_room.save(); //save()는 생성된 객체 그대로 리턴
-          console.log(result);
-          return result;
+          return new_room._id;
     }
     catch(err) {
         console.log(err);

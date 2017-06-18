@@ -72,6 +72,7 @@
     });
 
 
+    
     // 채팅방 목록 요청 결과 (목록 출력) -DONE
     socket.on('showListResults', roomList => {
         $("#rooms").empty();
@@ -105,14 +106,14 @@
 
     });
     // 메세지 전송
- 
         $("#sendButton").click(() => {
             socket.emit('sendMessage', {
             content: $('#userInput').val()
         });
     });
 
-
+    //분양희망자와 대화하기
+    socket.emit('startChat', { participant_id: 30 });
 
     function appendMessage(msg) {
         $('#messages').append($('<li>').text(msg));
