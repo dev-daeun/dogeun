@@ -8,6 +8,7 @@ var doglists = require('./routes/doglists');
 var profiles = require('./routes/profiles');
 var favorites = require('./routes/favorites');
 var login = require('./routes/login');
+var signout = require('./routes/signout');
 var secretKey = require('./config/secretKey');
 var app = express();
 
@@ -29,6 +30,7 @@ app.use('/doglists', doglists);
 app.use('/profiles', profiles);
 app.use('/favorites', favorites);
 app.use('/login', login);
+app.use('/signout', signout);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');

@@ -30,7 +30,6 @@ router.get('/:user_id', async(req, res) => {
 
 router.put('/:user_id', async(req, res) => {
     try {
-        
         //분양글 id, 사용자 id는 바디에 넣어서
         if(!(req.body.parcel_id&&req.params.user_id)) res.status(400).send({message: 'request value required'});
         else {
@@ -45,4 +44,6 @@ router.put('/:user_id', async(req, res) => {
     }
 
 });
+
+
 module.exports = router;

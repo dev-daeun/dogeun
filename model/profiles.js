@@ -156,6 +156,23 @@ Profile.editProfile = async function(req){
     }
 };
 
-
+Profile.deleteProfile = async function(user_id){
+    try {
+        let count = await User.count(
+            { where: { user_id: user_id } }
+        );
+        if(count==0) return -1;
+        else {
+            let del = await User.destroy({
+            where: { user_id: user_id }
+            });
+            return del;
+        }
+    }
+    catch(err){
+        console.log(err);
+        throw err;
+    }
+};
 module.exports = Profile;
 
