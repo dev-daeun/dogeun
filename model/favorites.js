@@ -4,10 +4,10 @@ const upload = aws.getUpload();
 const jwt = require('jsonwebtoken');
 class Favor {}
 
-Favor.getFavorites = async function(token_id){
+Favor.getFavorites = async function(user_id){
     try {
         var connection = await pool.getConnection();
-        let parcel_ids = await connection.query('select parcel_id from favorites where user_id = ? order by createdAt desc', token_id); //분양글 id 가져오기
+        let parcel_ids = await connection.query('select parcel_id from favorites where user_id = ? and is_true = 1 order by createdAt desc', user_id); //분양글 id 가져오기
         let parcels = [];
         let query = `select parcel_id, title, pet_thumbnail, username from parcel, users 
                      where users.user_id = parcel.user_id and parcel_id = ?`;
@@ -38,7 +38,7 @@ Favor.setFavorites = async function(parcel_id, user_id){
         let userExist = await connection.query(q2, user_id);
         if(userExist.length==0) return -1;
 
-        let query = 'select id from favorites where parcel_id = ? and user_id = ?';
+        let query = 'select id_true from favorites where parcel_id = ? and user_id = ?';
         let count = await connection.query(query, [parcel_id, user_id]);
         let result, query2;
         if(count.length>0) {
