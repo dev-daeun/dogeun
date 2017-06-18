@@ -127,18 +127,23 @@ io.on('connection', socket => {
         let send = await message.getUserInfo(new_msg.sender_id, user_id);
         send.sender_id = new_msg.sender_id;
         send.content = content;
+        if(send.username) {
+          send.sender_name = send.username;
+          delete send.username;
+        } 
+        console.log(send);
         socket.emit('sendMessageResults', { newMessage: send });
     });
 
 
     //분양희망자와 대화하기 이벤트
-    // socket.on('startChat', obj => {
-    //     let r_id = await room.findRoom(user, obj.participant_id);
-    //     if(r_id===-1) { 
-    //       let new_room = await room.createRoom(user, participant_id);
-    //       room_id = new_room._id;
+    // socket.on('startChat', participant_id => {
+    //     let r_id = await room.findRoom(user, participant_id); //현재사용자와 상대방이 만든 방이 있는지 찾기
+    //     if(r_id===-1) {  //없으면
+    //       let new_room = await room.createRoom(user, participant_id); //방 새로 만들기
+    //       room_id = new_room._id; //room_id는 새로 만들어진 방의 id
     //     }
-    //     else room_id = r_id;
+    //     else room_id = r_id; //있으면 기존에 있던 방 id가 room_id
     //     let messagelist = await room.enterRoom(room_id, user_id);
     //     socket.emit('enterRoomResults', { roomInfos: messagelist });
     // });
