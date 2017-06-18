@@ -105,11 +105,10 @@ io.on('connection', socket => {
         var messageCount = await message.getUnreadCount(i.room_id, user_id);
         i.unread_count = messageCount;
       }
-      console.log(roomlist);
       socket.emit('showListResults', { roomList: roomlist });
     });
 
-    //채팅방 입장 
+    //채팅방 입장  -DONE
     socket.on('enterRoom', async obj => {  
         room_id = obj.room_id;
         var messagelist = await room.enterRoom(room_id, user_id);
@@ -120,6 +119,7 @@ io.on('connection', socket => {
 
     });
     
+    //메세지 전송
     socket.on('sendMessage', async obj => {
         let new_msg = await message.saveMessage(obj.content, user_id, room_id);
         let updated_room = await room.addMessage(new_msg);
