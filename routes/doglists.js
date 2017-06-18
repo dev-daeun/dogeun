@@ -135,8 +135,9 @@ router.put('/:parcel_id', arrUpload, async function (req, res) {
                 petImageRecords.push({ 'image': item.location, 'parcel_id': changeId, 'image_key': item.key });
             }
             newPetNums = req.files['pet'].length;
-        } else {
+        } else if(req.files['pet']===undefined) {
             // 새로운 펫이미지가 없으면 
+console.log('no pet');
             newPetNums = 0;
         }
 

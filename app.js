@@ -1,14 +1,13 @@
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
-var winston = require('winston');
+var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var doglists = require('./routes/doglists');
 var profiles = require('./routes/profiles');
 var favorites = require('./routes/favorites');
 var login = require('./routes/login');
-var signout = require('./routes/signout');
 var secretKey = require('./config/secretKey');
 var app = express();
 
@@ -19,19 +18,7 @@ app.set('secret-key', secretKey.secretKey);
 
 // uncomment after placing your favicon in /public
 // app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-var logger = module.exports = new (winston.Logger)({
-  transports: [
-    new (winston.transports.Console)({
-      level: 'error',
-      colorize: 'all'
-    }),
-    new (winston.transports.File)({
-      name: 'serviceLog.log',
-      level: 'info'
-    })
-  ]
-});
-logger.log('info', 'This is an information message.');
+app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -42,7 +29,6 @@ app.use('/doglists', doglists);
 app.use('/profiles', profiles);
 app.use('/favorites', favorites);
 app.use('/login', login);
-app.use('/signout', signout);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
@@ -61,5 +47,6 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
 
 module.exports = app;

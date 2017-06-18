@@ -312,6 +312,7 @@ DogList.updateParcels = async function (changeId, userId, removePet, petRecord, 
         for (let item in parcelRecord) {
             data[item] = parcelRecord[item];
         }
+        data.parcel_id = changeId;
 
         console.log('parcel update success');
 
