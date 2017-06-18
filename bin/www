@@ -112,7 +112,7 @@ io.on('connection', socket => {
     socket.on('enterRoom', async obj => {  
         room_id = obj.room_id;
         var messagelist = await room.enterRoom(room_id, user_id);
-        socket.emit('enterRoomResults', messagelist);
+        socket.emit('enterRoomResults', { roomInfos: messagelist });
     });
 
     socket.on('removeRoom', room_id => {
@@ -125,7 +125,7 @@ io.on('connection', socket => {
         let send = await message.getUserInfo(new_msg.sender_id, user_id);
         send.sender_id = new_msg.sender_id;
         send.content = obj.content;
-        socket.emit('sendMessageResults', { new_message: send });
+        socket.emit('sendMessageResults', { newMessage: send });
     });
 
     socket.on('readMessage', room_id => {
