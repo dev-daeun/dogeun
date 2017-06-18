@@ -156,7 +156,7 @@ RoomSchema.methods.addMessage = async function addMessage(new_msg){
 RoomSchema.methods.getRooms = async function getRooms(id){ //사용자 id
     try {
         let rooms = await Room.find(  //채팅목록 조회
-            { remained_chatters: id },
+            { remained_chatters: id, 'messages.0': { $exists: true } }, //메세지 내역길이가 1이상인 room만 추출.
             { messages: 1, _id: 1 }
         ); //결과 : 해당 사용자가 참여중인 채팅방의 모든 메세지 내역
         

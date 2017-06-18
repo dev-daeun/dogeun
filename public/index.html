@@ -68,7 +68,7 @@
     var participant;
     socket.on('connect', () => {
         // 채팅방 목록 요청
-        user = 21;
+        user = 446436772;
         socket.emit('showList', user); //TODO : 요청 id 클라이언트에서 넘겨줘야
     });
 
@@ -137,7 +137,7 @@
 
     // 분양희망자와 대화하기
     $("#startButton").click(() => {
-        socket.emit("startChat", 446436772);
+        socket.emit("startChat", 28);
     });
 </script>
 </body>

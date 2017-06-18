@@ -119,7 +119,7 @@ io.on('connection', socket => {
         socket.emit('enterRoomResults', { roomInfos: messagelist });
     });
 
-    socket.on('removeRoom', room_id => {
+    socket.on('removeRoom', r_id => {
 
     });
     
@@ -140,16 +140,17 @@ io.on('connection', socket => {
     });
 
 
-    //분양희망자와 대화하기 이벤트
-    // socket.on('startChat', async participant_id => {
-    //     let r_id = await room.findRoom(user_id, participant_id); //현재사용자와 상대방이 만든 방이 있는지 찾기
-    //     if(r_id===-1) {  //없으면
-    //       let new_room = await room.createRoom(user_id, participant_id); //방 새로 만들기
-    //       room_id = new_room._id; //room_id는 새로 만들어진 방의 id
-    //     }
-    //     else room_id = r_id; //있으면 기존에 있던 방 id가 room_id
-    //     let messagelist = await room.enterRoom(room_id, user_id);
-    //     console.log({ roomInfos: messagelist });
-    //     socket.emit('enterRoomResults', { roomInfos: messagelist });
-    // });
+    //분양희망자와 대화하기 이벤트 -DONE
+    socket.on('startChat', async participant_id => {
+        let r_id = await room.findRoom(user_id, participant_id); //현재사용자와 상대방이 만든 방이 있는지 찾기
+        if(r_id===-1) {  //없으면
+          let new_room = await room.createRoom(user_id, participant_id); //방 새로 만들기
+          room_id = new_room._id; //room_id는 새로 만들어진 방의 id
+        }
+        else room_id = r_id; //있으면 기존에 있던 방 id가 room_id
+        let messagelist = await room.enterRoom(room_id, user_id);
+        console.log('startChat participant_id :', participant_id );
+        console.log({ roomInfos: messagelist });
+        socket.emit('enterRoomResults', { roomInfos: messagelist });
+    });
 });
