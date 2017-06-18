@@ -68,7 +68,7 @@
     socket.on('connect', () => {
         // 채팅방 목록 요청
         user = 21;
-        socket.emit('showList', {user_id: 21}); //TODO : 요청 id 클라이언트에서 넘겨줘야
+        socket.emit('showList', user); //TODO : 요청 id 클라이언트에서 넘겨줘야
     });
 
 
@@ -107,13 +107,11 @@
     });
     // 메세지 전송
         $("#sendButton").click(() => {
-            socket.emit('sendMessage', {
-            content: $('#userInput').val()
-        });
+            socket.emit('sendMessage', $('#userInput').val() );
     });
 
     //분양희망자와 대화하기
-    socket.emit('startChat', { participant_id: 30 });
+    socket.emit('startChat', 30 );
 
     function appendMessage(msg) {
         $('#messages').append($('<li>').text(msg));
@@ -128,7 +126,7 @@
             window.alert('채팅방에 먼저 입장하세요.');
             return false;
         }
-        socket.emit('sendMessage', { content: $('#userInput').val() });
+        socket.emit('sendMessage', $('#userInput').val());
         $("#userInput").val("")
         return false;
     });
@@ -136,7 +134,7 @@
     // 채팅방 입장
     $("#joinButton").click(() => {
         var room = $("#rooms").val();
-        socket.emit("enterRoom", {room_id: room});
+        socket.emit("enterRoom", room);
     });
     
 </script>
