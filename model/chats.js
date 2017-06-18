@@ -119,15 +119,15 @@ const RoomSchema = new Schema({
 });
 
 RoomSchema.methods.findRoom = async function findRoom(user_id, participant_id){
-    let exists = await Room.find(
+    let exists = await Room.findOne(
         { chatters: { $all: [user_id, participant_id] } },
         { _id: 1 }
     );
-    if(exists.length>0) return exists._id;
-    else return -1 ;
+    if(exists==null) return -1;
+    else return exists._id;
 };
 
-RoomSchema.methods.creatRoom = async function createRoom(creator_id, participant_id){
+RoomSchema.methods.createRoom = async function createRoom(creator_id, participant_id){
     try {
           let new_room  = Room.create({ //Room 모델로 채팅방 객체 생성
             created_time: moment(new Date()).format('YY-MM-DD h:mm:ss a'),

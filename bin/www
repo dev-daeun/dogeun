@@ -105,8 +105,8 @@ io.on('connection', socket => {
         let messageCount = await message.getUnreadCount(i.room_id, user_id);
         i.unread_count = messageCount;
       }
-	console.log({roomList: roomlist});
-      console.log({roomList: roomlist});
+      console.log('showList uid: ', u_id);
+    	console.log({roomList: roomlist});
       socket.emit('showListResults', { roomList: roomlist });
     });
 
@@ -114,6 +114,8 @@ io.on('connection', socket => {
     socket.on('enterRoom', async r_id => {  
         room_id = r_id;
         let messagelist = await room.enterRoom(room_id, user_id);
+        console.log('enterRoom r_id: ', r_id);
+        console.log({ roomInfos: messagelist });
         socket.emit('enterRoomResults', { roomInfos: messagelist });
     });
 
@@ -121,7 +123,7 @@ io.on('connection', socket => {
 
     });
     
-    //메세지 전송
+    //메세지 전송 -DONE
     socket.on('sendMessage', async content => {
         let new_msg = await message.saveMessage(content, user_id, room_id);
         let updated_room = await room.addMessage(new_msg);
@@ -132,20 +134,22 @@ io.on('connection', socket => {
           send.sender_name = send.username;
           delete send.username;
         } 
-        console.log(send);
+        console.log('sendMessage content: ', content);
+        console.log({ newMessage: send });
         socket.emit('sendMessageResults', { newMessage: send });
     });
 
 
     //분양희망자와 대화하기 이벤트
-    // socket.on('startChat', participant_id => {
-    //     let r_id = await room.findRoom(user, participant_id); //현재사용자와 상대방이 만든 방이 있는지 찾기
+    // socket.on('startChat', async participant_id => {
+    //     let r_id = await room.findRoom(user_id, participant_id); //현재사용자와 상대방이 만든 방이 있는지 찾기
     //     if(r_id===-1) {  //없으면
-    //       let new_room = await room.createRoom(user, participant_id); //방 새로 만들기
+    //       let new_room = await room.createRoom(user_id, participant_id); //방 새로 만들기
     //       room_id = new_room._id; //room_id는 새로 만들어진 방의 id
     //     }
     //     else room_id = r_id; //있으면 기존에 있던 방 id가 room_id
     //     let messagelist = await room.enterRoom(room_id, user_id);
+    //     console.log({ roomInfos: messagelist });
     //     socket.emit('enterRoomResults', { roomInfos: messagelist });
     // });
 });

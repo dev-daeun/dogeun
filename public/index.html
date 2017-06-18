@@ -51,6 +51,7 @@
     </select>
 
     <input type="button" id="joinButton" value="입장" class="btn btn-default">
+    <input type="button" id="startButton" value="분양희망자와 대화하기" class="btn btn-default">
 </div>
 
 <ul id="messages">
@@ -111,14 +112,11 @@
     });
 
     //분양희망자와 대화하기
-    socket.emit('startChat', 30 );
+
 
     function appendMessage(msg) {
         $('#messages').append($('<li>').text(msg));
     }
-
-
-
 
     // 메세지 보내기
     $("#chatInput").submit(function() {
@@ -136,7 +134,11 @@
         var room = $("#rooms").val();
         socket.emit("enterRoom", room);
     });
-    
+
+    // 분양희망자와 대화하기
+    $("#startButton").click(() => {
+        socket.emit("startChat", 446436772);
+    });
 </script>
 </body>
 </html>
