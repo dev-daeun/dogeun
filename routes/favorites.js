@@ -17,11 +17,8 @@ router.get('/:user_id', async(req, res) => {
     //         console.log('payload: ', decoded.payload);
     //         console.log('user_id: ', token_id);
     try {
-        if(!req.params.user_id) res.status(400).send({message: 'parameter value required'});
-        else {
-            let data = await Favorites.getFavorites(req.params.user_id);
-            res.status(200).send(data);
-        }
+        let data = await Favorites.getFavorites(req.params.user_id);
+        res.status(200).send(data);
     }
     catch(err){
         res.status(500).send({message: err});

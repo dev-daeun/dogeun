@@ -186,18 +186,6 @@ DogList.postParcels = async function (parcelRecord, parentRecord, petRecord, thu
                 let petOutput = await connection.query(query3, pet);
                 pet.image_id = petOutput.insertId;
                 data.pet.push({ 'image_id': pet.image_id, 'image': pet.image });
-
-                let query4 = 'select user_id from users';
-                let users = await connection.query(query4);
-
-                let query5 = 'insert into favorites set ?';
-                for(let i = 0; i<users.length; i++){
-                    await connection.query(query5, {
-                        user_id: users[i].user_id, 
-                        parcel_id: data.parcel_id, 
-                        is_true: 0
-                    });
-                }
             }
         }
         console.log('pet success');
@@ -522,21 +510,27 @@ DogList.getLists = async function (user_id, keywords, page) { //전체목록 조
                 offset: start,
                 limit: end - start 
         });
-
+        console.log(posts);
         const count = (end==start) ? 0 : posts.rows.length;
         const next = (end<total-1)? true: false; //다음 페이지 유무 여부
 
-
+        let favorites = await Favorites.findAll({ //현재 사용자가 찜한 분양글 id 가져오기(dataValues배열)
+            attributes: ['parcel_id'],
+            where: {user_id: user_id}
+        });
+        
         let post_array = [];
         for(let i = 0; i<end-start; i++) { 
             let post = posts.rows[i].dataValues;
-            let favor = await Favorites.findOne({ //현재 사용자가 찜한 분양글 id 가져오기(dataValues배열)
-                attributes: ['is_true'],
-                where: {user_id: user_id, parcel_id: post.parcel_id}
-            });
-            post.favorite = favor.dataValues.is_true;
             post.username = post.user.username; //사용자이름 뽑아오기
+            post.favorite = 0; //기본적으로 찜 여부는 0
             delete post.user;
+            for(let j = 0; j<favorites.length; j++){
+                if(post.parcel_id==favorites[j].dataValues.parcel_id) { //쿼리에 user_id가 없으면 0으로 유지됨.
+                    post.favorite = 1;
+                    break;
+                }
+            }
             post_array.push(post);
         }
         
