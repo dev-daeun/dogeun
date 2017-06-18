@@ -105,6 +105,7 @@ io.on('connection', socket => {
         var messageCount = await message.getUnreadCount(i.room_id, user_id);
         i.unread_count = messageCount;
       }
+	console.log(roomlist);
       socket.emit('showListResults', roomlist);
     });
 

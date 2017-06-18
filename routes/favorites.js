@@ -37,7 +37,7 @@ router.put('/:user_id', async(req, res) => {
             let result = await Favorites.setFavorites(req.body.parcel_id, req.params.user_id);
             if(result===-1) res.status(400).send({message: 'user_id or parcel_id do not exist'});
             else if(result==='delete') res.status(201).send({message: 'delete'});
-            else res.status(201).send({message: 'insert'});
+            else res.status(201).send({message: 'add'});
         }
     }
     catch(err){
