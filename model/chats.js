@@ -173,8 +173,6 @@ RoomSchema.methods.getRooms = async function getRooms(id){ //사용자 id
                 sender_name: msg.sender_name,
                 sender_thumbnail: profile.dataValues.profile_thumbnail,
                 content: msg.content
-
-                // receiver_name: msg.receiver_name //TODO: 안드에서는 불필요(지워야)
             };       
             recent_array.push(recent_msg);
         }
@@ -189,6 +187,19 @@ RoomSchema.methods.getRooms = async function getRooms(id){ //사용자 id
 
 RoomSchema.methods.enterRoom = async function enterRoom(room_id, user_id){
     try {
+        /* Message 컬렉션에서 안읽었던 메세지 모두 읽음처리 */
+        let updateMessage = await Message.updateMany(
+            { room_id: room_id, is_read: false, receiver_id: user_id },
+            { $set: { is_read: true } } 
+        ); 
+
+        /* Room 컬렉션에서 안읽었던 메세지 모두 읽음처리 */
+        let updateRoom = await Room.update(
+            { _id: room_id, "messages.receiver_id": user_id },
+            { $set: { "messages.$.is_read": true }}
+        );
+
+        /* 채팅방 내에 메세지 내역 find */
         let room = await Room.findOne(
             { _id: room_id },
             { messages: 1, chatters: 1 }
@@ -211,7 +222,6 @@ RoomSchema.methods.enterRoom = async function enterRoom(room_id, user_id){
            if(msg.sender_id==the_other) element.sender_name = msg.sender_name;
            array.push(element);
         }
-        console.log(array);
         obj.messages = array;
         return obj;
     }
