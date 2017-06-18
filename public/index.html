@@ -73,9 +73,10 @@
 
 
     // 채팅방 목록 요청 결과 (목록 출력) -DONE
-    socket.on('showListResults', roomlist => {
+    socket.on('showListResults', roomList => {
         $("#rooms").empty();
         // 채팅방 목록 갱신
+        let roomlist = roomList.roomList;
         for(var i = 0 ; i < roomlist.length ; i++) {
             var room = roomlist[i].room_id;
             var option = $("<option value='" + room + "'>").text(room);
