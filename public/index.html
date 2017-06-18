@@ -87,8 +87,8 @@
     //특정 채팅방 입장 결과(채팅방 메세지 내역 모두 출력) -DONE
     socket.on('enterRoomResults', data => {
         $('#messages').empty();
-        let msg = data.messages;
-        for(let i = 0; i<data.messages.length; i++){
+        let msg = data.roomInfos.messages;
+        for(let i = 0; i<data.roomInfos.messages.length; i++){
             $('#messages').append($('<li>').text(msg[i].sender_id));
             $('#messages').append($('<li>').text(msg[i].sender_name));
             $('#messages').append($('<li>').text(msg[i].sender_thumbnail));
@@ -97,7 +97,7 @@
     });
 
     socket.on('sendMessageResults', data => {
-        let msg = data.new_message;
+        let msg = data.newMessage;
         appendMessage(msg.sender_id);
         appendMessage(msg.sender_name);
         appendMessage(msg.sender_thumbnail);
