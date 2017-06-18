@@ -81,7 +81,7 @@ MessageSchema.methods.saveMessage = async function(content, user_id, room_id){
             { _id: room_id },
             { messages: 1, chatters: 1 }
         );
-        let participant_id = (room.chatters[0]==user_id) ? rooms.chatters[1] : room.chatters[0];
+        let participant_id = (room.chatters[0]==user_id) ? room.chatters[1] : room.chatters[0];
 
         let receiver =  await User.findOne({
             attributes: ['username'],
