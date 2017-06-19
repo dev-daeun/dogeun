@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 const pool = require('../config/db_pool');
-const User = require('../config/ORM');
+const User = require('../config/ORM').User;
 const AWS = require('../config/AWS');
 const s3 = AWS.getS3();
 const fs = require('fs');
