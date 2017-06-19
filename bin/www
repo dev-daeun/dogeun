@@ -119,7 +119,7 @@ io.on('connection', socket => {
         let messageCount = await message.getUnreadCount(i.room_id, user_id);
         i.unread_count = messageCount;
       }
-      console.log('showList uid: ', u_id);
+      console.log('showList 호출 uid: ', u_id);
     	console.log({roomList: roomlist});
       socket.emit('showListResults', { roomList: roomlist });
     });
@@ -128,7 +128,7 @@ io.on('connection', socket => {
     socket.on('enterRoom', async r_id => {  
         room_id = r_id;
         let messagelist = await room.enterRoom(room_id, user_id);
-        console.log('enterRoom r_id: ', r_id);
+        console.log('enterRoom 호출 r_id: ', r_id);
         console.log({ roomInfos: messagelist });
         socket.emit('enterRoomResults', { roomInfos: messagelist });
     });
@@ -147,19 +147,19 @@ io.on('connection', socket => {
     
     //메세지 전송 
     socket.on('sendMessage', async obj => {
-        let new_msg = await message.saveMessage(obj.content, obj.user_id, obj.room_id);
-        let updated_room = await room.addMessage(new_msg);
+        console.log('클라이언트에서 보낸 객체: ', obj);
         let sender_info = await message.getUserInfo(obj.user_id); // 메세지 전송한 사람의 프로필, 이름, user_id
-        sender_info.content = obj.content;
-        console.log(obj);
-        console.log('sendMessage emits receiveMessage: ', sender_info);
-        socket.emit('receiveMessage', {room_id: obj.room_id, sender: sender_info});
+        sender_info.content = obj.content; //객체에 메세지 내용 추가
+        if(sender_info.sender_id==user_id) sender_info.side = 'right'; //보낸 사용자가 본인이면 오른쪽
+        else sender_info.side = 'left'; //아니면 왼쪽
+        //보낸 메세지의 채팅방이 현재 채팅방이면 sender_info 로 이벤트 호출
+        if(obj.room_id==room_id) {
+          console.log('sendMessageResults 호출: ', sender_info);
+          socket.emit('sendMessageResults', {newMessage: sender_info});
+        }
+        let new_msg = await message.saveMessage(obj.content, obj.user_id, obj.room_id); //메세지 컬렉션에 메세지 저장
+        let updated_room = await room.addMessage(new_msg); //채팅방 컬렉션/에 메세지 추가    
     });
-
-    // socket.on('receiveMessage', async sender => {
-    //     if(sender.sender_id==user_id) sender.side = 'right';
-    //     else sender.side = 'left';
-    // });
 
 
     //분양희망자와 대화하기 이벤트 -DONE
@@ -171,8 +171,14 @@ io.on('connection', socket => {
         }
         else room_id = r_id; //있으면 기존에 있던 방 id가 room_id
         let messagelist = await room.enterRoom(room_id, user_id);
-        console.log('startChat participant_id :', participant_id );
+        console.log('startChat 호출 participant_id :', participant_id );
         console.log({ roomInfos: messagelist });
         socket.emit('enterRoomResults', { roomInfos: messagelist });
+    });
+
+    socket.on('disconnect', () => {
+        room_id = null;
+        user_id = null;
+        console.log('클라이언트 소켓 중단');
     });
 });
