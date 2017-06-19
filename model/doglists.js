@@ -302,7 +302,7 @@ DogList.updateParcels = async function (changeId, userId, removePet, petRecord, 
         //let parcelId = parcelRecord.parcel_id;
         let query = 'select thumbnail from pet_images where image_id = ( select min(image_id) from pet_images where parcel_id = ? )';
         let thumbnailURL = await connection.query(query, changeId);
-        parcelRecord.pet_thumbnail = thumbnailURL.thumbnail;
+        parcelRecord.pet_thumbnail = thumbnailURL[0].thumbnail;
         console.log('thumbnail update success');
 
         // 분양글 항목 업데이트
