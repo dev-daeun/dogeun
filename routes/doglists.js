@@ -146,10 +146,10 @@ console.log('no pet');
 
 
         // 널값 확인하기 위해
-        if (imageNums - removePetNums + newPetNums <= 0) {
-            res.status(400).send({ message: 'pet image null error' });
-            return;
-        }
+        //if (imageNums - removePetNums + newPetNums <= 0) {
+          //  res.status(400).send({ message: 'pet image null error' });
+            //return;
+       // }
 
         // 업데이트할 글 레코드 
         let parcelRecords = {

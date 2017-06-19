@@ -7,7 +7,7 @@ db.on('error', console.error);
 db.once('open', async function(){
     console.log("Connected to mongod server");
 });
-const url = 'mongodb://localhost:27017/dogeun';
+const url = require('../config/mongo_url');
 mongoose.connect(url);
 const Schema = mongoose.Schema;
 const ObjectId = mongoose.Schema.Types.ObjectId;
@@ -126,6 +126,13 @@ RoomSchema.methods.findRoom = async function findRoom(user_id, participant_id){
     if(exists==null) return -1;
     else return exists._id;
 };
+ 
+RoomSchema.methods.beforeRemove = async function beforeRemove(user_id, room_id){
+    let exists = await Room.count(
+        { remained_chatters: { user_id }, _id: room_id }
+    );
+    return exists;
+};
 
 RoomSchema.methods.createRoom = async function createRoom(creator_id, participant_id){
     try {
@@ -221,6 +228,8 @@ RoomSchema.methods.enterRoom = async function enterRoom(room_id, user_id){
                sender_name: profile.dataValues.username,
                content: msg.content
            };
+           if(msg.sender_id==user_id) element.side = 'right';
+           else element.side = 'left';
            array.push(element);
         }
         obj.messages = array;
