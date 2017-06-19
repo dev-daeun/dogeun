@@ -52,6 +52,7 @@
 
     <input type="button" id="joinButton" value="입장" class="btn btn-default">
     <input type="button" id="startButton" value="분양희망자와 대화하기" class="btn btn-default">
+    <input type="button" id="removeButton" value="방 나가기" class="btn btn-default">
 </div>
 
 <ul id="messages">
@@ -93,12 +94,16 @@
         for(let i = 0; i<data.roomInfos.messages.length; i++){
             $('#messages').append($('<li>').text(msg[i].sender_id));
             $('#messages').append($('<li>').text(msg[i].sender_name));
-	$('#messages').append($('<li>').text(msg[i].side));
+            $('#messages').append($('<li>').text(msg[i].side));
             $('#messages').append($('<li>').text(msg[i].sender_thumbnail));
             $('#messages').append($('<li>').text(msg[i].content));
         }
     });
 
+    socket.on('removeRoomResults', obj => {
+        alert(obj.result);
+    });
+    
     socket.on('sendMessageResults', data => {
         let msg = data.newMessage;
         appendMessage(msg.sender_id);
@@ -111,9 +116,6 @@
         $("#sendButton").click(() => {
             socket.emit('sendMessage', $('#userInput').val() );
     });
-
-    //분양희망자와 대화하기
-
 
     function appendMessage(msg) {
         $('#messages').append($('<li>').text(msg));
@@ -139,6 +141,11 @@
     // 분양희망자와 대화하기
     $("#startButton").click(() => {
         socket.emit("startChat", 28);
+    });
+
+    // 방 나가기
+    $("#removeButton").click(() => {
+        socket.emit('removeRoom', $("#rooms").val());
     });
 </script>
 </body>
