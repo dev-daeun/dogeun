@@ -149,16 +149,13 @@ io.on('connection', socket => {
     socket.on('sendMessage', async content => {
         let new_msg = await message.saveMessage(content, user_id, room_id);
         let updated_room = await room.addMessage(new_msg);
-        let send = await message.getUserInfo(new_msg.sender_id, user_id);
-        send.sender_id = new_msg.sender_id;
-        if(sender_id==user_id) send.side = 'right';
-        else send.side = 'left';
-        send.sender_name = send.username;
-        delete send.username;
-        send.content = content;
+        let userInfo = await message.getUserInfo(new_msg.sender_id, user_id); //프로필, 이름, user_id
+        if(new_msg.sender_id===user_id) userInfo.side = 'right';
+        else userInfo.side = 'left';
+        userInfo.content = content;
         console.log('sendMessage content: ', content);
-        console.log({ newMessage: send });
-        socket.emit('sendMessageResults', { newMessage: send });
+        console.log({ newMessage: userInfo });
+        socket.emit('sendMessageResults', { newMessage: userInfo });
     });
 
 
