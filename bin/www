@@ -151,11 +151,11 @@ io.on('connection', socket => {
         let updated_room = await room.addMessage(new_msg);
         let send = await message.getUserInfo(new_msg.sender_id, user_id);
         send.sender_id = new_msg.sender_id;
+        if(sender_id==user_id) send.side = 'right';
+        else send.side = 'left';
+        send.sender_name = send.username;
+        delete send.username;
         send.content = content;
-        if(send.username) {
-          send.sender_name = send.username;
-          delete send.username;
-        } 
         console.log('sendMessage content: ', content);
         console.log({ newMessage: send });
         socket.emit('sendMessageResults', { newMessage: send });
