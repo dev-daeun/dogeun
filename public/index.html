@@ -93,6 +93,7 @@
         for(let i = 0; i<data.roomInfos.messages.length; i++){
             $('#messages').append($('<li>').text(msg[i].sender_id));
             $('#messages').append($('<li>').text(msg[i].sender_name));
+	$('#messages').append($('<li>').text(msg[i].side));
             $('#messages').append($('<li>').text(msg[i].sender_thumbnail));
             $('#messages').append($('<li>').text(msg[i].content));
         }
