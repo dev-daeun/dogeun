@@ -145,14 +145,15 @@ io.on('connection', socket => {
         }
     });
     
-    //메세지 전송 -DONE
+    //메세지 전송 
     socket.on('sendMessage', async obj => {
         let new_msg = await message.saveMessage(obj.content, obj.user_id, obj.room_id);
         let updated_room = await room.addMessage(new_msg);
         let sender_info = await message.getUserInfo(obj.user_id); // 메세지 전송한 사람의 프로필, 이름, user_id
         sender_info.content = obj.content;
+        console.log(obj);
         console.log('sendMessage emits receiveMessage: ', sender_info);
-        // socket.emit('receiveMessage', {room_id: obj.room_id, sender: sender_info});
+        socket.emit('receiveMessage', {room_id: obj.room_id, sender: sender_info});
     });
 
     // socket.on('receiveMessage', async sender => {
