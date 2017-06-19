@@ -146,18 +146,19 @@ io.on('connection', socket => {
     });
     
     //메세지 전송 -DONE
-    socket.on('sendMessage', async content => {
-        let new_msg = await message.saveMessage(content, user_id, room_id);
+    socket.on('sendMessage', async obj => {
+        let new_msg = await message.saveMessage(obj.content, obj.user_id, obj.room_id);
         let updated_room = await room.addMessage(new_msg);
-        let userInfo = await message.getUserInfo(new_msg.sender_id, user_id); //프로필, 이름, user_id
-        console.log(new_msg);
-	if(new_msg.sender_id===user_id) userInfo.side = 'right';
-        else userInfo.side = 'left';
-        userInfo.content = content;
-        console.log('sendMessage content: ', content);
-        console.log({ newMessage: userInfo });
-        socket.emit('sendMessageResults', { newMessage: userInfo });
+        let sender_info = await message.getUserInfo(obj.user_id); // 메세지 전송한 사람의 프로필, 이름, user_id
+        sender_info.content = obj.content;
+        console.log('sendMessage emits receiveMessage: ', sender_info);
+        // socket.emit('receiveMessage', {room_id: obj.room_id, sender: sender_info});
     });
+
+    // socket.on('receiveMessage', async sender => {
+    //     if(sender.sender_id==user_id) sender.side = 'right';
+    //     else sender.side = 'left';
+    // });
 
 
     //분양희망자와 대화하기 이벤트 -DONE
