@@ -4,7 +4,7 @@ const pool = require('../config/db_pool.js');
 const jwt = require('jsonwebtoken');
 
 
-router.post('/', async function(req, res){
+router.post('/', async function(req, res, next){
     try {
             let option = {
                 algorithm: 'HS256',
@@ -18,8 +18,7 @@ router.post('/', async function(req, res){
         
     }
     catch(err) {
-        console.log(err);
-        res.status(500).send({message: err });
+         next(err);
     }
     finally {
         pool.releaseConnection(connection);

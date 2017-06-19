@@ -4,8 +4,7 @@ const aws = require('../config/AWS');
 aws.loadAccess();
 const Favorites = require('../model/favorites');
 
-
-router.get('/:user_id', async(req, res) => {
+router.get('/:user_id', async(req, res, next) => {
     // let token = req.headers.token;
     // if(!token) res.status(401).send({message: 'unauthorized'}); //토큰이 아예 없으면
     // else {
@@ -21,14 +20,14 @@ router.get('/:user_id', async(req, res) => {
         res.status(200).send(data);
     }
     catch(err){
-        res.status(500).send({message: err});
+        next(err);
     }
 
         // }
     // }
 });
 
-router.put('/:user_id', async(req, res) => {
+router.put('/:user_id', async(req, res, next) => {
     try {
         //분양글 id, 사용자 id는 바디에 넣어서
         if(!(req.body.parcel_id&&req.params.user_id)) res.status(400).send({message: 'request value required'});
@@ -40,7 +39,7 @@ router.put('/:user_id', async(req, res) => {
         }
     }
     catch(err){
-        res.status(500).send({message: err});
+        next(err);
     }
 
 });
