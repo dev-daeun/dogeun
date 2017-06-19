@@ -228,6 +228,8 @@ RoomSchema.methods.enterRoom = async function enterRoom(room_id, user_id){
                sender_name: profile.dataValues.username,
                content: msg.content
            };
+           if(msg.sender_id==user_id) element.side = 'right';
+           else element.side = 'left';
            array.push(element);
         }
         obj.messages = array;
