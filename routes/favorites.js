@@ -4,8 +4,7 @@ const aws = require('../config/AWS');
 aws.loadAccess();
 const Favorites = require('../model/favorites');
 
-
-router.get('/:user_id', async(req, res) => {
+router.get('/:user_id', async(req, res, next) => {
     // let token = req.headers.token;
     // if(!token) res.status(401).send({message: 'unauthorized'}); //토큰이 아예 없으면
     // else {
@@ -21,22 +20,29 @@ router.get('/:user_id', async(req, res) => {
         res.status(200).send(data);
     }
     catch(err){
-        res.status(500).send({message: err});
+        next(err);
     }
 
         // }
     // }
 });
 
-router.put('/', async(req, res) => {
+router.put('/:user_id', async(req, res, next) => {
     try {
         //분양글 id, 사용자 id는 바디에 넣어서
-        let result = await Favorites.setFavorites(req.body.parcel_id, req.body.user_id);
-        res.status(201).send({message: 'success'});
+        if(!(req.body.parcel_id&&req.params.user_id)) res.status(400).send({message: 'request value required'});
+        else {
+            let result = await Favorites.setFavorites(req.body.parcel_id, req.params.user_id);
+            if(result===-1) res.status(400).send({message: 'user_id or parcel_id do not exist'});
+            else if(result==='delete') res.status(201).send({message: 'delete'});
+            else res.status(201).send({message: 'add'});
+        }
     }
     catch(err){
-        res.status(500).send({message: err});
+        next(err);
     }
 
 });
+
+
 module.exports = router;

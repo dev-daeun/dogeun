@@ -8,11 +8,12 @@ const Doglist = require('../model/doglists');
 const easyimg = require('easyimage');
 const fs = require('fs');
 const s3 = aws.getS3();
-
 const upload = aws.getUpload();
 const arrUpload = upload.fields([{ name: 'pet', maxCount: 5 }, { name: 'lineage', maxCount: 1 }, { name: 'parent', maxCount: 2 }]);
 
-router.post('/', arrUpload, async function (req, res) {
+
+
+router.post('/', arrUpload, async function (req, res, next) {
 
     //토큰 검증 TODO: aouth 토큰으로 변경
     let user_id = req.headers.user_token;
@@ -80,27 +81,11 @@ router.post('/', arrUpload, async function (req, res) {
         petImageRecords.push({ 'image': petImage.location, 'image_key': petImage.key });
     }
 
-
-    // 썸네일 만드는 부분 
-    let thumbnailFileName = 'thumbnail_' + req.files['pet'][0].key;
-
-    let thumbnailPath = 'thumbnail/' + thumbnailFileName;
-
-    let thumbnail = await easyimg.rescrop({
-        name: thumbnailFileName,
-        src: req.files['pet'][0].location,
-        dst: thumbnailPath,
-        width: 300, height: 400
-    });
-    
-    let petThumbnail = await uploadToS3(thumbnailFileName, thumbnailPath);
-
-    // 썸네일도 레코드에 추가
-    parcelRecords.pet_thumbnail = petThumbnail;
+ 
+     // 썸네일 만드는 부분 
     let thumbnailInfo = [];
     thumbnailInfo.push({ 'key': req.files['pet'][0].key, 'location': req.files['pet'][0].location });
-
-
+  
 
     // 함수 호출부분 
     // record 넘기고 클라이언트에 응답
@@ -111,14 +96,13 @@ router.post('/', arrUpload, async function (req, res) {
         res.status(200).send({ results: result });
     }
     catch (err) {
-        console.log('error message : ', err);
-        res.status(500).send({ message: 'fail' + err.code });
+        next(err);
     }
 
 });
 
 // 분양글 수정하기 
-router.put('/:parcel_id', arrUpload, async function (req, res) {
+router.put('/:parcel_id', arrUpload, async function (req, res, next) {
     let changeId = req.params.parcel_id;
     let userId = req.body.user_id;
 
@@ -151,8 +135,9 @@ router.put('/:parcel_id', arrUpload, async function (req, res) {
                 petImageRecords.push({ 'image': item.location, 'parcel_id': changeId, 'image_key': item.key });
             }
             newPetNums = req.files['pet'].length;
-        } else {
+        } else if(req.files['pet']===undefined) {
             // 새로운 펫이미지가 없으면 
+console.log('no pet');
             newPetNums = 0;
         }
 
@@ -215,75 +200,74 @@ router.put('/:parcel_id', arrUpload, async function (req, res) {
         result = await Doglist.updateParcels(changeId, userId, removePet, petImageRecords, parcelRecords, removeParent, parentImageRecords);
         res.status(200).send({ 'results': result });
     } catch (err) {
-        console.log('err message : ', err);
-        res.status(500).send({ message: 'fail' });
+        next(err);
     }
 
 });
 
-router.delete('/:parcel_id', async function (req, res) {
+router.delete('/:parcel_id', async function (req, res, next) {
     let removeId = req.params.parcel_id;
 
     try {
         let result = Doglist.deleteParcles(removeId);
         res.status(200).send({ message: 'save' });
     } catch (err) {
-        console.log('err message : ', err);
-        res.status(500).send({ message: 'fail' });
+        next(err);
     }
 });
 
 
-router.get('/', async function (req, res) {
+router.get('/', async function (req, res, next) {
     try {
-        let ret = await Doglist.getLists(req.query);
-        let result = {
-            paging: {page:0, limit:10, query:'abc' , total: 100, maxpage:5},
-            count: ret.length,
-            data : ret
-        };
-
-        res.status(200).send(result);
+            let page;
+            if(req.query.page==0) page = 1; //page=0으로 날릴 경우 
+            else page = req.query.page || 1;
+            let keywords = {}; //TODO : if문 줄일 방법 찾기
+            if(req.query.spiece!=0) keywords.spiece = req.query.spiece;
+            if(req.query.region1!=0) keywords.region1 = req.query.region1;
+            if(req.query.region2!=0) keywords.region2 = req.query.region2;
+            if(req.query.gender!=0) keywords.gender = req.query.gender;
+            if(req.query.age!=0) keywords.age = req.query.age;
+            let ret = await Doglist.getLists(req.headers.user_token, keywords, page);
+            res.status(200).send(ret);
+        
     } catch (err) {
-        console.log(err);
-        res.status(500).send({ message: "fail : " + err });
-
+        next(err);
     }
 });
 
-router.get('/emergency', async function (req, res) {
+router.get('/emergency', async function (req, res, next) {
     try {
-        let ret = await Doglist.getEmergencyLists();
+        let ret = await Doglist.getEmergencyLists(req.headers.user_token);
         res.status(200).send(ret);
     } catch (err) {
-        res.status(500).send({ message: "fail : " + err });
-        console.log(err);
+         next(err);
     }
 });
 
-router.get('/:id', async function (req, res) {
+router.get('/:id', async function (req, res, next) {
     try {
         let ret = await Doglist.getOneList(req.params.id);
         if(ret===0) res.status(400).send({message: 'parcel does not exist'});
         else res.status(200).send(ret);
     }
     catch (err) {
-        res.status(500).send({ message: 'fail: ' + err });
+        next(err);
     }
 });
 
-router.put('/:id/done', async function (req, res) { //분양완료/완료취소하기
+router.put('/:id/done', async function (req, res, next) { //분양완료/완료취소하기
     try {
         let ret = Doglist.completeParcel(req.params.id);
         if(ret===0) res.status(400).send({message: 'parcel does not exist'});
         else res.status(201).send( { message: 'success'});
     }
     catch (err) {
-        res.status(500).send({ message: 'fail: ' + err });
+        next(err);
     }
 });
 
-router.post('/reports/:parcel_id', async function (req, res) {
+router.post('/reports/:parcel_id', async function (req, res, next) {
     let parcel_id = req.params.parcel_id;
 
     let reporter_id = req.body.user_id;
@@ -296,7 +280,7 @@ router.post('/reports/:parcel_id', async function (req, res) {
         let result = await Doglist.reportParcel(reportRecods);
         res.status(200).send({ message: "save" });
     } catch (err) {
-        res.status(500).send({ message: 'fail: ' + err });
+        next(err);
     }
 });
 

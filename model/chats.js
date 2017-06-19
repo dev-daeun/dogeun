@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const User = require('../config/ORM');
+const User = require('../config/ORM').User;
 const moment = require('moment');
 mongoose.Promise = global.Promise;
 const db = mongoose.connection;
@@ -22,16 +22,15 @@ const MessageSchema = new Schema({
     sent_time: String,
     content: String,
     is_read: Boolean,
-    room_id: ObjectId
+    room_id: ObjectId,
+    created_time: String
 });
 
-
-
-
-MessageSchema.methods.getUnreadCount = async function(room_id, user_id){
+//TODO: 몽고디비 계정 만들기, 동시 사용 테스트(이미지 포함 글 업로드, 조회/삭제 동시에 )
+MessageSchema.methods.getUnreadCount = async function getUnreadCount(room_id, user_id){
     try {
         //is_read가 false인 메세지들의 갯수를 리턴
-        let count = await Message.find({ room_id: room_id, is_read: false, receiver_id: user_id }).count(); 
+        let count = await Message.find({room_id: room_id, receiver_id: user_id, is_read: false}).count(); 
         return count;
     }
     catch(err){
@@ -61,39 +60,53 @@ MessageSchema.methods.setRead = async function(room_id){
     }
 };
 
+MessageSchema.methods.getUserInfo = async function getUserInfo(sender_id, user_id){
+    let info = await User.findOne({
+        attributes: ['profile_thumbnail', 'username'],
+        where: {user_id :user_id }
+    });
+    //메세지를 전송한 사람이 현재 사용자라면 사용자의 프로필 사진만 리턴, 상대방이면 프로필사진, 이름 리턴.
+    if(sender_id==user_id) return { profile_thumbnail: info.dataValues.profile_thumbnail };
+    else return info.dataValues;
+};
 
-MessageSchema.methods.saveMessage = async function(s_id, r_id, con, room_id){
+MessageSchema.methods.saveMessage = async function(content, user_id, room_id){
     try {
-        let sender, s_name, receiver, r_name;
-        sender = await User.findOne({
+        let sender = await User.findOne({
             attributes: ['username'],
-            where: { user_id: s_id }
+            where: { user_id: user_id }
         }); //보낸 사람 이름 user 테이블에서 가져오기
-        s_name = sender.dataValues.username;
-        receiver = await User.findOne({
+
+        let room = await Room.findOne(
+            { _id: room_id },
+            { messages: 1, chatters: 1 }
+        );
+        let participant_id = (room.chatters[0]==user_id) ? room.chatters[1] : room.chatters[0];
+
+        let receiver =  await User.findOne({
             attributes: ['username'],
-            where: { user_id: r_id }
+            where: { user_id: participant_id }
         }); //받은 사람 이름 user 테이블에서 가져오기
-        r_name = receiver.dataValues.username;
-        let new_msg  = new Message({ //Message 모델로 메세지 도큐먼트 생성
-            sender_id: s_id,
-            sender_name: s_name,
-            receiver_id: r_id,
-            receiver_name: r_name,
-            sent_time: moment(new Date()).format('YY-MM-DD h:mm:ss a'),
-            content: con,
+
+        let new_msg = await Message.create({ //Message컬랙션에 새로 전송된 메세지 insert
+            sender_id: user_id,
+            sender_name: sender.dataValues.username,
+            receiver_id: participant_id,
+            receiver_name: receiver.dataValues.username,
+            sent_time: moment(new Date()).format('MM-DD h:mm:ss a'),
+            content: content,
             is_read: false,
-            room_id: ObjectId(room_id)
+            room_id: room_id
         });
 
-        let insertNew = await new_msg.save(); //Message 컬렉션에 message 추가
-        return insertNew;
+        return new_msg;
     }
     catch(err) {
         console.log(err);
         throw err;
     }
 };
+
 
 
 /*-------------------------   Room Schema   -------------------------------*/
@@ -105,17 +118,24 @@ const RoomSchema = new Schema({
     messages: [MessageSchema] //메세지 담는 배열
 });
 
-RoomSchema.methods.creatRoom = async function createRoom(creator_id, participant_id){
+RoomSchema.methods.findRoom = async function findRoom(user_id, participant_id){
+    let exists = await Room.findOne(
+        { chatters: { $all: [user_id, participant_id] } },
+        { _id: 1 }
+    );
+    if(exists==null) return -1;
+    else return exists._id;
+};
+
+RoomSchema.methods.createRoom = async function createRoom(creator_id, participant_id){
     try {
-          let new_room  = new Room({ //Room 모델로 채팅방 객체 생성
+          let new_room  = Room.create({ //Room 모델로 채팅방 객체 생성
             created_time: moment(new Date()).format('YY-MM-DD h:mm:ss a'),
             chatters: [creator_id, participant_id],
             remained_chatters: [creator_id, participant_id],
             messages: []
           });
-          let result = await new_room.save(); //save()는 생성된 객체 그대로 리턴
-          console.log(result);
-          return result;
+          return new_room._id;
     }
     catch(err) {
         console.log(err);
@@ -125,9 +145,8 @@ RoomSchema.methods.creatRoom = async function createRoom(creator_id, participant
 
 
 RoomSchema.methods.addMessage = async function addMessage(new_msg){
-    //TODO: Message.saveMessage먼저 호출해야.(message _id 필요함)
-    let ret = await Room.update( //Room 컬렉션에 message 추가
-            { _id: room_id },
+    let ret = await Room.update( //Room 콜랙션에 새로 전송된 메세지 insert.
+            { _id: new_msg.room_id },
             { $push: { messages: new_msg }}
         );
     return ret;
@@ -137,7 +156,7 @@ RoomSchema.methods.addMessage = async function addMessage(new_msg){
 RoomSchema.methods.getRooms = async function getRooms(id){ //사용자 id
     try {
         let rooms = await Room.find(  //채팅목록 조회
-            { remained_chatters: id },
+            { remained_chatters: id, 'messages.0': { $exists: true } }, //메세지 내역길이가 1이상인 room만 추출.
             { messages: 1, _id: 1 }
         ); //결과 : 해당 사용자가 참여중인 채팅방의 모든 메세지 내역
         
@@ -153,9 +172,8 @@ RoomSchema.methods.getRooms = async function getRooms(id){ //사용자 id
                 room_id: rooms[i]._id+"",
                 sent_time: msg.sent_time,
                 sender_name: msg.sender_name,
-                content: msg.content,
-                profile_thumbnail: profile.dataValues.profile_thumbnail,
-                receiver_name: msg.receiver_name //TODO: 안드에서는 불필요(지워야)
+                sender_thumbnail: profile.dataValues.profile_thumbnail,
+                content: msg.content
             };       
             recent_array.push(recent_msg);
         }
@@ -170,46 +188,43 @@ RoomSchema.methods.getRooms = async function getRooms(id){ //사용자 id
 
 RoomSchema.methods.enterRoom = async function enterRoom(room_id, user_id){
     try {
-        // let edited_msg = await Message.find( //아직 읽지 않은 메세지들의 _id를 먼저 가져옴.
-        //    { is_read : false, receiver_id: user_id, room_id: room_id },
-        //    { _id: 1 }         
-        // ); // [{_id: ...},{_id: ...}] 형태
-        
-        // for(let i = 0; i<edited_msg.length; i++) edited_msg[i] = edited_msg[i]._id;
-        // await Message.update( //방에 입장하면 읽지 않았던 메세지들을 읽은 것으로 변경한다.
-        //    { is_read : false, receiver_id: user_id, room_id: room_id },
-        //    { is_read: true } 
-        // );
+        /* Message 컬렉션에서 안읽었던 메세지 모두 읽음처리 */
+        let updateMessage = await Message.updateMany(
+            { room_id: room_id, is_read: false, receiver_id: user_id },
+            { $set: { is_read: true } } 
+        ); 
 
-        // let result = await Room.update(
-        //     { 
-        //         _id: room_id, 
-        //         messages: { $elemMatch: { receiver_id: user_id, is_read: false }} 
-        //     },
-        //     { 
-        //         messages : { $where: "receiver_id==user_id", is_read :true } 
-        //     });
+        /* Room 컬렉션에서 안읽었던 메세지 모두 읽음처리 */
+        let updateRoom = await Room.update(
+            { _id: room_id, "messages.receiver_id": user_id },
+            { $set: { "messages.$.is_read": true }}
+        );
 
-   
+        /* 채팅방 내에 메세지 내역 find */
         let room = await Room.findOne(
             { _id: room_id },
-            { messages: 1 }
+            { messages: 1, chatters: 1 }
         );
         let array = [];
+        let the_other = (room.chatters[0]==user_id) ? room.chatters[1] : room.chatters[0];
+        let obj = { participant_id: the_other, user_id: user_id }; //현재 사용자가 대화중인 상대방의 id 
+
         for(let i = 0; i<room.messages.length; i++){
            let msg = room.messages[i];
            let profile = await User.findOne({
-                attributes: ['profile_thumbnail'],
+                attributes: ['profile_thumbnail', 'username'],
                 where: { user_id: msg.sender_id }
            });
-           array.push({
+           let element = {
                sender_id: msg.sender_id,
-               sender_name: msg.sender_name,
-               sender_profile: profile.dataValues.profile_thumbnail,
+               sender_thumbnail: profile.dataValues.profile_thumbnail,
+               sender_name: profile.dataValues.username,
                content: msg.content
-           });
+           };
+           array.push(element);
         }
-        return array;
+        obj.messages = array;
+        return obj;
     }
     catch(err) {
         console.log(err);
@@ -231,8 +246,8 @@ RoomSchema.methods.deleteRoom = async function deleteRoom(user_id, room_id){
     }
   
 };
-
 const Room = mongoose.model('Room', RoomSchema); 
 const Message = mongoose.model('Message', MessageSchema);
+
 module.exports.Room = Room;
 module.exports.Message = Message;

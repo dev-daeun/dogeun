@@ -1,4 +1,9 @@
+
 const pool = require('../config/db_pool');
+const sequelize = require('sequelize');
+const User = require('../config/ORM').User;
+const Parcel = require('../config/ORM').Parcel;
+const Favorites = require('../config/ORM').Favorites;
 const aws = require('../config/AWS');
 const fs = require('fs');
 const easyimage = require('easyimage');
@@ -308,8 +313,10 @@ DogList.updateParcels = async function (changeId, userId, removePet, petRecord, 
         for (let item in parcelRecord) {
             data[item] = parcelRecord[item];
         }
+        data.parcel_id = changeId;
 
         console.log('parcel update success');
+        
 
         // username 반환 
         let user_query = 'select username FROM users where user_id = ?';
@@ -334,22 +341,20 @@ DogList.updateParcels = async function (changeId, userId, removePet, petRecord, 
                         // 부모견 이미지 삭제
                     } catch (err) {
                         console.log('error : parent image array s3 delete fail');
-                    }
+ 		    }
                     let query7 = 'delete from parent_pet_images where parcel_id = ? and image_id = ?';
                     let deleteParent = await connection.query(query7, [changeId, item]);
                 }
             } else {
                 // s3 삭제를 위해, url
                 let querySix = 'select image_key from parent_pet_images where parcel_id = ? and image_id = ?';
-                let parentImage = await connection.query(query6, [changeId, removeParent]);
+                let parentImage = await connection.query(querySix, [changeId, removeParent]);
 
                 try {
                     // s3 삭제
                     await DogList.deleteInS3(parentImage[0].image_key);
                     console.log('parent image s3 delete success');
 
-                    let query7 = 'delete from parent_pet_images where parcel_id = ? and image_id = ?';
-                    let deleteParent = await connection.query(query7, [changeId, removeParent]);
                     // 부모견 이미지 삭제
                 } catch (err) {
                     console.log('error : parent image s3 delete fail');
@@ -433,7 +438,7 @@ DogList.deleteParcles = async function (id) {
                 await DogList.deleteInS3(url[url.length - 1]);
                 console.log('lineage s3 delete success');
             } catch (err) {
-                console.log('error: lineage s3 delete error', url[url.length - 1]);
+                console.log('error: lineage s3 delete error');
             }
         }
 
@@ -465,100 +470,170 @@ DogList.deleteParcles = async function (id) {
     }
 };
 
+DogList.getMyList  = async function(user_id){
+    try {
+        let array = [];
+        let ret = await Parcel.findAll({
+            attributes: ['parcel_id','title', 'pet_thumbnail'],
+            where: {user_id: user_id}
+        });
+        for(let i = ret.length-1; i>-1; i--) array.push({
+            title: ret[i].dataValues.title,
+            pet_thumbnail: ret[i].dataValues.pet_thumbnail,
+            parcel_id: ret[i].dataValues.parcel_id
+        });
+        return array;
+    }
+    catch(err) {
+        console.log(err);
+        throw err;
+    }
 
-DogList.getWhere = function (qs) { //검색조회에 필요한 쿼리 만드는 함수
-    let where = '', param_array = [];
-    for (let i in qs) {
-        if (i == 'page') continue;
-        else if (qs[i]) {
-            param_array.push(qs[i]);
-            where += ' and p.' + i + ' = ? ';
+
+};
+DogList.getLists = async function (user_id, keywords, page) { //전체목록 조회하기
+    try {
+        const total = await Parcel.count({ //조화한 결과 총 개수 
+                where: keywords
+        });
+
+        const start = Math.min( ( (page-1) * 10) , total );
+        const end = Math.min( page * 10, total );
+
+        const posts = await Parcel.findAndCountAll({ //offset & limit으로 page애 해당하는 분양글 find
+                attributes: ['parcel_id', 'title', 'pet_thumbnail'],
+                include: [{
+                    model: User,
+                    where: { state: sequelize.col('parcel.user_id') }
+                }],
+                where: keywords, 
+                order: sequelize.literal('parcel_id desc'),
+                offset: start,
+                limit: end - start 
+        });
+        console.log(posts);
+        const count = (end==start) ? 0 : posts.rows.length;
+        const next = (end<total-1)? true: false; //다음 페이지 유무 여부
+
+        let favorites = await Favorites.findAll({ //현재 사용자가 찜한 분양글 id 가져오기(dataValues배열)
+            attributes: ['parcel_id'],
+            where: {user_id: user_id}
+        });
+        
+        let post_array = [];
+        for(let i = 0; i<end-start; i++) { 
+            let post = posts.rows[i].dataValues;
+            post.username = post.user.username; //사용자이름 뽑아오기
+            post.favorite = 0; //기본적으로 찜 여부는 0
+            delete post.user;
+            for(let j = 0; j<favorites.length; j++){
+                if(post.parcel_id==favorites[j].dataValues.parcel_id) { //쿼리에 user_id가 없으면 0으로 유지됨.
+                    post.favorite = 1;
+                    break;
+                }
+            }
+            post_array.push(post);
         }
+        
+        let result = {
+            page: parseInt(page),
+            post_count: count,
+            has_next: next,
+            result: post_array
+        };
+        return result;
+     } 
+     catch(err){ console.log(err); throw err; }
+       
+};
+
+DogList.getEmergencyLists = async function(user_id) { //메인화면 가로에 들어갈 분양 가장 시급한 글 6개 조회
+    try {
+        let urgent_array = [];
+        let posts = await Parcel.findAll({ //dataValues배열
+                attributes: ['parcel_id', 'title', 'pet_thumbnail'],
+                where: {is_parceled: false},
+                include: [{
+                            model: User,
+                            where: { state: sequelize.col('parcel.user_id') }
+                }],
+                order: sequelize.literal('parcel_id'),
+                limit: 6
+        });
+        let favorites = await Favorites.findAll({ //현재 사용자가 찜한 분양글 id 가져오기(dataValues배열)
+            attributes: ['parcel_id'],
+            where: {user_id: user_id}
+        });
+
+        for(let i = 0; i<posts.length; i++) { 
+            let post = posts[i].dataValues;
+            post.username = post.user.username; //사용자이름 뽑아오기
+            post.favorite = 0; //기본적으로 찜 여부는 0
+            delete post.user;
+            for(let j = 0; j<favorites.length; j++){
+                if(post.parcel_id==favorites[j].dataValues.parcel_id) { //쿼리에 user_id가 없으면 0으로 유지됨.
+                    post.favorite = 1;
+                    break;
+                }
+            }
+            urgent_array.push(post);
+        }
+    
+        return urgent_array;
+    } catch (err) { console.log(err); throw err; }
+
+};
+     
+     
+
+DogList.getOneList = async function(parcelID){ //게시글 상세조회
+    try {
+      var connection = await pool.getConnection();
+      let query3 = 'select * from parcel where parcel_id = ?';
+      let parcel = await connection.query(query3, parcelID);
+      if(parcel.length==0) return 0;
+      else {
+        let query1 = 'select image_id, image from pet_images where parcel_id = ?';
+        let petImages = await connection.query(query1, parcelID);
+
+        let query2 = 'select image_id, image from parent_pet_images where parcel_id = ?'
+        let parentPetImages =  await connection.query(query2, parcelID);
+        delete parcel[0].createdAt;
+        delete parcel[0].updatedAt;
+        let query4 = 'select username from users where user_id = ?';
+        let username = await connection.query(query4, parcel[0].user_id);
+      
+        let query5 = 'select count(*) from favorites where parcel_id = ?'
+        let favor = await connection.query(query5, parcelID);
+        parcel[0].username = username[0].username;
+        parcel[0].parent_pet_images = parentPetImages;
+        parcel[0].pet_images = petImages;
+        parcel[0].favorite_number = favor[0]["count(*)"];
+        return parcel[0];
+      }
 
     }
-    return { where: where, param_array: param_array };
-};
-
-
-DogList.getLists = async function (qs) { //전체목록 조회하기
-    try {
-        var connection = await pool.getConnection();
-        let query = `select p.parcel_id, p.title, p.pet_thumbnail, u.username, 
-           (select 1 from favorites as f where p.parcel_id=f.parcel_id and f.user_id = ?) 
-           as favorite from parcel as p, users as u where u.user_id = p.user_id`;
-        let data;
-        let where = this.getWhere(qs).where; //검색어 쿼리스트링으로 조건절 만들어서 가져오기
-        let param_array = this.getWhere(qs).param_array; //placeholder에 들어갈 배열 가져오기
-        param_array.unshift(1); //placeholder에 들어갈 user_id 앞에다 추가(가라로 추가함)
-        console.log(query + where + ' order by parcel_id desc;', param_array);
-        data = await connection.query(query + where + ' order by parcel_id desc;', param_array); //검색어로 쿼리 때리기. 
-        return data;
-
-    } catch (err) { throw err; }
-    finally { pool.releaseConnection(connection); }
-};
-
-DogList.getEmergencyLists = async function () { //메인화면 가로에 들어갈 분양 가장 시급한 글 6개 조회
-    try {
-        var connection = await pool.getConnection();
-        let query = `select p.parcel_id, p.title, p.pet_thumbnail, u.username, 
-           (select 1 from favorites as f where p.parcel_id=f.parcel_id and f.user_id = ?) 
-           as favorite from parcel as p, users as u where u.user_id = p.user_id and p.is_parceled = 0 order by p.parcel_id limit 6`;
-        let data = await connection.query(query, 2); //전체 목록 쿼리 때리기
-        return data;
-    } catch (err) { throw err; }
-    finally { pool.releaseConnection(connection); }
-};
-
-
-DogList.getOneList = async function (parcelID) { //게시글 상세조회
-    try {
-        var connection = await pool.getConnection();
-        let query3 = 'select * from parcel where parcel_id = ?';
-        let parcel = await connection.query(query3, parcelID);
-        if (parcel.length == 0) return 0;
-        else {
-            let query1 = 'select image_id, image from pet_images where parcel_id = ?';
-            let petImages = await connection.query(query1, parcelID);
-
-            let query2 = 'select image_id, image from parent_pet_images where parcel_id = ?'
-            let parentPetImages = await connection.query(query2, parcelID);
-            delete parcel[0].createdAt;
-            delete parcel[0].updatedAt;
-            let query4 = 'select username from users where user_id = ?';
-            let username = await connection.query(query4, parcel[0].user_id);
-
-            let query5 = 'select count(*) from favorites where parcel_id = ?'
-            let favor = await connection.query(query5, parcelID);
-            parcel[0].username = username[0].username;
-            parcel[0].parent_pet_images = parentPetImages;
-            parcel[0].pet_images = petImages;
-            parcel[0].favorite_number = favor[0]["count(*)"];
-            return parcel[0];
-        }
-
-    }
-    catch (err) {
+    catch(err) {
         console.log(err);
         throw err;
     }
     finally {
         pool.releaseConnection(connection);
     }
-};
+  };
 
 DogList.completeParcel = async function (parcelID) { //분양완료 or 완료 취소하기
     try {
-        var connection = await pool.getConnection();
-        let query = 'select is_parceled from parcel where parcel_id = ?';
-        let is_parceled = await connection.query(query, parcelID);
-        if (is_parceled.length == 0) return 0;
-        else {
-            let query2 = 'update parcel set is_parceled = ? where parcel_id = ?';
-            let result;
-            if (is_parceled[0].is_parceled == 0) result = await connection.query(query2, [1, parcelID]);
-            else result = await connection.query(query2, [0, parcelID]);
-        }
+      var connection = await pool.getConnection();
+      let query = 'select is_parceled from parcel where parcel_id = ?';
+      let is_parceled = await connection.query(query, parcelID);
+      if(is_parceled.length==0) return 0;
+      else {
+        let query2 = 'update parcel set is_parceled = ? where parcel_id = ?';
+        let result;
+        if(is_parceled[0].is_parceled==0) result = await connection.query(query2, [1, parcelID]);
+        else result = await connection.query(query2, [0, parcelID]);
+      }
     }
     finally {
         pool.releaseConnection(connection);
@@ -587,3 +662,4 @@ DogList.reportParcel = async function (record) {
 }
 
 module.exports = DogList;
+
