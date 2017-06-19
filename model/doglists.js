@@ -333,7 +333,7 @@ DogList.updateParcels = async function (changeId, userId, removePet, petRecord, 
                         console.log('parent image s3 array delete success');
                         // 부모견 이미지 삭제
                     } catch (err) {
-                        console.log('error : parent image array s3 delete fail', parentImage[0].image_key);
+                        console.log('error : parent image array s3 delete fail');
                     }
                     let query7 = 'delete from parent_pet_images where parcel_id = ? and image_id = ?';
                     let deleteParent = await connection.query(query7, [changeId, item]);
@@ -352,7 +352,7 @@ DogList.updateParcels = async function (changeId, userId, removePet, petRecord, 
                     let deleteParent = await connection.query(query7, [changeId, removeParent]);
                     // 부모견 이미지 삭제
                 } catch (err) {
-                    console.log('error : parent image s3 delete fail', parentImage[0].image_key);
+                    console.log('error : parent image s3 delete fail');
                 }
                 let query7 = 'delete from parent_pet_images where parcel_id = ? and image_id = ?';
                 let deleteParent = await connection.query(query7, [changeId, removeParent]);
@@ -509,7 +509,6 @@ DogList.getEmergencyLists = async function () { //메인화면 가로에 들어�
     } catch (err) { throw err; }
     finally { pool.releaseConnection(connection); }
 };
-
 
 
 DogList.getOneList = async function (parcelID) { //게시글 상세조회
