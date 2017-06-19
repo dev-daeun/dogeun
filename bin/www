@@ -109,6 +109,7 @@ var io = require('socket.io')(server); //io = 소켓 서버 객체
 const room = new Room();
 const message = new Message(); 
 io.on('connection', socket => {  
+    console.log('클라이언트 소켓 연결');
     var user_id;
     var room_id;
     console.log('클라이언트 소켓 연결');
@@ -121,7 +122,7 @@ io.on('connection', socket => {
         i.unread_count = messageCount;
       }
       console.log('showList 호출 uid: ', u_id);
-    	console.log({roomList: roomlist});
+    	console.log('roomList: ', roomlist);
       socket.emit('showListResults', { roomList: roomlist });
     });
 
@@ -130,7 +131,7 @@ io.on('connection', socket => {
         room_id = r_id;
         let messagelist = await room.enterRoom(room_id, user_id);
         console.log('enterRoom 호출 r_id: ', r_id);
-        console.log({ roomInfos: messagelist });
+        console.log( 'messaglist: ',messagelist);
         socket.emit('enterRoomResults', { roomInfos: messagelist });
     });
 
@@ -173,7 +174,7 @@ io.on('connection', socket => {
         else room_id = r_id; //있으면 기존에 있던 방 id가 room_id
         let messagelist = await room.enterRoom(room_id, user_id);
         console.log('startChat 호출 participant_id :', participant_id );
-        console.log({ roomInfos: messagelist });
+        console.log(messagelist);
         socket.emit('enterRoomResults', { roomInfos: messagelist });
     });
 
