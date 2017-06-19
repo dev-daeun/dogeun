@@ -62,12 +62,10 @@ MessageSchema.methods.setRead = async function(room_id){
 
 MessageSchema.methods.getUserInfo = async function getUserInfo(sender_id, user_id){
     let info = await User.findOne({
-        attributes: ['profile_thumbnail', 'username'],
+        attributes: ['user_id', 'profile_thumbnail', 'username'],
         where: {user_id :user_id }
     });
-    //메세지를 전송한 사람이 현재 사용자라면 사용자의 프로필 사진만 리턴, 상대방이면 프로필사진, 이름 리턴.
-    if(sender_id==user_id) return { profile_thumbnail: info.dataValues.profile_thumbnail };
-    else return info.dataValues;
+    return info.dataValues;
 };
 
 MessageSchema.methods.saveMessage = async function(content, user_id, room_id){
