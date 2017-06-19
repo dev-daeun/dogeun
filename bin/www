@@ -133,8 +133,13 @@ io.on('connection', socket => {
         socket.emit('enterRoomResults', { roomInfos: messagelist });
     });
 
-    socket.on('removeRoom', r_id => {
-
+    //채팅방 삭제하기(나가기)
+    socket.on('removeRoom', async r_id => {
+        let exist = await room.beforeRemove(user_id, r_id);
+        console.log('removeRoom: ', exist);
+        if(exist==0) socket.emit('removeRoomResults', { result: false });
+        else socket.emit('removeRoomResults',{ result: true });
+        
     });
     
     //메세지 전송 -DONE

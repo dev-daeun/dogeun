@@ -126,6 +126,13 @@ RoomSchema.methods.findRoom = async function findRoom(user_id, participant_id){
     if(exists==null) return -1;
     else return exists._id;
 };
+ 
+RoomSchema.methods.beforeRemove = async function beforeRemove(user_id, room_id){
+    let exists = await Room.count(
+        { remained_chatters: { user_id }, _id: room_id }
+    );
+    return exists;
+};
 
 RoomSchema.methods.createRoom = async function createRoom(creator_id, participant_id){
     try {
