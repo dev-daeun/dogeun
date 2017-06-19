@@ -160,7 +160,6 @@ Profile.editProfile = async function(req){
 
 Profile.deleteProfile = async function(user_id){
     try {
-        console.log('user',User);
         let count = await User.count(
             { where: { user_id : user_id } }
         );
@@ -177,5 +176,25 @@ Profile.deleteProfile = async function(user_id){
         throw err;
     }
 };
+
+Profile.setAlarms = async function(userId){
+    let connection;
+    let data;
+    try{
+        connection = await pool.getConnection();
+        let alarmQuery = 'update users set pushed = case when pushed = 1 then 0 when pushed =0 then 1 end where user_id = ? ;'
+        let stat = await connection.query(alarmQuery, userId);
+        
+        return true;
+    }catch(err){
+        console.log('alarm error : ',err);
+        throw err;
+    }finally{
+        pool.releaseConnection(connection);
+    }
+}
+
+
+
 module.exports = Profile;
 

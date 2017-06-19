@@ -10,6 +10,7 @@ var signout = require('./routes/signout');
 var morgan = require('morgan');
 var login = require('./routes/login');
 var signout = require('./routes/signout');
+var alarms = require('./routes/alarms');
 
 var secretKey = require('./config/secretKey');
 var app = express();
@@ -31,6 +32,7 @@ app.use('/profiles', profiles);
 app.use('/favorites', favorites);
 app.use('/login', login);
 app.use('/signout',signout);
+app.use('/alarms',alarms);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
