@@ -7,7 +7,7 @@ db.on('error', console.error);
 db.once('open', async function(){
     console.log("Connected to mongod server");
 });
-const url = 'mongodb://localhost:27017/dogeun';
+const url = 'mongodb://localhost:20626/dogeun';
 mongoose.connect(url);
 const Schema = mongoose.Schema;
 const ObjectId = mongoose.Schema.Types.ObjectId;

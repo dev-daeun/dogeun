@@ -1,3 +1,4 @@
+
 const pool = require('../config/db_pool');
 const sequelize = require('sequelize');
 const User = require('../config/ORM').User;
@@ -300,7 +301,8 @@ DogList.updateParcels = async function (changeId, userId, removePet, petRecord, 
 
         // 대표 썸네일 만들기 
         //let parcelId = parcelRecord.parcel_id;
-        let query = 'select thumbnail from pet_images where image_id = ( select min(image_id) from pet_images where parcel_id = ? )';
+        // let query = 'select thumbnail from pet_images where image_id = ( select min(image_id) from pet_images where parcel_id = ? )';
+        let query = 'select thumbnail from pet_images where parcel_id = ?';
         let thumbnailURL = await connection.query(query, changeId);
         parcelRecord.pet_thumbnail = thumbnailURL[0].thumbnail;
         console.log('thumbnail update success');
@@ -354,11 +356,9 @@ DogList.updateParcels = async function (changeId, userId, removePet, petRecord, 
                     await DogList.deleteInS3(parentImage[0].image_key);
                     console.log('parent image s3 delete success');
 
-                    let query7 = 'delete from parent_pet_images where parcel_id = ? and image_id = ?';
-                    let deleteParent = await connection.query(query7, [changeId, removeParent]);
                     // 부모견 이미지 삭제
                 } catch (err) {
-                    console.log('error : parent image s3 delete fail', parentImage);
+                    console.log('error : parent image s3 delete fail');
                 }
                 let query7 = 'delete from parent_pet_images where parcel_id = ? and image_id = ?';
                 let deleteParent = await connection.query(query7, [changeId, removeParent]);
@@ -439,7 +439,7 @@ DogList.deleteParcles = async function (id) {
                 await DogList.deleteInS3(url[url.length - 1]);
                 console.log('lineage s3 delete success');
             } catch (err) {
-                console.log('error: lineage s3 delete error', url[url.length - 1]);
+                console.log('error: lineage s3 delete error');
             }
         }
 
@@ -663,3 +663,4 @@ DogList.reportParcel = async function (record) {
 }
 
 module.exports = DogList;
+
