@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 const pool = require('../config/db_pool');
-const User = require('../config/ORM').User;
+const User = require('../config/ORM');
 const AWS = require('../config/AWS');
 const s3 = AWS.getS3();
 const fs = require('fs');
@@ -160,8 +160,9 @@ Profile.editProfile = async function(req){
 
 Profile.deleteProfile = async function(user_id){
     try {
+        console.log('user',User);
         let count = await User.count(
-            { where: { user_id: user_id } }
+            { where: { user_id : user_id } }
         );
         if(count==0) return -1;
         else {
