@@ -13,3 +13,5 @@
 {"level":"error","message":"404","timestamp":"2017-06-19 05:01:19"}
 {"level":"error","message":"404","timestamp":"2017-06-19 05:50:20"}
 {"level":"error","message":"404","timestamp":"2017-06-19 05:50:55"}
+{"level":"error","message":"500 User.findAll is not a function","timestamp":"2017-06-19 08:42:41"}
+{"level":"error","message":"500 User.findAll is not a function","timestamp":"2017-06-19 09:54:28"}

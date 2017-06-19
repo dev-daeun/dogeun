@@ -150,7 +150,8 @@ io.on('connection', socket => {
         let new_msg = await message.saveMessage(content, user_id, room_id);
         let updated_room = await room.addMessage(new_msg);
         let userInfo = await message.getUserInfo(new_msg.sender_id, user_id); //프로필, 이름, user_id
-        if(new_msg.sender_id===user_id) userInfo.side = 'right';
+        console.log(new_msg);
+	if(new_msg.sender_id===user_id) userInfo.side = 'right';
         else userInfo.side = 'left';
         userInfo.content = content;
         console.log('sendMessage content: ', content);
