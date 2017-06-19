@@ -3,6 +3,7 @@ const router = express.Router();
 const Profile = require('../model/profiles');
 const Doglist = require('../model/doglists');
 const AWS = require('../config/AWS');
+
 AWS.loadAccess();
 const upload = AWS.getUpload();
 
@@ -13,7 +14,7 @@ router.use(function(req, res, next){
   else next();
 });
 
-router.get('/:user_id', async function(req,res){
+router.get('/:user_id', async function(req, res, next){
     try{
         let userId = req.params.user_id;
 
@@ -21,18 +22,21 @@ router.get('/:user_id', async function(req,res){
             res.status(400).send({message: 'no user error'});
         }else{
             let profile = await Profile.readProfile(userId);
-            let mylist = await Doglist.getMyList(userId);
-            profile.mylist = mylist;
-            res.status(200).send(profile);
+            if(profile===-1) res.status(400).send({message: 'user_id does not exist'});
+            else {
+                let mylist = await Doglist.getMyList(userId);
+                profile.mylist = mylist;
+                res.status(200).send(profile);
+            }
+
         }
         
     }catch(err){
-        console.log(err);
-        throw err;
+        next(err);
     }
 })
 
-router.post('/', upload.single('profile'),async function(req, res){
+router.post('/', upload.single('profile'),async function(req, res, next){
     try {
 	let body = req.body;
         if(!(body.username&&body.gender&&body.lifestyle&&body.region&&body.other_pets&&body.family_size)) {
@@ -50,12 +54,12 @@ router.post('/', upload.single('profile'),async function(req, res){
         }
     }
     catch(err) {
-        res.status(500).send({ message: err });
+        next(err);
     }
 });
 
 
-router.put('/:id', upload.single('profile'), async function(req ,res){
+router.put('/:id', upload.single('profile'), async function(req, res, next){
     try {
 	    let body = req.body;
         if(!(body.username&&body.gender&&body.lifestyle&&body.region&&body.other_pets&&body.family_size)) {
@@ -75,7 +79,7 @@ router.put('/:id', upload.single('profile'), async function(req ,res){
         }
     }
     catch(err) {
-        res.status(500).send({ message: err });
+         next(err);
     }
 });
 

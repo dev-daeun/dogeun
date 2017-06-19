@@ -57,16 +57,14 @@ Profile.readProfile = async function(id){
     let data = {};
     try{
         connection = await pool.getConnection();
-        
         let query = 'select user_id, profile_image, username, gender, lifestyle, region, other_pets, family_size, profile_thumbnail from users where user_id = ? ';
         let user = await connection.query(query, id);
        
+       if(user.length==0) return -1;
        let keys = Object.keys(user[0]);
        for(let item of keys ){
-           console.log(user[0][item]);
            data[item] = user[0][item];
        }
-
         return data;
     }catch(err){
         console.log(err);
@@ -109,12 +107,18 @@ Profile.saveProfile = async function(req){
 };
 
 Profile.isNameDup = async function(user_id, username){ //사용자이름 중복확인
-    let ret = await User.findAll({
-        attributes: ['username'],
-        where: {username: username, $not: { user_id: user_id }}
-    });
-    if(ret.length>0) return true;
-    else return false;
+    try{
+        let ret = await User.findAll({
+            attributes: ['username'],
+            where: {username: username, $not: { user_id: user_id }}
+        });
+        if(ret.length>0) return true;
+        else return false;
+    }catch(err){
+        console.log(err);
+        throw err;
+    }
+
 };
 
 
@@ -147,8 +151,6 @@ Profile.editProfile = async function(req){
        
         result = await User.update(record,{ where:{ user_id: req.params.id }}); 
         return result;
-        
-
     }
     catch(err) {
         console.log(err); 

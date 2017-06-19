@@ -92,6 +92,20 @@ function onListening() {
 const Message = require('../model/chats').Message;
 const Room = require('../model/chats').Room;
 var io = require('socket.io')(server); //io = 소켓 서버 객체
+// const Logger = require('socket.io-logger')();
+// var stream = fs.createWriteStream('../Logs/socket-logs.log', {flags:'a'});
+// var format = function (sock, args) {
+//   return {
+//     sock: sock.id,
+//     name: args.shift(),
+//     data: args
+//   };
+// };
+// var logger = Logger();
+// logger.stream(stream);
+// logger.format(format);
+// io.use(logger);
+
 const room = new Room();
 const message = new Message(); 
 io.on('connection', socket => {  

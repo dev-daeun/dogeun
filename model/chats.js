@@ -26,7 +26,7 @@ const MessageSchema = new Schema({
     created_time: String
 });
 
-
+//TODO: 몽고디비 계정 만들기, 동시 사용 테스트(이미지 포함 글 업로드, 조회/삭제 동시에 )
 MessageSchema.methods.getUnreadCount = async function getUnreadCount(room_id, user_id){
     try {
         //is_read가 false인 메세지들의 갯수를 리턴
