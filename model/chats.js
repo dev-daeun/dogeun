@@ -212,7 +212,7 @@ RoomSchema.methods.enterRoom = async function enterRoom(room_id, user_id){
         for(let i = 0; i<room.messages.length; i++){
            let msg = room.messages[i];
            let profile = await User.findOne({
-                attributes: ['profile_thumbnail, username'],
+                attributes: ['profile_thumbnail', 'username'],
                 where: { user_id: msg.sender_id }
            });
            let element = {

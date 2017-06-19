@@ -315,6 +315,7 @@ DogList.updateParcels = async function (changeId, userId, removePet, petRecord, 
         data.parcel_id = changeId;
 
         console.log('parcel update success');
+        
 
         // username 반환 
         let user_query = 'select username FROM users where user_id = ?';
@@ -338,15 +339,15 @@ DogList.updateParcels = async function (changeId, userId, removePet, petRecord, 
                         console.log('parent image s3 array delete success');
                         // 부모견 이미지 삭제
                     } catch (err) {
-                        console.log('error : parent image array s3 delete fail', parentImage[0].image_key);
-                    }
+                        console.log('error : parent image array s3 delete fail');
+ 		    }
                     let query7 = 'delete from parent_pet_images where parcel_id = ? and image_id = ?';
                     let deleteParent = await connection.query(query7, [changeId, item]);
                 }
             } else {
                 // s3 삭제를 위해, url
                 let querySix = 'select image_key from parent_pet_images where parcel_id = ? and image_id = ?';
-                let parentImage = await connection.query(query6, [changeId, removeParent]);
+                let parentImage = await connection.query(querySix, [changeId, removeParent]);
 
                 try {
                     // s3 삭제
@@ -357,7 +358,7 @@ DogList.updateParcels = async function (changeId, userId, removePet, petRecord, 
                     let deleteParent = await connection.query(query7, [changeId, removeParent]);
                     // 부모견 이미지 삭제
                 } catch (err) {
-                    console.log('error : parent image s3 delete fail', parentImage[0].image_key);
+                    console.log('error : parent image s3 delete fail', parentImage);
                 }
                 let query7 = 'delete from parent_pet_images where parcel_id = ? and image_id = ?';
                 let deleteParent = await connection.query(query7, [changeId, removeParent]);
