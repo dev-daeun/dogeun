@@ -211,7 +211,7 @@ RoomSchema.methods.enterRoom = async function enterRoom(room_id, user_id){
 
         /* 채팅방 내에 메세지 내역 find */
         let room = await Room.findOne(
-            { _id: ObjectId(room_id) },
+            { _id: room_id },
             { messages: 1, chatters: 1 }
         );
         let array = [];
