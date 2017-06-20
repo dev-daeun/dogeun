@@ -239,6 +239,7 @@ router.get('/', async function (req, res, next) {
 router.get('/emergency', async function (req, res, next) {
     try {
         let ret = await Doglist.getEmergencyLists(req.headers.user_token);
+	console.log(ret);
         res.status(200).send(ret);
     } catch (err) {
          next(err);
