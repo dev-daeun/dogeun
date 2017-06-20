@@ -219,6 +219,7 @@ router.delete('/:parcel_id', async function (req, res, next) {
 
 router.get('/', async function (req, res, next) {
     try {
+            console.log('user_token from all list : ', req.headers.user_token);
             let page;
             if(req.query.page==0) page = 1; //page=0으로 날릴 경우 
             else page = req.query.page || 1;
@@ -238,6 +239,7 @@ router.get('/', async function (req, res, next) {
 
 router.get('/emergency', async function (req, res, next) {
     try {
+        console.log('user_token from emergency : ', req.headers.user_token);
         let ret = await Doglist.getEmergencyLists(req.headers.user_token);
 	console.log(ret);
         res.status(200).send(ret);
