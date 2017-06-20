@@ -26,7 +26,6 @@ const MessageSchema = new Schema({
     created_time: String
 });
 
-//TODO: 몽고디비 계정 만들기, 동시 사용 테스트(이미지 포함 글 업로드, 조회/삭제 동시에 )
 MessageSchema.methods.getUnreadCount = async function getUnreadCount(room_id, user_id){
     try {
         //is_read가 false인 메세지들의 갯수를 리턴
@@ -81,7 +80,7 @@ MessageSchema.methods.saveMessage = async function(content, user_id, room_id){
         }); //보낸 사람 이름 user 테이블에서 가져오기
 
         let room = await Room.findOne(
-            { _id: room_id },
+            { _id: ObjectId(room_id) },
             { messages: 1, chatters: 1 }
         );
         let participant_id = (room.chatters[0]==user_id) ? room.chatters[1] : room.chatters[0];
@@ -127,12 +126,12 @@ RoomSchema.methods.findRoom = async function findRoom(user_id, participant_id){
         { _id: 1 }
     );
     if(exists==null) return -1;
-    else return exists._id;
+    else return exists._id.toString();
 };
  
 RoomSchema.methods.beforeRemove = async function beforeRemove(user_id, room_id){
     let exists = await Room.count(
-        { remained_chatters: user_id, _id: room_id }
+        { remained_chatters: user_id, _id: ObjectId(room_id) }
     );
     return exists;
 };
@@ -145,7 +144,7 @@ RoomSchema.methods.createRoom = async function createRoom(creator_id, participan
             remained_chatters: [creator_id, participant_id],
             messages: []
           });
-          return new_room._id;
+          return new_room._id.toString();
     }
     catch(err) {
         console.log(err);
@@ -156,7 +155,7 @@ RoomSchema.methods.createRoom = async function createRoom(creator_id, participan
 
 RoomSchema.methods.addMessage = async function addMessage(new_msg){
     let ret = await Room.update( //Room 콜랙션에 새로 전송된 메세지 insert.
-            { _id: new_msg.room_id },
+            { _id: ObjectId(new_msg.room_id) },
             { $push: { messages: new_msg }}
         );
     return ret;
@@ -179,7 +178,7 @@ RoomSchema.methods.getRooms = async function getRooms(id){ //사용자 id
                 where: { user_id: msg.sender_id }}); 
                 //채팅방 별 가장 최근에 도착한 메세지를 보낸 사람의 id로 보낸 사람 프로필 썸네일 가져오기
             let recent_msg = {
-                room_id: rooms[i]._id+"",
+                room_id: rooms[i]._id.toString(),
                 sent_time: msg.sent_time,
                 sender_name: msg.sender_name,
                 sender_thumbnail: profile.dataValues.profile_thumbnail,
@@ -206,13 +205,13 @@ RoomSchema.methods.enterRoom = async function enterRoom(room_id, user_id){
 
         /* Room 컬렉션에서 안읽었던 메세지 모두 읽음처리 */
         let updateRoom = await Room.update(
-            { _id: room_id, "messages.receiver_id": user_id },
+            { _id: ObjectId(room_id), "messages.receiver_id": user_id },
             { $set: { "messages.$.is_read": true }}
         );
 
         /* 채팅방 내에 메세지 내역 find */
         let room = await Room.findOne(
-            { _id: room_id },
+            { _id: ObjectId(room_id) },
             { messages: 1, chatters: 1 }
         );
         let array = [];
@@ -247,7 +246,7 @@ RoomSchema.methods.enterRoom = async function enterRoom(room_id, user_id){
 RoomSchema.methods.deleteRoom = async function deleteRoom(user_id, room_id){
     try {
         await Room.update(
-            { _id: room_id },
+            { _id: ObjectId(room_id) },
             { $pull: { remained_chatters: user_id } }
          );
     }
