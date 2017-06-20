@@ -108,13 +108,19 @@
         let msg = data.newMessage;
         appendMessage(msg.sender_id);
         appendMessage(msg.sender_name);
+        appendMessage(msg.side);
         appendMessage(msg.sender_thumbnail);
         appendMessage(msg.content);
 
     });
     // 메세지 전송
         $("#sendButton").click(() => {
-            socket.emit('sendMessage', $('#userInput').val() );
+            let obj = {
+                user_id: 21,
+                room_id: $("#rooms").val(),
+                content:  $("#userInput").val()
+            };
+            socket.emit('sendMessage',obj );
     });
 
     function appendMessage(msg) {

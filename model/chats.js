@@ -60,12 +60,17 @@ MessageSchema.methods.setRead = async function(room_id){
     }
 };
 
-MessageSchema.methods.getUserInfo = async function getUserInfo(sender_id, user_id){
+MessageSchema.methods.getUserInfo = async function getUserInfo(user_id){
     let info = await User.findOne({
         attributes: ['user_id', 'profile_thumbnail', 'username'],
         where: {user_id :user_id }
     });
-    return info.dataValues;
+    let obj = {
+        sender_id: info.dataValues.user_id,
+        sender_thumbnail: info.dataValues.profile_thumbnail,
+        sender_name: info.dataValues.username      
+    };
+    return obj;
 };
 
 MessageSchema.methods.saveMessage = async function(content, user_id, room_id){
