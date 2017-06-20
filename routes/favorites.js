@@ -16,7 +16,7 @@ router.get('/:user_id', async(req, res, next) => {
     //         console.log('payload: ', decoded.payload);
     //         console.log('user_id: ', token_id);
     try {
-        let data = await Favorites.getFavorites(req.params.user_id);
+        let data = await Favorites.getFavorites(req.headers.user_token || 21);
         res.status(200).send(data);
     }
     catch(err){
