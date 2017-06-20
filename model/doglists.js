@@ -218,6 +218,9 @@ DogList.updateParcels = async function (changeId, userId, removePet, petRecord, 
     try {
         connection = await pool.getConnection();
 
+        await connection.beginTransaction();
+
+
         // 삭제할 펫 이미지 아이디가 있다면 
         if (removePet && removePet.length > 0) {
             // 삭제할 펫 이미지 아이디가 객체라면 (여러 개)
