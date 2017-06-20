@@ -26,6 +26,7 @@ const MessageSchema = new Schema({
     created_time: String
 });
 
+
 MessageSchema.methods.getUnreadCount = async function getUnreadCount(room_id, user_id){
     try {
         //is_read가 false인 메세지들의 갯수를 리턴
@@ -126,7 +127,7 @@ RoomSchema.methods.findRoom = async function findRoom(user_id, participant_id){
         { _id: 1 }
     );
     if(exists==null) return -1;
-    else return exists._id.toString();
+    else return exists._id;
 };
  
 RoomSchema.methods.beforeRemove = async function beforeRemove(user_id, room_id){
@@ -144,7 +145,7 @@ RoomSchema.methods.createRoom = async function createRoom(creator_id, participan
             remained_chatters: [creator_id, participant_id],
             messages: []
           });
-          return new_room._id.toString();
+          return new_room._id;
     }
     catch(err) {
         console.log(err);
@@ -178,7 +179,7 @@ RoomSchema.methods.getRooms = async function getRooms(id){ //사용자 id
                 where: { user_id: msg.sender_id }}); 
                 //채팅방 별 가장 최근에 도착한 메세지를 보낸 사람의 id로 보낸 사람 프로필 썸네일 가져오기
             let recent_msg = {
-                room_id: rooms[i]._id.toString(),
+                room_id: rooms[i]._id+"",
                 sent_time: msg.sent_time,
                 sender_name: msg.sender_name,
                 sender_thumbnail: profile.dataValues.profile_thumbnail,
