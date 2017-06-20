@@ -80,7 +80,7 @@ MessageSchema.methods.saveMessage = async function(content, user_id, room_id){
         }); //보낸 사람 이름 user 테이블에서 가져오기
 
         let room = await Room.findOne(
-            { _id: ObjectId(room_id) },
+            { _id: room_id },
             { messages: 1, chatters: 1 }
         );
         let participant_id = (room.chatters[0]==user_id) ? room.chatters[1] : room.chatters[0];
@@ -131,7 +131,7 @@ RoomSchema.methods.findRoom = async function findRoom(user_id, participant_id){
  
 RoomSchema.methods.beforeRemove = async function beforeRemove(user_id, room_id){
     let exists = await Room.count(
-        { remained_chatters: user_id, _id: ObjectId(room_id) }
+        { remained_chatters: user_id, _id: room_id }
     );
     return exists;
 };
@@ -155,7 +155,7 @@ RoomSchema.methods.createRoom = async function createRoom(creator_id, participan
 
 RoomSchema.methods.addMessage = async function addMessage(new_msg){
     let ret = await Room.update( //Room 콜랙션에 새로 전송된 메세지 insert.
-            { _id: ObjectId(new_msg.room_id) },
+            { _id: new_msg.room_id },
             { $push: { messages: new_msg }}
         );
     return ret;
@@ -205,13 +205,13 @@ RoomSchema.methods.enterRoom = async function enterRoom(room_id, user_id){
 
         /* Room 컬렉션에서 안읽었던 메세지 모두 읽음처리 */
         let updateRoom = await Room.update(
-            { _id: ObjectId(room_id), "messages.receiver_id": user_id },
+            { _id: room_id, "messages.receiver_id": user_id },
             { $set: { "messages.$.is_read": true }}
         );
 
         /* 채팅방 내에 메세지 내역 find */
         let room = await Room.findOne(
-            { _id: ObjectId(room_id) },
+            { _id: room_id },
             { messages: 1, chatters: 1 }
         );
         let array = [];
@@ -246,7 +246,7 @@ RoomSchema.methods.enterRoom = async function enterRoom(room_id, user_id){
 RoomSchema.methods.deleteRoom = async function deleteRoom(user_id, room_id){
     try {
         await Room.update(
-            { _id: ObjectId(room_id) },
+            { _id: room_id },
             { $pull: { remained_chatters: user_id } }
          );
     }
