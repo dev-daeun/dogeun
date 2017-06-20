@@ -16,7 +16,7 @@ router.use(function(req, res, next){
 
 router.get('/:user_id', async function(req, res, next){
     try{
-        let userId = req.params.user_id;
+        let userId = req.headers.user_id;
 
         if(!userId){
             res.status(400).send({message: 'no user error'});
@@ -67,7 +67,7 @@ router.put('/:id', upload.single('profile'), async function(req, res, next){
             return;
          }
         else {
-            let name_dup = await Profile.isNameDup(req.params.id, req.body.username);
+            let name_dup = await Profile.isNameDup(req.headers.id, req.body.username);
             if(name_dup) {
                 res.status(400).send({message: 'username already used'});
                 return;
