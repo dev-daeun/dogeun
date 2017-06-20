@@ -16,13 +16,16 @@ router.get('/:user_id', async(req, res, next) => {
     //         console.log('payload: ', decoded.payload);
     //         console.log('user_id: ', token_id);
     try {
-        let data = await Favorites.getFavorites(req.headers.user_token || 21);
-        res.status(200).send(data);
+        if(!req.headers.user_token) res.status(400).send({message: 'no user_token'});
+        else {
+            let data = await Favorites.getFavorites(req.headers.user_token);
+            res.status(200).send(data);
+        }
     }
     catch(err){
         next(err);
     }
-
+o 
         // }
     // }
 });
@@ -30,9 +33,9 @@ router.get('/:user_id', async(req, res, next) => {
 router.put('/:user_id', async(req, res, next) => {
     try {
         //분양글 id, 사용자 id는 바디에 넣어서
-        if(!(req.body.parcel_id&&req.params.user_id)) res.status(400).send({message: 'request value required'});
+        if(!(req.body.parcel_id&&req.params.user_id&&req.headers.user_token)) res.status(400).send({message: 'request value required'});
         else {
-            let result = await Favorites.setFavorites(req.body.parcel_id, req.params.user_id);
+            let result = await Favorites.setFavorites(req.body.parcel_id, req.headers.user_token);
             if(result===-1) res.status(400).send({message: 'user_id or parcel_id do not exist'});
             else if(result==='delete') res.status(201).send({message: 'delete'});
             else res.status(201).send({message: 'add'});
