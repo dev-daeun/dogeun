@@ -10,17 +10,13 @@ const upload = AWS.getUpload();
 
 router.use(function(req, res, next){
   if(!req.headers.user_token) res.status(401).send({ message: 'user unauthorized'});
-  else if(req.headers.user_token!=20) res.status(400).send({message: 'wrong token'});
+  else if(req.headers.user_token!=21) res.status(400).send({message: 'wrong token'});
   else next();
 });
 
 router.get('/:user_id', async function(req, res, next){
     try{
-        let userId = req.headers.user_id;
-
-        if(!userId){
-            res.status(400).send({message: 'no user error'});
-        }else{
+            let userId = req.headers.user_token;
             let profile = await Profile.readProfile(userId);
             if(profile===-1) res.status(400).send({message: 'user_id does not exist'});
             else {
@@ -28,8 +24,6 @@ router.get('/:user_id', async function(req, res, next){
                 profile.mylist = mylist;
                 res.status(200).send(profile);
             }
-
-        }
         
     }catch(err){
         next(err);
