@@ -119,6 +119,12 @@
         $('#messages').append($('<li>').text(msg));
     }
 
+
+    // 채팅방 입장
+    $("#joinButton").click(() => {
+        var room = $("#rooms").val();
+        socket.emit("enterRoom", room);
+    });
     // 메세지 보내기
     $("#sendButton").click(function() {
         if ( ! user || ! room ) {
@@ -132,13 +138,6 @@
             };
             socket.emit('sendMessage',obj );
     });
-
-    // 채팅방 입장
-    $("#joinButton").click(() => {
-        var room = $("#rooms").val();
-        socket.emit("enterRoom", room);
-    });
-
     // 분양희망자와 대화하기
     $("#startButton").click(() => {
         socket.emit("startChat", 28);
