@@ -105,6 +105,7 @@
     });
     
     socket.on('sendMessageResults', data => {
+	socket.emit("enterRoom", room);
         let msg = data.newMessage;
         appendMessage(msg.sender_id);
         appendMessage(msg.sender_name);

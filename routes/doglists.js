@@ -17,7 +17,7 @@ router.post('/', arrUpload, async function (req, res, next) {
 
     //토큰 검증 TODO: aouth 토큰으로 변경
     let user_id = req.headers.user_token;
-    if(user_id!=20){
+    if(user_id!=21){
         res.status(400).send({message: 'wrong user_token'});
         return;
     } 
