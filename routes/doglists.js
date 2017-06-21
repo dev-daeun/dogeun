@@ -241,6 +241,7 @@ router.get('/emergency', async function (req, res, next) {
     try {
         console.log('user_token from emergency : ', req.headers.user_token);
         let ret = await Doglist.getEmergencyLists(req.headers.user_token);
+	console.log(ret);
         res.status(200).send(ret);
     } catch (err) {
          next(err);

@@ -217,6 +217,8 @@ DogList.updateParcels = async function (changeId, userId, removePet, petRecord, 
     let data = {}; //응답 records, 객체 형태로 반환 
     try {
         connection = await pool.getConnection();
+        
+        await connection.beginTransaction();
 
         await connection.beginTransaction();
 

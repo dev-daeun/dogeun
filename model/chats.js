@@ -200,7 +200,7 @@ RoomSchema.methods.enterRoom = async function enterRoom(room_id, user_id){
     try {
         /* Message 컬렉션에서 안읽었던 메세지 모두 읽음처리 */
         let updateMessage = await Message.updateMany(
-            { room_id: room_id, is_read: false, receiver_id: user_id },
+            { room_id: ObjectId(room_id), is_read: false, receiver_id: user_id },
             { $set: { is_read: true } } 
         ); 
 
