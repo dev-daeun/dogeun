@@ -149,6 +149,8 @@ io.on('connection', socket => {
     //메세지 전송 
     socket.on('sendMessage', async obj => {
         console.log('클라이언트에서 보낸 객체: ', obj);
+        let new_msg = await message.saveMessage(obj.content, obj.user_id, obj.room_id); //메세지 컬렉션에 메세지 저장
+        let updated_room = await room.addMessage(new_msg); //채팅방 컬렉션/에 메세지 추가    
         let sender_info = await message.getUserInfo(obj.user_id); // 메세지 전송한 사람의 프로필, 이름, user_id
         sender_info.content = obj.content; //객체에 메세지 내용 추가
         if(sender_info.sender_id==user_id) sender_info.side = 'right'; //보낸 사용자가 본인이면 오른쪽
@@ -158,8 +160,7 @@ io.on('connection', socket => {
           console.log('클라이언트에서 sendMessage 호출&결과: ', sender_info);
           socket.emit('sendMessageResults', {newMessage: sender_info});
         }
-        let new_msg = await message.saveMessage(obj.content, obj.user_id, obj.room_id); //메세지 컬렉션에 메세지 저장
-        let updated_room = await room.addMessage(new_msg); //채팅방 컬렉션/에 메세지 추가    
+
     });
 
 

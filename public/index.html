@@ -105,7 +105,6 @@
     });
     
     socket.on('sendMessageResults', data => {
-	socket.emit("enterRoom", room);
         let msg = data.newMessage;
         appendMessage(msg.sender_id);
         appendMessage(msg.sender_name);
@@ -114,15 +113,7 @@
         appendMessage(msg.content);
 
     });
-    // 메세지 전송
-        $("#sendButton").submit(() => {
-            let obj = {
-                user_id: 21,
-                room_id: $("#rooms").val(),
-                content:  $("#userInput").val()
-            };
-            socket.emit('sendMessage',obj );
-    });
+
 
     function appendMessage(msg) {
         $('#messages').append($('<li>').text(msg));
@@ -134,9 +125,12 @@
             window.alert('채팅방에 먼저 입장하세요.');
             return false;
         }
-        socket.emit('sendMessage', $('#userInput').val());
-        $("#userInput").val("")
-        return false;
+            let obj = {
+                user_id: 21,
+                room_id: $("#rooms").val(),
+                content:  $("#userInput").val()
+            };
+            socket.emit('sendMessage',obj );
     });
 
     // 채팅방 입장
