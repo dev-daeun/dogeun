@@ -126,7 +126,8 @@ io.on('connection', socket => {
     });
 
     //채팅방 입장  -DONE
-    socket.on('enterRoom', async r_id => {  
+    socket.on('enterRoom', async participant_id => {  
+       let r_id =  await room.findRoom(user_id, participant_id);
         room_id = r_id;
         let messagelist = await room.enterRoom(room_id, user_id);
         console.log('클라이언트에서 enterRoom 호출 r_id: ', r_id);

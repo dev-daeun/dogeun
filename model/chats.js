@@ -167,7 +167,7 @@ RoomSchema.methods.getRooms = async function getRooms(id){ //사용자 id
     try {
         let rooms = await Room.find(  //채팅목록 조회
             { remained_chatters: id, 'messages.0': { $exists: true } }, //메세지 내역길이가 1이상인 room만 추출.
-            { messages: 1, _id: 1 }
+            { messages: 1, _id: 1, remained_chatters: 1 }
         ); //결과 : 해당 사용자가 참여중인 채팅방의 모든 메세지 내역
         
         let recent_array = []; 
@@ -179,7 +179,7 @@ RoomSchema.methods.getRooms = async function getRooms(id){ //사용자 id
                 where: { user_id: msg.sender_id }}); 
                 //채팅방 별 가장 최근에 도착한 메세지를 보낸 사람의 id로 보낸 사람 프로필 썸네일 가져오기
             let recent_msg = {
-                sender_id: msg.sender_id,
+                participant_id: (rooms[i].remained_chatters[0]==id) ? rooms[i].remained_chatters[1] : rooms[i].remained_chatters[0],
                 sent_time: msg.sent_time,
                 sender_name: msg.sender_name,
                 sender_thumbnail: profile.dataValues.profile_thumbnail,
@@ -201,7 +201,7 @@ RoomSchema.methods.enterRoom = async function enterRoom(room_id, user_id){
     try {
         /* Message 컬렉션에서 안읽었던 메세지 모두 읽음처리 */
         let updateMessage = await Message.updateMany(
-            { room_id: ObjectId(room_id), is_read: false, receiver_id: user_id },
+            { room_id: room_id, is_read: false, receiver_id: user_id },
             { $set: { is_read: true } } 
         ); 
 
