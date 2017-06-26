@@ -69,8 +69,7 @@
     var participant;
     socket.on('connect', () => {
         // 채팅방 목록 요청
-        user = 21;
-        socket.emit('showList', user); //TODO : 요청 id 클라이언트에서 넘겨줘야
+        socket.emit('showList'); 
     });
 
 
@@ -81,7 +80,7 @@
         // 채팅방 목록 갱신
         let roomlist = roomList.roomList;
         for(var i = 0 ; i < roomlist.length ; i++) {
-            var room = roomlist[i].room_id;
+            var room = roomlist[i].sender_id;
             var option = $("<option value='" + room + "'>").text(room);
             $("#rooms").append(option);
         }

@@ -8,7 +8,7 @@ router.post('/', async function(req, res, next){
     try {
             let option = {
                 algorithm: 'HS256',
-                expiresIn: 60 * 60 * 365
+                expiresIn: 60 * 60 * 24 * 7
             };
             let payload = {
                 user_id: req.body.kakao_id 
