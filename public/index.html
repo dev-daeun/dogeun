@@ -128,10 +128,6 @@
     });
     // 메세지 보내기
     $("#sendButton").click(function() {
-        if ( ! user || ! room ) {
-            window.alert('채팅방에 먼저 입장하세요.');
-            return false;
-        }
         let obj = {
             participant_id: $("#rooms").val(),
             content:  $("#userInput").val()
