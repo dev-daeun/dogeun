@@ -10,9 +10,6 @@ const signout = require('./routes/signout');
 const morgan = require('morgan');
 const login = require('./routes/login');
 const alarms = require('./routes/alarms');
-const swaggerUi = require('swagger-ui-express');
-const swaggerJSDoc = require('swagger-jsdoc');
-const swaggerSpec = require('./swag');
 
 var secretKey = require('./config/secretKey');
 var app = express();
@@ -28,7 +25,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use( (req, res, next) => {req.user= {}, next();}); //인증
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use('/doglists', doglists);
 app.use('/profiles', profiles);
 app.use('/favorites', favorites);
