@@ -131,9 +131,9 @@ RoomSchema.methods.findRoom = async function findRoom(user_id, participant_id){
     else return exists._id;
 };
  
-RoomSchema.methods.beforeRemove = async function beforeRemove(user_id, room_id){
+RoomSchema.methods.beforeRemove = async function beforeRemove(user_id, participant_id){
     let exists = await Room.count(
-        { remained_chatters: user_id, _id: room_id }
+        { remained_chatters: { $all: [user_id, participant_id] } }
     );
     return exists;
 };
@@ -245,10 +245,10 @@ RoomSchema.methods.enterRoom = async function enterRoom(room_id, user_id){
     }
 };
 
-RoomSchema.methods.deleteRoom = async function deleteRoom(user_id, room_id){
+RoomSchema.methods.deleteRoom = async function deleteRoom(user_id, participant_id){
     try {
         await Room.update(
-            { _id: room_id },
+            { chatters: { $all: [user_id, participant_id] } },
             { $pull: { remained_chatters: user_id } }
          );
     }
