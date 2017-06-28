@@ -8,11 +8,11 @@ AWS.loadAccess();
 const upload = AWS.getUpload();
 
 
-router.use(function(req, res, next){
-  if(!req.headers.user_token) res.status(401).send({ message: 'user unauthorized'});
-  else if(req.headers.user_token!=21) res.status(400).send({message: 'wrong token'});
-  else next();
-});
+// router.use(function(req, res, next){
+//   if(!req.headers.user_token) res.status(401).send({ message: 'user unauthorized'});
+//   else if(req.headers.user_token!=21) res.status(400).send({message: 'wrong token'});
+//   else next();
+// });
 
 router.get('/:user_id', async function(req, res, next){
     try{

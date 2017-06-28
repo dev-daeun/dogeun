@@ -66,9 +66,11 @@
 
     var socket = io.connect();
     var user;
+    var room;
     var participant;
     socket.on('connect', () => {
         // 채팅방 목록 요청
+        user = 21;
         socket.emit('showList'); 
     });
 
@@ -130,12 +132,13 @@
             window.alert('채팅방에 먼저 입장하세요.');
             return false;
         }
-            let obj = {
-                user_id: 21,
-                room_id: $("#rooms").val(),
-                content:  $("#userInput").val()
-            };
-            socket.emit('sendMessage',obj );
+        let obj = {
+            participant_id: $("#rooms").val(),
+            content:  $("#userInput").val()
+        };
+        socket.emit('sendMessage',obj );
+        $("#userInput").val("");
+        return;
     });
     // 분양희망자와 대화하기
     $("#startButton").click(() => {

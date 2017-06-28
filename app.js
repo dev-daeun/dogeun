@@ -25,6 +25,17 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use( (req, res, next) => {req.user= {}, next();}); //인증
+
+
+// app.use((req, res, next) => {
+//   let user_token = req.headers.user_token;
+//   if(!user_token) res.status(401).send({message: 'unauth'});
+//   else if(user_token!=21) res.status(401).send({messsage: 'wrong token'});
+//   else req.user = user_token;
+//   next();
+// }); //인증
+
+
 app.use('/doglists', doglists);
 app.use('/profiles', profiles);
 app.use('/favorites', favorites);
