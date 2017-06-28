@@ -128,21 +128,12 @@
     });
     // 메세지 보내기
     $("#sendButton").click(function() {
-        if ( ! user || ! room ) {
-            window.alert('채팅방에 먼저 입장하세요.');
-            return false;
-        }
         let obj = {
             participant_id: $("#rooms").val(),
             content:  $("#userInput").val()
         };
         socket.emit('sendMessage',obj );
         $("#userInput").val("");
-        return;
-    });
-    // 분양희망자와 대화하기
-    $("#startButton").click(() => {
-        socket.emit("startChat", 28);
     });
 
     // 방 나가기

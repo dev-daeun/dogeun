@@ -155,12 +155,8 @@ io.on('connection', socket => {
         let updated_room = await room.addMessage(new_msg); //채팅방 컬렉션/에 메세지 추가    
         let sender_info = await message.getUserInfo(user_id); // 메세지 전송한 사람의 프로필, 이름, user_id
         sender_info.content = obj.content; //객체에 메세지 내용 추가
-        sender_info.side = 'left'; 
+        sender_info.side = 'right'; 
         //보낸 메세지의 채팅방이 현재 채팅방이면 sender_info 로 이벤트 호출
-        console.log('new_msg의 room_id : ', new_msg.room_id.toString());
-        console.log('현재 들어가있는 방 id : ', room_id.toString());
-        console.log('new_msg.room_id 타입 : ',typeof room_id.toString());
-        console.log('현재 접속중인 room_id 타입 : ',typeof new_msg.room_id.toString());
         if(new_msg.room_id.toString()==room_id.toString()) {
           console.log('클라이언트에서 sendMessage 호출&결과: ', sender_info);
           socket.emit('sendMessageResults', {newMessage: sender_info});
