@@ -61,6 +61,7 @@ MessageSchema.methods.setRead = async function(room_id){
 };
 
 MessageSchema.methods.getUserInfo = async function getUserInfo(user_id){
+    console.log("getUserInfo에서 user_id : ", user_id);
     let info = await User.findOne({
         attributes: ['user_id', 'profile_thumbnail', 'username'],
         where: {user_id :user_id }
@@ -73,7 +74,7 @@ MessageSchema.methods.getUserInfo = async function getUserInfo(user_id){
     return obj;
 };
 
-MessageSchema.methods.saveMessage = async function(content, user_id, room_id){
+MessageSchema.methods.saveMessage = async function(content, user_id, participant_id){
     try {
         let sender = await User.findOne({
             attributes: ['username'],
@@ -81,11 +82,11 @@ MessageSchema.methods.saveMessage = async function(content, user_id, room_id){
         }); //보낸 사람 이름 user 테이블에서 가져오기
 
         let room = await Room.findOne(
-            { _id: room_id },
-            { messages: 1, chatters: 1 }
+            { chatters: { $all: [user_id, participant_id] } },
+            { _id: 1 }
         );
-        let participant_id = (room.chatters[0]==user_id) ? room.chatters[1] : room.chatters[0];
 
+        let room_id = room._id;
         let receiver =  await User.findOne({
             attributes: ['username'],
             where: { user_id: participant_id }
@@ -185,7 +186,6 @@ RoomSchema.methods.getRooms = async function getRooms(id){ //사용자 id
                 sender_thumbnail: profile.dataValues.profile_thumbnail,
                 content: msg.content
             };       
-            console.log(recent_msg);
             recent_array.push(recent_msg);
         }
         return recent_array;
