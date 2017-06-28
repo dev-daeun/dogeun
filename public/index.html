@@ -134,11 +134,6 @@
         };
         socket.emit('sendMessage',obj );
         $("#userInput").val("");
-        return;
-    });
-    // 분양희망자와 대화하기
-    $("#startButton").click(() => {
-        socket.emit("startChat", 28);
     });
 
     // 방 나가기
