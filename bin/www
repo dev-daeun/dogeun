@@ -127,7 +127,7 @@ io.on('connection', socket => {
 
     //채팅방 입장  -DONE
     socket.on('enterRoom', async participant_id => {  
-      if(room) room = null;
+      if(room_id) room_id = null;
       let r_id =  await room.findRoom(user_id, participant_id);
       room_id = r_id;
       let messagelist = await room.enterRoom(room_id, user_id);
