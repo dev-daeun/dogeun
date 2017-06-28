@@ -158,6 +158,8 @@ io.on('connection', socket => {
         //보낸 메세지의 채팅방이 현재 채팅방이면 sender_info 로 이벤트 호출
         console.log('new_msg의 room_id : ', new_msg.room_id);
         console.log('현재 들어가있는 방 id : ', room_id);
+        console.log('new_msg.room_id 타입 : ',typeof room_id);
+        console.log('현재 접속중인 room_id 타입 : ',typeof new_msg.room_id);
         if(new_msg.room_id==room_id) {
           console.log('클라이언트에서 sendMessage 호출&결과: ', sender_info);
           socket.emit('sendMessageResults', {newMessage: sender_info});
