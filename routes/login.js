@@ -7,11 +7,11 @@ const bcrypt = require('bcrypt-node');
 
 router.post('/', async function(req, res, next){
     try {
-            let emailExist = await User.findAndCount({
+            let emailExist = await User.count({
                 where: { email: req.body.email }
             }); //이메일 있는지 확인
 
-            if(emailExist.count===0) res.status(404).send({message: 'email does not exist', user_token: ""});
+            if(emailExist===0) res.status(404).send({message: 'email does not exist', user_token: ""});
             else{
                 let info = await User.findOne({
                     where: {email: req.body.email},
