@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+const User = require('./config/ORM').User;
 const favicon = require('serve-favicon');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
@@ -9,8 +10,11 @@ const favorites = require('./routes/favorites');
 const signout = require('./routes/signout');
 const morgan = require('morgan');
 const login = require('./routes/login');
+const signup = require('./routes/signup');
 const alarms = require('./routes/alarms');
-
+const passport = require('passport');
+const jwtStrategy = require('passport-jwt').Strategy;
+const extractJWT = require('passport-jwt').ExtractJwt; 
 var secretKey = require('./config/secretKey');
 var app = express();
 // view engine setup
@@ -24,15 +28,62 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use( (req, res, next) => {req.user= {}, next();}); //인증
+app.use(passport.initialize());
+
+const opts = {
+    jwtFromRequest: extractJWT.fromHeader('user_token'),
+    secretOrKey: secretKey
+};
+
+// passport.use(new jwtStrategy(opts, function(jwt_payload, done) {
+//     User.findOne({user_id: jwt_payload.sub}, function(err, user) {
+//         if (err) {
+//             return done(err, false);
+//         }
+//         if (user) {
+//           req.user = jwt_payload.sub;
+//           done(null, user);
+//         } else {
+//           done(null, false); 
+//         }
+//     });
+// }));
+
+//이메일 주소 정규표현
+app.set('emailFormed', (address) => {
+  var regex=/^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/;
+  if(!regex.test(address)){
+    return false;
+  }
+  else return true;
+});
+
+//비번 정규표현
+app.set('pwFormed', (pw) => {
+  //영문, 숫자, 특수문자를 모두 포함하는 6~16개의 문자들
+  var regex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{6,16}$/;
+  if(!regex.test(pw)){
+    return false;
+  }
+  if (pw.length < 6 || pw.length > 16) {
+  return false;
+ }
+  else return true;
+});
 
 
 // app.use((req, res, next) => {
 //   let user_token = req.headers.user_token;
-//   if(!user_token) res.status(401).send({message: 'unauth'});
+//   if(!user_token) {
+//     res.status(400).send({message: 'unauth'});
+//     console.log('unauth');
+//   }
 //   else if(user_token!=21) res.status(401).send({messsage: 'wrong token'});
-//   else req.user = user_token;
-//   next();
+//   else {
+//     req.user = user_token;
+//     console.log('authorized');
+//     next();
+//   }
 // }); //인증
 
 
@@ -41,6 +92,7 @@ app.use('/profiles', profiles);
 app.use('/favorites', favorites);
 app.use('/login', login);
 app.use('/signout',signout);
+app.use('/signup', signup);
 app.use('/alarms',alarms);
 
 // catch 404 and forward to error handler
@@ -59,6 +111,7 @@ app.use(function(err, req, res, next) {
   logger.error(err.status||500 + " " + err.message);
   res.status(err.status || 500);
   res.json({message: err.message});
+  console.log(err.message);
 });
 
 module.exports = app;

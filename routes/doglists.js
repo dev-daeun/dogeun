@@ -137,7 +137,7 @@ router.put('/:parcel_id', arrUpload, async function (req, res, next) {
             newPetNums = req.files['pet'].length;
         } else if(req.files['pet']===undefined) {
             // 새로운 펫이미지가 없으면 
-console.log('no pet');
+        console.log('no pet');
             newPetNums = 0;
         }
 
@@ -217,7 +217,7 @@ router.delete('/:parcel_id', async function (req, res, next) {
 });
 
 
-router.get('/', async function (req, res, next) {
+router.get('/',  async function (req, res, next) {
     try {
             console.log('user_token from all list : ', req.headers.user_token);
             let page;
