@@ -50,13 +50,13 @@ User.signup = async(email, password, checking_password) => {
 
 User.login = async(email, password) => {
     try {
-            let emailExist = await User.count({
+            let emailExist = await Sign.count({
                 where: { email: req.body.email }
             }); //이메일 있는지 확인
 
             if(emailExist===0) return 'noneEmail';
             else{
-                let info = await User.findOne({
+                let info = await Sign.findOne({
                     where: {email: req.body.email},
                     attributes: ['id','password']
                 }); //비번 맞는지 확인
