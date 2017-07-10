@@ -32,10 +32,9 @@ User.signup = async(email, password, checking_password) => {
         if(dupEmail>0) return 'dupEmail';
         else if(password!==checking_password) return 'wrongPW';
         else {
-            let hashed_email = await hashAnything(email);
             let hashed_pw = await hashAnything(password);
             await Sign.create({
-                email: hashed_email,
+                email: email,
                 password: hashed_pw
             });
             return 'success';
@@ -51,16 +50,16 @@ User.signup = async(email, password, checking_password) => {
 User.login = async(email, password) => {
     try {
             let emailExist = await Sign.count({
-                where: { email: req.body.email }
+                where: { email: email }
             }); //이메일 있는지 확인
 
             if(emailExist===0) return 'noneEmail';
             else{
                 let info = await Sign.findOne({
-                    where: {email: req.body.email},
+                    where: {email: email},
                     attributes: ['id','password']
                 }); //비번 맞는지 확인
-                let pwCorrect = await bcrypt.compareHash(req.body.password, info.dataValues.password);
+                let pwCorrect = await compareHash(password, info.dataValues.password);
                 if(!pwCorrect) return 'wrongPW';
                 else return info.dataValues.id; 
                 
@@ -68,6 +67,7 @@ User.login = async(email, password) => {
     }
     catch(err) {
         console.log(err);
+        throw err;
     }
 };
 
