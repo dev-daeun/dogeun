@@ -19,7 +19,7 @@ router.post('/', async (req, res, next) => {
         }
         else{
             let ret = await User.signup(email, password, checking_password);
-            if(ret==='dupEmail') {
+            if(ret==='dupEmail'){
                 res.status(405).send({ message: 'the email is already being used'});
                 return;
             }
@@ -34,6 +34,7 @@ router.post('/', async (req, res, next) => {
         }
     }
     catch(err) {
+        console.log(err);
         next(err);
     }
 });
