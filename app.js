@@ -12,9 +12,7 @@ const morgan = require('morgan');
 const login = require('./routes/login');
 const signup = require('./routes/signup');
 const alarms = require('./routes/alarms');
-const passport = require('passport');
-const jwtStrategy = require('passport-jwt').Strategy;
-const extractJWT = require('passport-jwt').ExtractJwt; 
+const passport = require('passport'); 
 var secretKey = require('./config/secretKey');
 var app = express();
 // view engine setup
@@ -28,26 +26,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(passport.initialize());
 
-const opts = {
-    jwtFromRequest: extractJWT.fromHeader('user_token'),
-    secretOrKey: secretKey
-};
-
-// passport.use(new jwtStrategy(opts, function(jwt_payload, done) {
-//     User.findOne({user_id: jwt_payload.sub}, function(err, user) {
-//         if (err) {
-//             return done(err, false);
-//         }
-//         if (user) {
-//           req.user = jwt_payload.sub;
-//           done(null, user);
-//         } else {
-//           done(null, false); 
-//         }
-//     });
-// }));
 
 //이메일 주소 정규표현
 app.set('emailFormed', (address) => {
@@ -70,21 +49,6 @@ app.set('pwFormed', (pw) => {
  }
   else return true;
 });
-
-
-// app.use((req, res, next) => {
-//   let user_token = req.headers.user_token;
-//   if(!user_token) {
-//     res.status(400).send({message: 'unauth'});
-//     console.log('unauth');
-//   }
-//   else if(user_token!=21) res.status(401).send({messsage: 'wrong token'});
-//   else {
-//     req.user = user_token;
-//     console.log('authorized');
-//     next();
-//   }
-// }); //인증
 
 
 app.use('/doglists', doglists);

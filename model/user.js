@@ -15,6 +15,15 @@ function hashAnything(info){
     });
 }
 
+function compareHash(info, hash){
+    return new Promise((fulfill, reject) => {
+       bcrypt.compare(info, hash, (err, result)=>{
+            if(err) reject(err);
+            else return result;
+       });
+    });
+}
+
 User.signup = async(email, password, checking_password) => {
     try{
         let dupEmail = await Sign.count({ 
@@ -35,6 +44,30 @@ User.signup = async(email, password, checking_password) => {
     catch(err){
         console.log(err);
         throw err;   
+    }
+};
+
+
+User.login = async(email, password) => {
+    try {
+            let emailExist = await User.count({
+                where: { email: req.body.email }
+            }); //이메일 있는지 확인
+
+            if(emailExist===0) return 'noneEmail';
+            else{
+                let info = await User.findOne({
+                    where: {email: req.body.email},
+                    attributes: ['id','password']
+                }); //비번 맞는지 확인
+                let pwCorrect = await bcrypt.compareHash(req.body.password, info.dataValues.password);
+                if(!pwCorrect) return 'wrongPW';
+                else return info.dataValues.id; 
+                
+            }
+    }
+    catch(err) {
+        console.log(err);
     }
 };
 
