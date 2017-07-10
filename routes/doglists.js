@@ -14,13 +14,6 @@ const arrUpload = upload.fields([{ name: 'pet', maxCount: 5 }, { name: 'lineage'
 
 
 router.post('/', arrUpload, async function (req, res, next) {
-
-    //토큰 검증 TODO: aouth 토큰으로 변경
-    let user_id = req.headers.user_token;
-    if(user_id!=21){
-        res.status(400).send({message: 'wrong user_token'});
-        return;
-    } 
     
     //error 처리
     if (!req.body.user_id || !req.body.spiece || !req.body.gender || !req.body.age || !req.body.region1
