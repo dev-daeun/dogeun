@@ -311,6 +311,7 @@ DogList.updateParcel = async(user, changeId, record, removedPet, removedParent, 
         }
 
         connection.commit();
+        data.parcel_id = changeId;
         return data;
     } catch (err) {
         await connection.rollback();
