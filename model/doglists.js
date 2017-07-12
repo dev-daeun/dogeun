@@ -255,7 +255,7 @@ DogList.updateParcel = async(user, changeId, record, removedPet, removedParent, 
 
             //pet_image 테이블에 원본이미지, 썸네일 넣기
             let query3 = 'insert into pet_images set ?';
-            let insertedPet = await connection.query(query3, pet_record);
+            var insertedPet = await connection.query(query3, pet_record);
             console.log('new pet image upload success');
             let pet = {};
             pet.image_id = insertedPet.insertId;
@@ -311,6 +311,7 @@ DogList.updateParcel = async(user, changeId, record, removedPet, removedParent, 
         }
 
         connection.commit();
+        data.parcel_id = changeId;
         return data;
     } catch (err) {
         await connection.rollback();
