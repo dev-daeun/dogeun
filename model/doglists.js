@@ -278,15 +278,17 @@ DogList.updateParcel = async(user, changeId, record, removedPet, removedParent, 
             let query7 = 'delete from parent_pet_images where parcel_id = ? and image_id = ?';
             let deleteParent = await connection.query(query7, [changeId, removedParent]);
 
-            let parent = {
+            let parent_record = {
                 image: newParent.location,
                 image_key: newParent.key,
                 parcel_id: changeId
             };
+            let parent = {};
             let query8 = 'insert into parent_pet_images set ?';
-            let insertedParent = await connection.query(query8, parent);
-            data.parent.image_id = insertedParent.insertId;
-            data.parent.image = newParent.location;
+            let insertedParent = await connection.query(query8, parent_record);
+            parent.image_id = insertedParent.insertId;
+            parent.image = newParent.location;
+            data.parent = parent;
         }
         
  
