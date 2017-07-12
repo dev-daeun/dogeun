@@ -11,6 +11,7 @@ class Profile {}
 
 Profile.getRecord = function(req){  //저장, 수정에 들어갈 레코드 반환하는 메소드
     return {
+                user_id: req.user,
                 username: req.body.username,
                 gender: req.body.gender,
                 region: req.body.region,
@@ -126,7 +127,7 @@ Profile.editProfile = async function(req){
     try { 
          let result;
          let record = this.getRecord(req);
-         let profile = await User.findOne({where: { user_id: req.params.id } });
+         let profile = await User.findOne({where: { user_id: req.user } });
          let original_url = profile.dataValues.profile_image; //원본 이미지 url 가져오기
 
         if(req.file) {

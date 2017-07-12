@@ -3,20 +3,13 @@ const router = express.Router();
 const Profile = require('../model/profiles');
 const Doglist = require('../model/doglists');
 const AWS = require('../config/AWS');
-
+const auth = require('./auth');
 AWS.loadAccess();
 const upload = AWS.getUpload();
 
-
-// router.use(function(req, res, next){
-//   if(!req.headers.user_token) res.status(401).send({ message: 'user unauthorized'});
-//   else if(req.headers.user_token!=21) res.status(400).send({message: 'wrong token'});
-//   else next();
-// });
-
-router.get('/:user_id', async function(req, res, next){
+router.get('/', auth, async function(req, res, next){
     try{
-            let userId = req.headers.user_token;
+            let userId = req.user;
             let profile = await Profile.readProfile(userId);
             if(profile===-1) res.status(400).send({message: 'user_id does not exist'});
             else {
@@ -30,7 +23,7 @@ router.get('/:user_id', async function(req, res, next){
     }
 })
 
-router.post('/', upload.single('profile'),async function(req, res, next){
+router.post('/', auth, upload.single('profile'),async function(req, res, next){
     try {
 	let body = req.body;
         if(!(body.username&&body.gender&&body.lifestyle&&body.region&&body.other_pets&&body.family_size)) {
@@ -44,7 +37,7 @@ router.post('/', upload.single('profile'),async function(req, res, next){
         }
         else {
             let ret = await Profile.saveProfile(req);
-            res.status(201).send({ message: 'success', user_id: ret.insertId });
+            res.status(201).send({ message: 'success'});
         }
     }
     catch(err) {
@@ -53,7 +46,7 @@ router.post('/', upload.single('profile'),async function(req, res, next){
 });
 
 
-router.put('/:id', upload.single('profile'), async function(req, res, next){
+router.put('/', auth, upload.single('profile'), async function(req, res, next){
     try {
 	    let body = req.body;
         if(!(body.username&&body.gender&&body.lifestyle&&body.region&&body.other_pets&&body.family_size)) {
@@ -61,7 +54,7 @@ router.put('/:id', upload.single('profile'), async function(req, res, next){
             return;
          }
         else {
-            let name_dup = await Profile.isNameDup(req.headers.id, req.body.username);
+            let name_dup = await Profile.isNameDup(req.user, req.body.username);
             if(name_dup) {
                 res.status(400).send({message: 'username already used'});
                 return;

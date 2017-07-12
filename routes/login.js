@@ -17,6 +17,7 @@ router.post('/', async function(req, res, next){
                     let payload = {
                         user_id: ret
                     };
+                    User.setUserId(ret);
                     let token = jwt.sign(payload, req.app.get('secret-key'), option);
                     res.status(200).send({ 
                         message: 'success',

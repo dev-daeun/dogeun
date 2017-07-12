@@ -5,18 +5,18 @@ aws.loadAccess();
 const multer = require('multer');
 const multerS3 = require('multer-s3');
 const Doglist = require('../model/doglists');
+const User = require('../model/user');
 const easyimg = require('easyimage');
 const fs = require('fs');
 const s3 = aws.getS3();
 const upload = aws.getUpload();
 const arrUpload = upload.fields([{ name: 'pet', maxCount: 5 }, { name: 'lineage', maxCount: 1 }, { name: 'parent', maxCount: 2 }]);
+const auth = require('./auth');
 
-
-
-router.post('/', arrUpload, async function (req, res, next) {
+router.post('/', auth, arrUpload, async function (req, res, next) {
     
     //error 처리
-    if (!req.body.user_id || !req.body.spiece || !req.body.gender || !req.body.age || !req.body.region1
+    if (!req.body.spiece || !req.body.gender || !req.body.age || !req.body.region1
         || !req.body.region2 || !req.body.price || !req.body.size || !req.body.introduction
         || !req.body.condition || !req.body.title) {
 
@@ -33,7 +33,7 @@ router.post('/', arrUpload, async function (req, res, next) {
     //파일 제외하고 body부분 record
     //let parcelRecords = req.body; 에러날 가능성 있다.
     let parcelRecords = {
-        user_id: req.body.user_id,
+        user_id: req.user,
         spiece: req.body.spiece,
         gender: req.body.gender,
         age: req.body.age,
@@ -95,9 +95,9 @@ router.post('/', arrUpload, async function (req, res, next) {
 });
 
 // 분양글 수정하기 
-router.put('/:parcel_id', arrUpload, async function (req, res, next) {
+router.put('/:parcel_id', auth, arrUpload, async function (req, res, next) {
     let changeId = req.params.parcel_id;
-    let userId = req.body.user_id;
+    let userId = req.user;
 
     try {
         let removePet; // 삭제 요청 받은 펫 이미지 id
@@ -202,7 +202,7 @@ router.delete('/:parcel_id', async function (req, res, next) {
     let removeId = req.params.parcel_id;
 
     try {
-        let result = Doglist.deleteParcles(removeId);
+        let result = Doglist.deleteParcel(removeId);
         res.status(200).send({ message: 'save' });
     } catch (err) {
         next(err);
@@ -212,7 +212,6 @@ router.delete('/:parcel_id', async function (req, res, next) {
 
 router.get('/',  async function (req, res, next) {
     try {
-            console.log('user_token from all list : ', req.headers.user_token);
             let page;
             if(req.query.page==0) page = 1; //page=0으로 날릴 경우 
             else page = req.query.page || 1;
@@ -222,19 +221,18 @@ router.get('/',  async function (req, res, next) {
             if(req.query.region2!=0) keywords.region2 = req.query.region2;
             if(req.query.gender!=0) keywords.gender = req.query.gender;
             if(req.query.age!=0) keywords.age = req.query.age;
-            let ret = await Doglist.getLists(req.headers.user_token, keywords, page);
+            let ret = await Doglist.getLists(User.getUserId(), keywords, page);
             res.status(200).send(ret);
         
     } catch (err) {
+        console.log(err);
         next(err);
     }
 });
 
 router.get('/emergency', async function (req, res, next) {
     try {
-        console.log('user_token from emergency : ', req.headers.user_token);
-        let ret = await Doglist.getEmergencyLists(req.headers.user_token);
-	console.log(ret);
+        let ret = await Doglist.getEmergencyLists(req.user);
         res.status(200).send(ret);
     } catch (err) {
          next(err);
@@ -266,7 +264,7 @@ router.put('/:id/done', async function (req, res, next) { //분양완료/완료�
 router.post('/reports/:parcel_id', async function (req, res, next) {
     let parcel_id = req.params.parcel_id;
 
-    let reporter_id = req.body.user_id;
+    let reporter_id = req.user;
     let content = req.body.content;
 
     let reportRecods = [];

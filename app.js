@@ -12,9 +12,11 @@ const morgan = require('morgan');
 const login = require('./routes/login');
 const signup = require('./routes/signup');
 const alarms = require('./routes/alarms');
-const passport = require('passport'); 
-var secretKey = require('./config/secretKey');
 var app = express();
+
+
+var secretKey = require('./config/secretKey');
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -26,7 +28,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
 
 //이메일 주소 정규표현
 app.set('emailFormed', (address) => {
