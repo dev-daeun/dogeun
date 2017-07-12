@@ -198,11 +198,11 @@ router.put('/:parcel_id', auth, arrUpload, async function (req, res, next) {
 
 });
 
-router.delete('/:parcel_id', async function (req, res, next) {
+router.delete('/:parcel_id', auth, async function (req, res, next) {
     let removeId = req.params.parcel_id;
 
     try {
-        let result = Doglist.deleteParcel(removeId);
+        let result = Doglist.deleteParcel(removeId, req.user);
         res.status(200).send({ message: 'save' });
     } catch (err) {
         next(err);
@@ -250,9 +250,9 @@ router.get('/:id', async function (req, res, next) {
     }
 });
 
-router.put('/:id/done', async function (req, res, next) { //분양완료/완료취소하기
+router.put('/:id/done', auth, async function (req, res, next) { //분양완료/완료취소하기
     try {
-        let ret = Doglist.completeParcel(req.params.id);
+        let ret = Doglist.completeParcel(req.params.id, req.user);
         if(ret===0) res.status(400).send({message: 'parcel does not exist'});
         else res.status(201).send( { message: 'success'});
     }
@@ -261,21 +261,21 @@ router.put('/:id/done', async function (req, res, next) { //분양완료/완료�
     }
 });
 
-router.post('/reports/:parcel_id', async function (req, res, next) {
-    let parcel_id = req.params.parcel_id;
-
+router.post('/reports', auth, async function (req, res, next) {
     let reporter_id = req.user;
+    let parcel_id = req.body.parcel_id;
     let content = req.body.content;
-
-    let reportRecods = [];
-    reportRecods.push({ 'reporter_id': reporter_id, 'parcel_id': parcel_id, 'content': content });
-
-    try {
-        let result = await Doglist.reportParcel(reportRecods);
-        res.status(200).send({ message: "save" });
-    } catch (err) {
-        next(err);
+    if(!parcel_id) res.status(404).send({message: 'parcel does not exist'});
+    else if(!content) res.status(400).send({message: 'content is empty'});
+    else{
+        try {
+            let result = await Doglist.reportParcel(reporter_id, parcel_id, content);
+            res.status(200).send({ message: "save" });
+        } catch (err) {
+            next(err);
+        }
     }
+
 });
 
 

@@ -7,9 +7,9 @@ const auth = require('./auth');
 AWS.loadAccess();
 const upload = AWS.getUpload();
 
-router.get('/', auth, async function(req, res, next){
+router.get('/:user_id', auth, async function(req, res, next){
     try{
-            let userId = req.user;
+            let userId = req.params.user_id;
             let profile = await Profile.readProfile(userId);
             if(profile===-1) res.status(400).send({message: 'user_id does not exist'});
             else {
@@ -27,17 +27,17 @@ router.post('/', auth, upload.single('profile'),async function(req, res, next){
     try {
 	let body = req.body;
         if(!(body.username&&body.gender&&body.lifestyle&&body.region&&body.other_pets&&body.family_size)) {
-            res.status(400).send({ message: 'input unsatisfied' });
+            res.status(400).send({ message: 'input unsatisfied', user_id: 0 });
             return;
         }
         let name_dup = await Profile.isNameDup(null, req.body.username);
         if(name_dup) {
-                res.status(400).send({message: 'username already used'});
+                res.status(400).send({message: 'username already used', user_id: 0});
                 return;
         }
         else {
             let ret = await Profile.saveProfile(req);
-            res.status(201).send({ message: 'success'});
+            res.status(201).send({ message: 'success', user_id: req.user});
         }
     }
     catch(err) {
