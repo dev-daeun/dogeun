@@ -193,7 +193,6 @@ DogList.postParcels = async function (parcelRecord, parentRecord, petRecord, thu
 
         //commit
         await connection.commit();
-
         return data;
 
     } catch (err) {
@@ -212,195 +211,104 @@ DogList.postParcels = async function (parcelRecord, parentRecord, petRecord, thu
 };
 
 // 분양글 수정하기 
-DogList.updateParcels = async function (changeId, userId, removePet, petRecord, parcelRecord, removeParent, parentRecord) {
-    let connection;
-    let data = {}; //응답 records, 객체 형태로 반환 
+DogList.updateParcel = async(user, changeId, record, removedPet, removedParent, newPet, newParent, newLineage) => {
+    var connection;
+    var data; //응답 records, 객체 형태로 반환 
     try {
         connection = await pool.getConnection();
-        
         await connection.beginTransaction();
 
+        let checkQuery = 'select * from parcel where parcel_id = ?';
+        let count = await connection.query(checkQuery, changeId);
+        if(count.length===0) return -1;
+       let query5 = 'UPDATE parcel SET ? WHERE parcel_id = ?';
+        if(newLineage){
+            let addedRecord = record;
+            addedRecord.lineage = newLineage.location;
+            data = addedRecord;
+            await connection.query(query5, [addedRecord, changeId]);
+        }
+        else{
+            data = record;
+            await connection.query(query5, [record, changeId]);
+        }
         // 삭제할 펫 이미지 아이디가 있다면 
-        if (removePet && removePet.length > 0) {
-            // 삭제할 펫 이미지 아이디가 객체라면 (여러 개)
-            if (removePet instanceof Array) {
-                for (let item of removePet) {
-                    // s3 삭제를 위해 url
-                    let query1 = 'select image_key, thumbnail_key from pet_images where parcel_id = ? and image_id = ? ;';
-                    let petImage = await connection.query(query1, [changeId, item]);
-                    try {
-                        await DogList.deleteInS3(petImage[0].image_key);
-                        await DogList.deleteInS3(petImage[0].thumbnail_key);
-                        console.log('pet image array s3 delete success');
-                    } catch (err) {
-                        console.log('error : pet image array s3 delete fail');
-                    }
-                    let query2 = 'delete from pet_images where parcel_id = ? and image_id = ?';
-                    let deleteResult = await connection.query(query2, [changeId, item]);
-                }
-            } else { //삭제할 아이디 1개 라면
-                let queryOne = 'select image_key, thumbnail_key from pet_images where parcel_id = ? and image_id = ? ;';
-                let petImageOne = await connection.query(queryOne, [changeId, removePet]);
-                try {
-                    await DogList.deleteInS3(petImageOne[0].image_key);
-                    await DogList.deleteInS3(petImageOne[0].thumbnail_key);
-                    console.log('pet image s3 delete success');
-                } catch (err) {
-                    console.log('error : pet image s3 delete fail');
-                }
-                let queryTwo = 'delete from pet_images where parcel_id = ? and image_id = ?';
-                let deleteResultTwo = await connection.query(queryTwo, [changeId, removePet]);
-            }
+        if (removedPet>0) {
+            //s3에 기존 펫 이미지 삭제
+            let query1 = 'select image_key, thumbnail_key from pet_images where parcel_id = ? and image_id = ? ;';
+            let petImage = await connection.query(query1, [changeId, removedPet]);
+            await DogList.deleteInS3(petImage[0].image_key);
+            await DogList.deleteInS3(petImage[0].thumbnail_key);
+            let query2 = 'delete from pet_images where parcel_id = ? and image_id = ?';
+            let deleteResult = await connection.query(query2, [changeId, removedPet]);
+            console.log('s3에서 펫 이미지 삭제');
+            //새로운 펫 이미지 썸네일 만들어 주기 
+            let thumbnailFileName = 'thumbnail_' + newPet.key;
+            let thumbnailPath = 'thumbnail/' + thumbnailFileName;
+            let thumbnail = await easyimage.rescrop({
+                name: thumbnailFileName,
+                src: newPet.location,
+                dst: thumbnailPath,
+                width: 300, height: 400
+            });
+            let petThumbnail = await DogList.uploadToS3(thumbnailFileName, thumbnailPath);
+            let pet = {
+                thumbnail: petThumbnail,
+                thumbnail_key: thumbnailFileName,
+                image: newPet.location,
+                image_key: newPet.key,
+                parcel_id: changeId
+            };
+            let query3 = 'insert into pet_images set ?';
+            let insertedPet = await connection.query(query3, pet);
+            console.log('new pet image upload success');
+            data.pet.image_id = insertedPet.insertId;
+            data.pet.image = newPet.location;
         }
-        console.log('delete pet success');
+         // 삭제할 부모견 사진 아이디가 있다면
+        if (removedParent>0) {
+           //기존의 부모견 이미지 삭제   
+            let query6 = 'select image_key from parent_pet_images where parcel_id = ? and image_id = ?';
+            let parentImage = await connection.query(query6, [changeId, removedParent]);
+    
+            // s3 삭제
+            await DogList.deleteInS3(parentImage[0].image_key);
+            let query7 = 'delete from parent_pet_images where parcel_id = ? and image_id = ?';
+            let deleteParent = await connection.query(query7, [changeId, removedParent]);
 
-
-        data.pet = [];
-        // 기존 분양글에 있었던 pet_images
-        let petQuery = 'select image_id, image from pet_images where parcel_id = ?';
-        let originalPet = await connection.query(petQuery, changeId);
-
-        if (originalPet && originalPet.length > 0) {
-            for (let pet of originalPet) {
-                data.pet.push({ 'image_id': pet.image_id, 'image': pet.image });
-            }
+            let parent = {
+                image: newParent.location,
+                image_key: newParent.key,
+                parcel_id: changeId
+            };
+            let query8 = 'insert into parent_pet_images set ?';
+            let insertedParent = await connection.query(query8, parent);
+            data.parent.image_id = insertedParent.insertId;
+            data.parent.image = newParent.location;
         }
-
-
-        // 새로 추가할 펫 이미지가 있다면
-        if (petRecord && petRecord.length > 0) {
-
-            for (let pet of petRecord) {
-                // 모든 펫이미지 썸네일 만들어 주기 
-                let thumbnailFileName = 'thumbnail_' + pet.image_key;
-                let thumbnailPath = 'thumbnail/' + thumbnailFileName;
-
-                try {
-                    let thumbnail = await easyimage.rescrop({
-                        name: thumbnailFileName,
-                        src: pet.image,
-                        dst: thumbnailPath,
-                        width: 300, height: 400
-                    });
-
-                    let petThumbnail = await DogList.uploadToS3(thumbnailFileName, thumbnailPath);
-                    pet.thumbnail = petThumbnail;
-                    pet.thumbnail_key = thumbnailFileName;
-                    console.log('new pet thumbnail success');
-                } catch (err) {
-                    console.log('new pet thumbnail fail :', pet.image);
-                    pet.thumbnail = pet.image;
-                    pet.thumbnail_key = thumbnailFileName;
-                }
-
-                let query3 = 'insert into pet_images set ?';
-                let newPet = await connection.query(query3, pet);
-                pet.image_id = newPet.insertId;
-                data.pet.push({ 'image_id': pet.image_id, 'image': pet.image });
-                console.log('new pet image upload success');
-            }
-        }
-
+        
+ 
         // 대표 썸네일 만들기 
         //let parcelId = parcelRecord.parcel_id;
         // let query = 'select thumbnail from pet_images where image_id = ( select min(image_id) from pet_images where parcel_id = ? )';
-        let query = 'select thumbnail from pet_images where parcel_id = ?';
-        let thumbnailURL = await connection.query(query, changeId);
-        parcelRecord.pet_thumbnail = thumbnailURL[0].thumbnail;
-        console.log('thumbnail update success');
+        // let query = 'select thumbnail from pet_images where parcel_id = ?';
+        // let thumbnailURL = await connection.query(query, changeId);
+        // parcelRecord.pet_thumbnail = thumbnailURL[0].thumbnail;
+        // console.log('thumbnail update success');
 
-        // 분양글 항목 업데이트
-        let query5 = 'UPDATE parcel SET ? WHERE parcel_id = ?';
-        let parcelOutput = await connection.query(query5, [parcelRecord, changeId]);
-
-        for (let item in parcelRecord) {
-            data[item] = parcelRecord[item];
-        }
-        data.parcel_id = changeId;
-
-        console.log('parcel update success');
-        
 
         // username 반환 
         let user_query = 'select username FROM users where user_id = ?';
-        let users = await connection.query(user_query, userId);
+        let users = await connection.query(user_query, user);
         if (users && users.length > 0) {
             data.username = users[0].username;
         }
 
-        // 삭제할 부모견 사진 아이디가 있다면
-        if (removeParent && removeParent.length > 0) {
-            // 삭제할 부모견 이미지 아이디가 여러 개면 
-            if (removeParent instanceof Array) {
-                for (let item of removeParent) {
-                    // s3 삭제를 위해, url
-                    let query6 = 'select image_key from parent_pet_images where parcel_id = ? and image_id = ?';
-                    let parentImage = await connection.query(query6, [changeId, item]);
-
-                    try {
-                        // s3 삭제
-                        await DogList.deleteInS3(parentImage[0].image_key);
-                        console.log('parent image s3 array delete success');
-                        // 부모견 이미지 삭제
-                    } catch (err) {
-                        console.log('error : parent image array s3 delete fail');
- 		    }
-                    let query7 = 'delete from parent_pet_images where parcel_id = ? and image_id = ?';
-                    let deleteParent = await connection.query(query7, [changeId, item]);
-                }
-            } else {
-                // s3 삭제를 위해, url
-                let querySix = 'select image_key from parent_pet_images where parcel_id = ? and image_id = ?';
-                let parentImage = await connection.query(querySix, [changeId, removeParent]);
-
-                try {
-                    // s3 삭제
-                    await DogList.deleteInS3(parentImage[0].image_key);
-                    console.log('parent image s3 delete success');
-
-                    // 부모견 이미지 삭제
-                } catch (err) {
-                    console.log('error : parent image s3 delete fail');
-                }
-                let query7 = 'delete from parent_pet_images where parcel_id = ? and image_id = ?';
-                let deleteParent = await connection.query(query7, [changeId, removeParent]);
-            }
-        }
-        console.log('delete parent success');
-
-        data.parent = [];
-
-        // 기존의 부모견 사진이 있다면
-        let parentQuery = 'select image_id, image from parent_pet_images where parcel_id = ? ';
-        let originalParent = await connection.query(parentQuery, changeId);
-
-        if (originalParent && originalParent.length > 0) {
-            for (let parent of originalParent) {
-                data.parent.push({ 'image_id': parent.image_id, 'image': parent.image });
-            }
-        }
-
-        // 새로운 부모견 사진이 있다면
-        if (parentRecord && parentRecord.length > 0) {
-
-            for (let parent of parentRecord) {
-                let query8 = 'insert into parent_pet_images set ?';
-                let newParent = await connection.query(query8, parent);
-                parent.image_id = newParent.insertId;
-                data.parent.push({ 'image_id': parent.image_id, 'image': parent.image });
-            }
-        }
-
-        console.log('new parent success');
-        // 응답 record 리턴
+        connection.commit();
         return data;
     } catch (err) {
-        try {
-            await connection.rollback();
-            console.log(err);
-        } catch (error) {
-            console.log(err);
-        }
+        await connection.rollback();
+        console.log(err);
         throw err;
     } finally {
         pool.releaseConnection(connection);
@@ -633,9 +541,14 @@ DogList.completeParcel = async function (parcelID, user_id) { //분양완료 or 
       if(is_parceled.length==0) return 0;
       else {
         let query2 = 'update parcel set is_parceled = ? where parcel_id = ? and user_id = ?';
-        let result;
-        if(is_parceled[0].is_parceled==0) result = await connection.query(query2, [1, parcelID, user_id]);
-        else result = await connection.query(query2, [0, parcelID, user_id]);
+        if(is_parceled[0].is_parceled===0){
+            await connection.query(query2, [1, parcelID, user_id]);
+            return 1;
+        } 
+        else {
+            await connection.query(query2, [0, parcelID, user_id]);
+            return 2;
+        }
       }
     }
     finally {
