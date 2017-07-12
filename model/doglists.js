@@ -291,16 +291,17 @@ DogList.updateParcel = async(user, changeId, record, removedPet, removedParent, 
         
 
         //pet_image에 있는 썸네일 주소를 가져와서 parcel에 업데이트(다른 수정된 정보 포함)
-        let selectThumb = 'select thumbnail from pet_images where parcel_id = ?';
-        let thumb = await connection.query(selectThumb, changeId);
+        let selectThumb = 'select thumbnail from pet_images where image_id = ?';
+        let thumb = await connection.query(selectThumb, insertedPet.insertId);
         let query5 = 'UPDATE parcel SET ? WHERE parcel_id = ?';
         let addedRecord = record; //테이블 insert용 레코드
         if(newLineage) addedRecord.lineage = newLineage.location;
            
         addedRecord.pet_thumbnail = thumb[0].thumbnail;
         await connection.query(query5, [addedRecord, changeId]);
-        // data = addedRecord;
-
+        
+        for(let i in addedRecord)
+            data[i] = addedRecord[i];
 
         // username 반환 
         let user_query = 'select username FROM users where user_id = ?';
