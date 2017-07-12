@@ -252,7 +252,7 @@ DogList.updateParcel = async(user, changeId, record, removedPet, removedParent, 
                 width: 300, height: 400
             });
             let petThumbnail = await DogList.uploadToS3(thumbnailFileName, thumbnailPath);
-            let pet = {
+            let pet_record = {
                 thumbnail: petThumbnail,
                 thumbnail_key: thumbnailFileName,
                 image: newPet.location,
@@ -260,10 +260,12 @@ DogList.updateParcel = async(user, changeId, record, removedPet, removedParent, 
                 parcel_id: changeId
             };
             let query3 = 'insert into pet_images set ?';
-            let insertedPet = await connection.query(query3, pet);
+            let insertedPet = await connection.query(query3, pet_record);
             console.log('new pet image upload success');
-            data.pet.image_id = insertedPet.insertId;
-            data.pet.image = newPet.location;
+            let pet = {};
+            pet.image_id = insertedPet.insertId;
+            pet.image = newPet.location;
+            data.pet = pet;
         }
          // 삭제할 부모견 사진 아이디가 있다면
         if (removedParent>0) {
