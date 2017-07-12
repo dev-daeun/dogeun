@@ -213,7 +213,7 @@ DogList.postParcels = async function (parcelRecord, parentRecord, petRecord, thu
 // 분양글 수정하기 
 DogList.updateParcel = async(user, changeId, record, removedPet, removedParent, newPet, newParent, newLineage) => {
     var connection;
-    var data; //응답 records, 객체 형태로 반환 
+    var data = {}; //응답 records, 객체 형태로 반환 
     try {
         connection = await pool.getConnection();
         await connection.beginTransaction();
@@ -299,9 +299,9 @@ DogList.updateParcel = async(user, changeId, record, removedPet, removedParent, 
            
         addedRecord.pet_thumbnail = thumb[0].thumbnail;
         await connection.query(query5, [addedRecord, changeId]);
-        data = addedRecord;
+        // data = addedRecord;
 
-        
+
         // username 반환 
         let user_query = 'select username FROM users where user_id = ?';
         let users = await connection.query(user_query, user);
