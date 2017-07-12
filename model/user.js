@@ -1,39 +1,32 @@
 const Sequelize = require('sequelize');
 const pool = require('../config/db_pool');
-const Sign = require('../config/ORM').Sign;
+const User = require('../config/ORM').User;
 const AWS = require('../config/AWS');
 const bcrypt = require('bcrypt-node');
-const salt = bcrypt.genSaltSync(20)
-class User{}
-
-function hashAnything(info){
-    return new Promise((fulfill, reject) => {
-        bcrypt.hash(info, salt, null, (err, data) => {
-            if(err) reject(err);
-            else return data;
-        });
-    });
+const bcrypt2 = require('bcrypt');
+const salt = bcrypt.genSaltSync(20);
+var _id;
+class Account{
 }
 
-function compareHash(info, hash){
-    return new Promise((fulfill, reject) => {
-       bcrypt.compare(info, hash, (err, result)=>{
-            if(err) reject(err);
-            else return result;
-       });
-    });
+Account.setUserId = (user_id) => {
+    _id = user_id;
 }
 
-User.signup = async(email, password, checking_password) => {
+Account.getUserId = () => {
+    return _id;
+}
+
+Account.signup = async(email, password, checking_password) => {
     try{
-        let dupEmail = await Sign.count({ 
+        let dupEmail = await User.count({ 
             where: { email: email } 
         });
         if(dupEmail>0) return 'dupEmail';
         else if(password!==checking_password) return 'wrongPW';
         else {
-            let hashed_pw = await hashAnything(password);
-            await Sign.create({
+            let hashed_pw = bcrypt.hashSync(password);
+            await User.create({
                 email: email,
                 password: hashed_pw
             });
@@ -47,22 +40,21 @@ User.signup = async(email, password, checking_password) => {
 };
 
 
-User.login = async(email, password) => {
+Account.login = async(email, password) => {
     try {
-            let emailExist = await Sign.count({
+            let emailExist = await User.count({
                 where: { email: email }
             }); //이메일 있는지 확인
 
             if(emailExist===0) return 'noneEmail';
             else{
-                let info = await Sign.findOne({
+                let info = await User.findOne({
                     where: {email: email},
-                    attributes: ['id','password']
+                    attributes: ['user_id','password']
                 }); //비번 맞는지 확인
-                let pwCorrect = await compareHash(password, info.dataValues.password);
-                if(!pwCorrect) return 'wrongPW';
-                else return info.dataValues.id; 
-                
+                let pwCorrect = bcrypt2.compareSync(password, info.dataValues.password);
+                if(pwCorrect) return info.dataValues.user_id;
+                else return 'wrongPW';     
             }
     }
     catch(err) {
@@ -72,4 +64,4 @@ User.login = async(email, password) => {
 };
 
 
-module.exports = User;
+module.exports = Account;

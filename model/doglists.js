@@ -1,7 +1,7 @@
 
 const pool = require('../config/db_pool');
 const sequelize = require('sequelize');
-const User = require('../config/ORM').User;
+const User  = require('../config/ORM').User;
 const Parcel = require('../config/ORM').Parcel;
 const Favorites = require('../config/ORM').Favorites;
 const aws = require('../config/AWS');
@@ -409,7 +409,7 @@ DogList.updateParcels = async function (changeId, userId, removePet, petRecord, 
 
 
 // 분양글 삭제하기 
-DogList.deleteParcles = async function (id) {
+DogList.deleteParcel = async function (id) {
     let connection;
     try {
         connection = await pool.getConnection();
@@ -514,7 +514,6 @@ DogList.getLists = async function (user_id, keywords, page) { //전체목록 조
                 offset: start,
                 limit: end - start 
         });
-        console.log(posts);
         const count = (end==start) ? 0 : posts.rows.length;
         const next = (end<total-1)? true: false; //다음 페이지 유무 여부
 
