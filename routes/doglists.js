@@ -130,7 +130,7 @@ router.put('/:parcel_id', auth, arrUpload, async function (req, res, next) {
             let newPet = req.files['pet'] ? req.files['pet'][0] : null;
             let newParent = req.files['parent'] ? req.files['parent'][0] : null;
             let ret = await Doglist.updateParcel(req.user, changeId, record, removedPet, removedParent, newPet, newParent, newLineage);
-            if(ret===-1) res.status(404).send({message: 'parcel does not exist'});
+            if(ret===-1) res.status(404).send({message: 'parcel or image_id does not exist'});
             res.status(200).send({results: ret});
     }
     }

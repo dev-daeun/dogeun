@@ -221,22 +221,13 @@ DogList.updateParcel = async(user, changeId, record, removedPet, removedParent, 
         let checkQuery = 'select * from parcel where parcel_id = ?';
         let count = await connection.query(checkQuery, changeId);
         if(count.length===0) return -1;
-       let query5 = 'UPDATE parcel SET ? WHERE parcel_id = ?';
-        if(newLineage){
-            let addedRecord = record;
-            addedRecord.lineage = newLineage.location;
-            data = addedRecord;
-            await connection.query(query5, [addedRecord, changeId]);
-        }
-        else{
-            data = record;
-            await connection.query(query5, [record, changeId]);
-        }
+
         // 삭제할 펫 이미지 아이디가 있다면 
         if (removedPet>0) {
             //s3에 기존 펫 이미지 삭제
             let query1 = 'select image_key, thumbnail_key from pet_images where parcel_id = ? and image_id = ? ;';
             let petImage = await connection.query(query1, [changeId, removedPet]);
+            if(petImage.length===0) return -1;
             await DogList.deleteInS3(petImage[0].image_key);
             await DogList.deleteInS3(petImage[0].thumbnail_key);
             let query2 = 'delete from pet_images where parcel_id = ? and image_id = ?';
@@ -251,6 +242,8 @@ DogList.updateParcel = async(user, changeId, record, removedPet, removedParent, 
                 dst: thumbnailPath,
                 width: 300, height: 400
             });
+
+            //s3에 새로 만든 썸네일 업로드
             let petThumbnail = await DogList.uploadToS3(thumbnailFileName, thumbnailPath);
             let pet_record = {
                 thumbnail: petThumbnail,
@@ -259,6 +252,8 @@ DogList.updateParcel = async(user, changeId, record, removedPet, removedParent, 
                 image_key: newPet.key,
                 parcel_id: changeId
             };
+
+            //pet_image 테이블에 원본이미지, 썸네일 넣기
             let query3 = 'insert into pet_images set ?';
             let insertedPet = await connection.query(query3, pet_record);
             console.log('new pet image upload success');
@@ -278,11 +273,14 @@ DogList.updateParcel = async(user, changeId, record, removedPet, removedParent, 
             let query7 = 'delete from parent_pet_images where parcel_id = ? and image_id = ?';
             let deleteParent = await connection.query(query7, [changeId, removedParent]);
 
+            //s3에 새 부모견 이미지 업로드
             let parent_record = {
                 image: newParent.location,
                 image_key: newParent.key,
                 parcel_id: changeId
             };
+
+            //parent_pet_images에 새 부모견 이미지 넣기
             let parent = {};
             let query8 = 'insert into parent_pet_images set ?';
             let insertedParent = await connection.query(query8, parent_record);
@@ -291,16 +289,19 @@ DogList.updateParcel = async(user, changeId, record, removedPet, removedParent, 
             data.parent = parent;
         }
         
- 
-        // 대표 썸네일 만들기 
-        //let parcelId = parcelRecord.parcel_id;
-        // let query = 'select thumbnail from pet_images where image_id = ( select min(image_id) from pet_images where parcel_id = ? )';
-        // let query = 'select thumbnail from pet_images where parcel_id = ?';
-        // let thumbnailURL = await connection.query(query, changeId);
-        // parcelRecord.pet_thumbnail = thumbnailURL[0].thumbnail;
-        // console.log('thumbnail update success');
 
+        //pet_image에 있는 썸네일 주소를 가져와서 parcel에 업데이트(다른 수정된 정보 포함)
+        let selectThumb = 'select thumbnail from pet_images where parcel_id = ?';
+        let thumb = await connection.query(selectThumb, changeId);
+        let query5 = 'UPDATE parcel SET ? WHERE parcel_id = ?';
+        let addedRecord = record; //테이블 insert용 레코드
+        if(newLineage) addedRecord.lineage = newLineage.location;
+           
+        addedRecord.pet_thumbnail = thumb[0].thumbnail;
+        await connection.query(query5, [addedRecord, changeId]);
+        data = addedRecord;
 
+        
         // username 반환 
         let user_query = 'select username FROM users where user_id = ?';
         let users = await connection.query(user_query, user);
