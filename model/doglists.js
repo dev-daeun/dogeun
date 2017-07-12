@@ -409,11 +409,11 @@ DogList.updateParcels = async function (changeId, userId, removePet, petRecord, 
 
 
 // 분양글 삭제하기 
-DogList.deleteParcel = async function (id) {
+DogList.deleteParcel = async function (id, user_id) {
     let connection;
     try {
         connection = await pool.getConnection();
-
+        await connection.beginTransaction();
         // 펫 이미지, 썸네일 key
         let query1 = 'select image_key, thumbnail_key from pet_images where parcel_id = ? ';
         let petImage = await connection.query(query1, id);
@@ -460,13 +460,14 @@ DogList.deleteParcel = async function (id) {
             }
         }
         // 레코드 삭제
-        let query4 = 'DELETE FROM parcel WHERE parcel_id = ?';
-        let deleteRecord = await connection.query(query4, id);
+        let query4 = 'DELETE FROM parcel WHERE parcel_id = ? and user_id = ?';
+        let deleteRecord = await connection.query(query4, [id, user_id]);
         console.log('delete success');
-
+        await connection.commit();
         return deleteRecord;
     } catch (err) {
         console.log(err);
+        await connection.rollback();
         throw err;
     } finally {
         pool.releaseConnection(connection);
@@ -624,17 +625,17 @@ DogList.getOneList = async function(parcelID){ //게시글 상세조회
     }
   };
 
-DogList.completeParcel = async function (parcelID) { //분양완료 or 완료 취소하기
+DogList.completeParcel = async function (parcelID, user_id) { //분양완료 or 완료 취소하기
     try {
       var connection = await pool.getConnection();
-      let query = 'select is_parceled from parcel where parcel_id = ?';
-      let is_parceled = await connection.query(query, parcelID);
+      let query = 'select is_parceled from parcel where parcel_id = ? and user_id = ?';
+      let is_parceled = await connection.query(query, [parcelID, user_id]);
       if(is_parceled.length==0) return 0;
       else {
-        let query2 = 'update parcel set is_parceled = ? where parcel_id = ?';
+        let query2 = 'update parcel set is_parceled = ? where parcel_id = ? and user_id = ?';
         let result;
-        if(is_parceled[0].is_parceled==0) result = await connection.query(query2, [1, parcelID]);
-        else result = await connection.query(query2, [0, parcelID]);
+        if(is_parceled[0].is_parceled==0) result = await connection.query(query2, [1, parcelID, user_id]);
+        else result = await connection.query(query2, [0, parcelID, user_id]);
       }
     }
     finally {
@@ -642,16 +643,17 @@ DogList.completeParcel = async function (parcelID) { //분양완료 or 완료 �
     }
 };
 
-DogList.reportParcel = async function (record) {
-    let data;
-    let connection;
+DogList.reportParcel = async function (repo_id, parcel_id, content) {
     try {
-        connection = await pool.getConnection();
+        var connection = await pool.getConnection();
         let query1 = 'insert into report set ? ';
+        let record = {
+            reporter_id: repo_id,
+            parcel_id: parcel_id,
+            content: content
+        };
         let report = await connection.query(query1, record);
-
-        data = report.report_id;
-        return data;
+        return report.insertId;
 
     } catch (err) {
         console.log(err);
