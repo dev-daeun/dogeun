@@ -149,7 +149,7 @@ Profile.editProfile = async function(req){
             record.profile_thumbnail = thumbnail_url;       
         }
        
-        result = await User.update(record,{ where:{ user_id: req.params.id }}); 
+        result = await User.update(record,{ where:{ user_id: req.user }}); 
         return result;
     }
     catch(err) {
