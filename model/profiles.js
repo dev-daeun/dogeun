@@ -93,7 +93,7 @@ Profile.saveProfile = async function(req){
                 let thumbnail_url = await this.uploadThumbToS3(thumb_name, thumb_path); //2. 로컬 디렉토리에 저장된 이미지를 s3에 올리기
                 record.profile_image = req.file.location;
                 record.profile_thumbnail = thumbnail_url;
-                result = await connection.query(query, record);
+                result = await connection.query(query, [record, req.user]);
             }
             return result;
     } 
