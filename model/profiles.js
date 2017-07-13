@@ -11,7 +11,6 @@ class Profile {}
 
 Profile.getRecord = function(req){  //저장, 수정에 들어갈 레코드 반환하는 메소드
     return {
-                user_id: req.user,
                 username: req.body.username,
                 gender: req.body.gender,
                 region: req.body.region,
@@ -79,9 +78,9 @@ Profile.saveProfile = async function(req){
     try {
             var connection = await pool.getConnection();
             let record = this.getRecord(req);
-            let query = 'insert into users set ?';
+            let query = 'update users set ? where user_id = ?';
             let result;
-            if(!req.file) result = await connection.query(query, record);
+            if(!req.file) result = await connection.query(query, [record, req.user]);
             else {
                 let thumb_name = 'thumbnail_' + req.file.key; //썸네일이미지 이름
                 let thumb_path = 'thumbnail/'+ thumb_name; //썸네일 저장 경로

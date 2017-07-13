@@ -36,6 +36,7 @@ router.post('/', auth, upload.single('profile'),async function(req, res, next){
                 return;
         }
         else {
+
             let ret = await Profile.saveProfile(req);
             res.status(201).send({ message: 'success', user_id: req.user});
         }
