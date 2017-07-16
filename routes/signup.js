@@ -28,7 +28,20 @@ router.post('/', async (req, res, next) => {
                 return;
             }
             else{
-                res.status(201).send({message: 'success'});        
+                let option = {
+                    algorithm: 'HS256',
+                    expiresIn: 60 * 60 * 24 * 7
+                };
+                let payload = {
+                    user_id: ret
+                };
+                
+                let token = jwt.sign(payload, req.app.get('secret-key'), option);
+                res.status(201).send({ 
+                    message: 'success',
+                    user_token : token 
+                });
+                 
                 return;
             }
         }

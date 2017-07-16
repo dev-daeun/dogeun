@@ -26,11 +26,11 @@ Account.signup = async(email, password, checking_password) => {
         else if(password!==checking_password) return 'wrongPW';
         else {
             let hashed_pw = bcrypt.hashSync(password);
-            await User.create({
+            let ret = await User.create({
                 email: email,
                 password: hashed_pw
             });
-            return 'success';
+            return ret.dataValues.insertId;
         }
     }
     catch(err){

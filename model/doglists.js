@@ -93,7 +93,6 @@ DogList.postParcels = async function (parcelRecord, parentRecord, petRecord, thu
     let data = {}; // 응답 records, 객체 형태로 반환 
     try {
         connection = await pool.getConnection();
-
         await connection.beginTransaction();
 
         // 썸네일 만들기 
@@ -523,6 +522,7 @@ DogList.getOneList = async function(parcelID){ //게시글 상세조회
       
         let query5 = 'select count(*) from favorites where parcel_id = ?'
         let favor = await connection.query(query5, parcelID);
+        parcel[0].age = parcel[0].age + '개월';
         parcel[0].username = username[0].username;
         parcel[0].parent_pet_images = parentPetImages;
         parcel[0].pet_images = petImages;
