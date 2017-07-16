@@ -417,26 +417,13 @@ DogList.getLists = async function (user_id, keywords, page) { //전체목록 조
 
         const start = Math.min( ( (page-1) * 10) , total );
         const end = Math.min( page * 10, total );
-        var ageCategory;
-        if(keywords.age = '2개월 이상 - 4개월 미만') ageCategory = [2,3];
-        if(keywords.age = '4개월 이상 - 12개월 미만') ageCategory = [4, 11];
-        if(keywords.age = '12개월 이상') ageCategory = [12, 18];
-        else ageCategory = [2, 18];
         const posts = await Parcel.findAndCountAll({ //offset & limit으로 page애 해당하는 분양글 find
                 attributes: ['parcel_id', 'title', 'pet_thumbnail'],
                 include: [{
                     model: User,
                     where: { state: sequelize.col('parcel.user_id') }
                 }],
-                where: {
-                    spiece: keywords.spiece || true,
-                    region1: keywords.region1 || true,
-                    region2: keywords.region2 || true,
-                    gender: keywords.gender || true,
-                    age: {
-                        $between: ageCategory
-                    }
-                }, 
+                where: keywords, 
                 order: sequelize.literal('parcel_id desc'),
                 offset: start,
                 limit: end - start 
