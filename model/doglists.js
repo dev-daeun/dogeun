@@ -409,7 +409,7 @@ DogList.getMyList  = async function(user_id){
 
 
 };
-DogList.getLists = async function (user_id, keywords, page) { //전체목록 조회하기
+DogList.getLists = async function (user_id, keywords, ageCategory, page) { //전체목록 조회하기
     try {
         const total = await Parcel.count({ //조화한 결과 총 개수 
                 where: keywords
@@ -417,13 +417,19 @@ DogList.getLists = async function (user_id, keywords, page) { //전체목록 조
 
         const start = Math.min( ( (page-1) * 10) , total );
         const end = Math.min( page * 10, total );
+        const selectQuery = 'select parcel_id, title, pet_thumbnail from parcel where set ? and age between ? and ?';
         const posts = await Parcel.findAndCountAll({ //offset & limit으로 page애 해당하는 분양글 find
                 attributes: ['parcel_id', 'title', 'pet_thumbnail'],
                 include: [{
                     model: User,
                     where: { state: sequelize.col('parcel.user_id') }
                 }],
-                where: keywords, 
+                where: { 
+                    spiece: keywords.spiece,
+                    region1: keywords.region1,
+                    region2: keywords.region2,
+                    gender: keywords.gender,
+                    age: { $between: [ageCategory[0], ageCategory[1]] }}, 
                 order: sequelize.literal('parcel_id desc'),
                 offset: start,
                 limit: end - start 

@@ -155,6 +155,7 @@ router.delete('/:parcel_id', auth, async function (req, res, next) {
 router.get('/',  async function (req, res, next) {
     try {
             let page;
+            let ageCategory;
             if(req.query.page==0) page = 1; //page=0으로 날릴 경우 
             else page = req.query.page || 1;
             let keywords = {}; //TODO : if문 줄일 방법 찾기
@@ -162,8 +163,11 @@ router.get('/',  async function (req, res, next) {
             if(req.query.region1!=0) keywords.region1 = req.query.region1;
             if(req.query.region2!=0) keywords.region2 = req.query.region2;
             if(req.query.gender!=0) keywords.gender = req.query.gender;
-            if(req.query.age!=0) keywords.age = req.query.age;
-            let ret = await Doglist.getLists(User.getUserId(), keywords, page);
+            if(req.query.age==='2개월 이상 - 4개월 미만') ageCategory = [2,3];
+            else if(req.query.age==='4개월 이상 - 12개월 미만') ageCategory = [4,11];
+            else if(req.query.age==='12개월 이상') ageCategory = [12,18];
+            else ageCategory = [2,18];
+            let ret = await Doglist.getLists(User.getUserId(), keywords, ageCategory, page);
             res.status(200).send(ret);
         
     } catch (err) {
