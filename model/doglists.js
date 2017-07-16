@@ -424,9 +424,10 @@ DogList.getLists = async function (user_id, keywords, ageCategory, page) { //전
                     model: User,
                     where: { state: sequelize.col('parcel.user_id') }
                 }],
-                where: { 
-                    keywords,
-                    $and: {age: { $between: [ageCategory[0], ageCategory[1]] }}}, 
+                where: sequelize.and(
+                    {age: { $between: [ageCategory[0], ageCategory[1]] }},
+                    keywords
+                ), 
                 order: sequelize.literal('parcel_id desc'),
                 offset: start,
                 limit: end - start 
