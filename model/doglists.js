@@ -429,13 +429,13 @@ DogList.getLists = async function (user_id, keywords, page) { //전체목록 조
                     where: { state: sequelize.col('parcel.user_id') }
                 }],
                 where: {
-                    spiece: keywords.spiece || true,
-                    region1: keywords.region1 || true,
-                    region2: keywords.region2 || true,
-                    gender: keywords.gender || true,
-                    age: {
-                        $between: ageCategory
-                    }
+                    spiece: keywords.spiece || *,
+                    region1: keywords.region1 || *,
+                    region2: keywords.region2 || *,
+                    gender: keywords.gender || *
+                  //  age: {
+                   //     $between: ageCategory
+                    //}
                 }, 
                 order: sequelize.literal('parcel_id desc'),
                 offset: start,
