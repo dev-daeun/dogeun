@@ -509,11 +509,11 @@ DogList.getEmergencyLists = async function(user_id) { //메인화면 가로에 �
 DogList.getOneList = async function(parcelID){ //게시글 상세조회
     try {
       var connection = await pool.getConnection();
-      let query3 = 'select * from parcel where parcel_id = ?';
+      let query3 = 'select * from parcel where parcel_id = ?;';
       let parcel = await connection.query(query3, parcelID);
       if(parcel.length==0) return 0;
       else {
-        let query1 = 'select image_id, image from pet_images where parcel_id = ?';
+        let query1 = 'select image_id, image from pet_images where parcel_id = ?;';
         let petImages = await connection.query(query1, parcelID);
 
         let query2 = 'select image_id, image from parent_pet_images where parcel_id = ?'

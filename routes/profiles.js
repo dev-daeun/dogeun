@@ -10,7 +10,10 @@ const upload = AWS.getUpload();
 router.get('/:user_id', auth, async function(req, res, next){
     try{
             let userId = req.params.user_id;
-            let profile = await Profile.readProfile(userId);
+            let profile;
+            if(!userId) profile = await Profile.readProfile(req.user);
+            else profile = await Profile.readProfile(userId);
+            
             if(profile===-1) res.status(400).send({message: 'user_id does not exist'});
             else {
                 let mylist = await Doglist.getMyList(userId);
