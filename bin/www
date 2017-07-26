@@ -115,35 +115,17 @@ io.on('connection', socket => {
     console.log('클라이언트 소켓 연결');
     var user_id;
     var room_id;
-    //채팅 목록 조회 -DONE 
-    socket.on('showList', async () => {
-      try {
-        user_id = User.getUserId(); // TODO : 토큰값으로 변경
-        console.log('현재접속 사용자id : ',user_id);
-        let roomlist = await room.getRooms(user_id); //현재 사용자id로 사용자가 참여중인 채팅목록 가져오기
-        for(let i of roomlist){
-          let messageCount = await message.getUnreadCount(i.room_id, user_id);
-          i.unread_count = messageCount;
-        }
-        console.log('클라이언트에서 showList 호출');
-        socket.emit('showListResults', { roomList: roomlist });
-      }catch(err){
-        console.log(err);
-      }
-
-    });
-
-
 
 
     //채팅방 입장  -DONE
     socket.on('enterRoom', async participant_id => {
       try{
+        user_id = User.getUserId();
         if(room_id) room_id = null;
         let r_id = await room.findRoom(user_id, participant_id);
         if(r_id===-1) r_id = await room.createRoom(user_id, participant_id);
         room_id = r_id;
-        let messagelist = await room.enterRoom(room_id, user_id);
+        let messagelist = await room.enterRoom(room_id,user_id);
         console.log('클라이언트에서 enterRoom 호출 r_id: ', r_id);
         socket.emit('enterRoomResults', { roomInfos: messagelist });
       }catch(err){

@@ -11,6 +11,7 @@ const signout = require('./routes/signout');
 const morgan = require('morgan');
 const login = require('./routes/login');
 const signup = require('./routes/signup');
+const chats = require('./routes/chats');
 const alarms = require('./routes/alarms');
 var app = express();
 
@@ -60,7 +61,7 @@ app.use('/login', login);
 app.use('/signout',signout);
 app.use('/signup', signup);
 app.use('/alarms',alarms);
-
+app.use('/chats', chats);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
